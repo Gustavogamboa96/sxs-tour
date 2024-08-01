@@ -121,7 +121,7 @@ const LandingPage = () => {
         {events.map((event, index) => (
           <a key={index} href={event.link} target="_blank" rel="noopener noreferrer">
             <div className="event">
-              <p>{event.date}... ... ... ...{event.city}... ... ... ...{event.venue}</p>
+              <p>{event.date}... ... ... ...{event.city}... ... ...{event.venue}</p>
             </div>
           </a>
         ))}
