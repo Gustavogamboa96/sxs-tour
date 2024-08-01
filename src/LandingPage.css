@@ -40,6 +40,7 @@
     border-radius: 10px;
     text-align: left;
     margin-right: 2%; /* Optional: adds space from the right edge */
+
     
 }
 
@@ -49,8 +50,8 @@
     justify-content: center;
     flex-direction: row;
     gap: 20px; /* Space between links */
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.8); /* Optional: background for the footer */
+    padding-top: 10%;
+    
     color: white;
   }
   
@@ -147,6 +148,9 @@
       box-sizing: border-box;
       background-image: url('./images/ruido\ copy.png');
       font-size: 0.55em;
+      white-space: nowrap; /* Prevent text from wrapping to the next line */
+      /* overflow: hidden; Hide overflow content */
+      text-overflow: ellipsis; 
     }
   }
 
