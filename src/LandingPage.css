@@ -150,6 +150,7 @@
       white-space: nowrap; /* Prevent text from wrapping to the next line */
       /* overflow: hidden; Hide overflow content */
       text-overflow: ellipsis; 
+      border-radius: 0;
     }
   }
 
