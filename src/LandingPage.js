@@ -3,10 +3,10 @@ import './LandingPage.css';
 
 
 const links = [
-    { href: 'https://example.com', text: 'Link 1' },
-    { href: 'https://example.com', text: 'Link 2' },
-    { href: 'https://example.com', text: 'Link 3' },
-    { href: 'https://example.com', text: 'Link 4' }
+    { href: 'https://www.youtube.com/@lavidabohemev0', text: 'Link 1' },
+    { href: 'https://open.spotify.com/artist/5gs7iemsrjIJbz0ryFcy79', text: 'Link 2' },
+    { href: 'https://lavidaboheme.bandcamp.com/', text: 'Link 3' },
+    { href: 'https://www.instagram.com/lavidaboheme/', text: 'Link 4' }
   ];
 
 const events = [
