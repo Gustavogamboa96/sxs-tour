@@ -161,7 +161,9 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        flex-direction: column;
+        /* flex-direction: column; */
+        flex: 1 1 45%;
+        flex-wrap: wrap;
         gap: 2%; /* Space between links */
         padding-top: 10%;
         text-align: center;
