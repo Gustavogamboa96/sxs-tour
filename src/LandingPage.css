@@ -129,7 +129,7 @@
     .background-section {
       width: 100%;
       height: 100vh;
-      min-height: 100vh;
+      /* min-height: 100vh; */
       background-image: url('./images/iphone.png'), url('./images/ruido\ copy.png');
       background-size: cover, auto; /* Cover for the first image, auto for the second */
       background-position: center, center;
@@ -144,7 +144,6 @@
       margin: 0; /* Remove margin */
       padding: 20px;
       margin-top: 125%;
-      border-radius: 0 0 10px 10px; /* Optional: Round bottom corners */
       box-sizing: border-box;
       background-image: url('./images/ruido\ copy.png');
       font-size: 0.55em;
