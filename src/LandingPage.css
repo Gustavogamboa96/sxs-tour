@@ -100,7 +100,7 @@
 } */
 
 /* style for desktop vertical view */
-@media (max-width: 600px) {
+@media (max-width: 376px) {
     body, html {
         margin: 0;
         padding: 0;
