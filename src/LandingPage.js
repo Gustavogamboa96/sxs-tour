@@ -122,7 +122,7 @@ const LandingPage = () => {
       
       
     </div>
-    <div className="content">
+    <div className="content animated-cursor">
         {events.map((event, index) => (
           <a key={index} href={event.link} target="_blank" rel="noopener noreferrer">
             <div className="event">

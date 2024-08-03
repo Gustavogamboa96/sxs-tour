@@ -13,7 +13,7 @@
     font-style: bold;
     letter-spacing: 3px;
     overflow-x: hidden;
-    
+    overflow-y: hidden;
   }
   
   .landing-page {
@@ -38,11 +38,13 @@
     max-width: 90%;
     padding: 2%;
     font-size: 0.9em;
+    /* left: 50%; */
     border-radius: 10px;
     text-align: left;
     margin-right: 2%; /* Optional: adds space from the right edge */
-
-    
+    flex-direction: row;
+    /* padding-left: 42%;
+    transform: translate(0%, -100%); */
 }
 
 .footer {
@@ -99,19 +101,29 @@
     }
 } */
 
-/* style for desktop vertical view */
-
-
+/* style for desktops */
+@media (min-width: 992px){
+    .content {
+        max-width: 90%;
+        padding: 2%;
+        font-size: 0.9em;
+        /* left: 50%; */
+        border-radius: 10px;
+        text-align: left;
+        margin-right: 2%; /* Optional: adds space from the right edge */
+        flex-direction: row;
+        padding-left: 42%;
+        transform: translate(0%, -100%);
+    }
+}
 /* mobile view style */
 @media  (max-width: 768px) {
     body, html {
         margin: 0;
         padding: 0;
         height: 100%;
-        
         font-family: 'IBM Plex Sans', sans-serif;
         font-weight: 700;
-        
         font-style: bold;
         letter-spacing: 2px;
         overflow-x: hidden;
