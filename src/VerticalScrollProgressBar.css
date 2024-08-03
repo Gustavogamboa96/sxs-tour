@@ -1,3 +1,4 @@
+@media (max-width: 768px) {
 /* VerticalScrollProgressBar.css */
 .progress-container {
     position: fixed;
@@ -15,11 +16,5 @@
     height: 0;
     transition: height 0.25s ease-out;
   }
-  
-  /* Mobile-specific styles */
-  @media (max-width: 768px) {
-    .progress-container {
-      display: block;
-    }
-  }
+}
   
