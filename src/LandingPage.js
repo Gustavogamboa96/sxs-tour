@@ -38,19 +38,19 @@ const events = [
   {
     date: 'Sep.28',
     city: 'Monterrey, Mex',
-    venue: 'Metapatio',
+    venue: ' ...Metapatio',
     link: 'https://www.passline.com/eventos/la-vida-boheme-en-monterrey',
   },
   {
     date: 'Oct.04',
     city: 'Leon, Mex',
-    venue: ' .Llamarada',
+    venue: ' ... ... ...Llamarada',
     link: 'https://www.passline.com/eventos/la-vida-boheme-en-leon-guanajuato',
   },
   {
     date: 'Oct.05',
     city: 'Guadalajara, Mex',
-    venue: 'Cuerda',
+    venue: ' .Cuerda',
     link: 'https://www.passline.com/eventos/la-vida-boheme-en-guadalajara-jalisco',
   },
   {
@@ -74,19 +74,19 @@ const events = [
   {
     date: 'Oct.15',
     city: 'Berlin, Alemania',
-    venue: ' ..Lido',
+    venue: ' ...Lido',
     link: 'https://www.passline.com/eventos/la-vida-boheme-live-berlin-sangrexsangre-tour-2024',
   },
   {
     date: 'Oct.16',
     city: 'Oporto, Portugal',
-    venue: ' ... Hardclub',
+    venue: ' ...Hardclub',
     link: 'https://www.passline.com/eventos/la-vida-boheme-live-porto-sangrexsangre-tour-2024',
   },
   {
     date: 'Oct.17',
     city: 'Londres, UK',
-    venue: ' ... ... .Oslo',
+    venue: ' ... ... ..Oslo',
     link: 'https://www.passline.com/eventos/la-vida-boheme-live-londres-sangrexsangre-tour2024',
   },
   {
