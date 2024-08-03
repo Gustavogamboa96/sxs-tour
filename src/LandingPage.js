@@ -67,7 +67,7 @@ const events = [
   {
     date: 'Oct.13',
     city: 'España, Barcelona',
-    venue: ' Razzmataz',
+    venue: ' Razzmatazz',
     link: 'https://www.passline.com/eventos/la-vida-boheme-live-barcelona-sangrexsangre-tour-2024',
   },
   {
