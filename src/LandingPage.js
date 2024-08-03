@@ -115,9 +115,36 @@ const events = [
   },
 ];
 
+
+
 const LandingPage = () => {
+//     const [scrollingProgress, setScrollingProgress] = useState(0);
+  
+  
+//   useEffect(() => {
+//     const handleScroll = () => {
+//         const scrollTop = document.body.scrollTop;
+//         const docHeight = document.body.scrollHeight ;
+//         const winHeight = window.innerHeight;
+//         const scrollPercent = (scrollTop / (docHeight-winHeight)) * 100;
+//         setScrollingProgress(scrollPercent);
+        
+        
+//       };
+//     window.addEventListener('scroll', handleScroll);
+      
+//     return () => window.removeEventListener('scroll', handleScroll);
+//   }, []);
+//     console.log(scrollingProgress);
+
   return (
     <div>
+        {/* <div className="progress-container">
+      <div
+        className="progress-bar"
+        style={{ height: `${scrollingProgress}%` }}
+      ></div>
+    </div> */}
     <div className="landing-page background-section animated-cursor">
       
       

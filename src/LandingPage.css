@@ -13,6 +13,7 @@
     font-style: bold;
     letter-spacing: 3px;
     overflow-x: hidden;
+    overflow-y: hidden;
     
   }
   
@@ -128,6 +129,7 @@
         font-style: bold;
         letter-spacing: 2px;
         overflow-x: hidden;
+        overflow-y: auto;
       }
 
     .landing-page {
@@ -185,6 +187,24 @@
         color: white;
       }
 
+
+      .progress-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 5px; /* Adjust the width as needed */
+        height: 100%;
+        background-color:yellow; /* Change to any color if you want a container background */
+        z-index: 9999;
+      }
+      
+      .progress-bar {
+        width: 100%;
+        background-color: rgb(250,22,10); /* Color of the progress bar */
+        
+        
+        transition: height 0.25s ease-out;
+      }
   }
 
 

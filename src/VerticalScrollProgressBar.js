@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './VerticalScrollProgressBar.css';
 
 const VerticalScrollProgressBar = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(1);
 
+ 
+  
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
+      const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
       const docHeight = document.body.scrollHeight - window.innerHeight;
       const scrollPercent = (scrollTop / docHeight) * 100;
       setScrollProgress(scrollPercent);
+      console.log("hello");
     };
 
     window.addEventListener('scroll', handleScroll);
