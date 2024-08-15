@@ -90,10 +90,10 @@ const events = [
     link: 'https://www.passline.com/eventos/la-vida-boheme-live-londres-sangrexsangre-tour2024',
   },
   {
-    date: 'Oct.22',
+    date: '2025',
     city: 'Lima, Peru',
-    venue: ' ... ... Teatro Leguia',
-    link: 'samplelink.com',
+    venue: ' ... ... TBD',
+    link: 'https://docs.google.com/forms/d/e/1FAIpQLSe678XwGTB6yZ0Izk9_iJaYvZ3uuYmc2_6ju5yrZpraOlZojQ/viewform?fbclid=PAZXh0bgNhZW0CMTEAAaapFEEMdGXMIEogssMEVbQs2m4EbyzXrVbRrj67oGgrvATKR_yVKSGgomQ_aem_iRFbFFm0c9D1tMwgOS67zg&pli=1',
   },
   {
     date: 'Oct.23',
