@@ -4,10 +4,11 @@ import './LandingPage.css';
 
 
 const links = [
-    { href: 'https://www.youtube.com/@lavidabohemev0', text: 'https://youtube.com' },
-    { href: 'https://open.spotify.com/artist/5gs7iemsrjIJbz0ryFcy79', text: 'https://spotify.com' },
-    { href: 'https://lavidaboheme.bandcamp.com/', text: 'https://bandcamp.com' },
-    { href: 'https://www.instagram.com/lavidaboheme/', text: 'https://instagram.com' }
+    { href: 'https://www.youtube.com/@lavidabohemev0', text: 'http://youtube.com' },
+    { href: 'https://open.spotify.com/artist/5gs7iemsrjIJbz0ryFcy79', text: 'http://spotify.com' },
+    { href: 'https://lavidaboheme.bandcamp.com/', text: 'http://bandcamp.com' },
+    { href: 'https://www.instagram.com/lavidaboheme/', text: 'http://instagram.com'},
+    { href: 'mailto:management@yosoylavidaboheme.com', text: 'http://contacto.com' },
   ];
 
 const events = [
