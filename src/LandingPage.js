@@ -31,12 +31,6 @@ const events = [
     link: 'https://www.passline.com/eventos/la-vida-boheme-en-toluca',
   },
   {
-    date: 'Sep.27',
-    city: 'Texcoco, Mex',
-    venue: ' ... ..Doppler',
-    link: 'https://www.passline.com/eventos/la-vida-boheme-en-texcoco',
-  },
-  {
     date: 'Sep.28',
     city: 'Monterrey, Mex',
     venue: ' ...Metapatio',
@@ -77,12 +71,6 @@ const events = [
     city: 'Berlin, Alemania',
     venue: ' ...Lido',
     link: 'https://www.passline.com/eventos/la-vida-boheme-live-berlin-sangrexsangre-tour-2024',
-  },
-  {
-    date: 'Oct.16',
-    city: 'Oporto, Portugal',
-    venue: ' ...Hardclub',
-    link: 'https://www.passline.com/eventos/la-vida-boheme-live-porto-sangrexsangre-tour-2024',
   },
   {
     date: 'Oct.17',
