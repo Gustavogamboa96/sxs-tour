@@ -105,7 +105,7 @@ const events = [
   {
     date: 'Dec.20',
     city: 'Miami, USA',
-    venue: ' ..ZeyZey',
+    venue: ' ... ... ..ZeyZey',
     link: 'https://shotgun.live/en/events/zey-zey-presents-chromeo-dj-set-2?utm_source=la-vida-boheme',
   },
 ];
