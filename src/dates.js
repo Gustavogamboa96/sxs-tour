@@ -1,17 +1,13 @@
-import React from 'react';
-import './LandingPage.css';
-
-
-
-const links = [
+export const links = [
     { href: 'https://www.youtube.com/@lavidabohemev0', text: 'http://youtube.com' },
     { href: 'https://open.spotify.com/artist/5gs7iemsrjIJbz0ryFcy79', text: 'http://spotify.com' },
     { href: 'https://lavidaboheme.bandcamp.com/', text: 'http://bandcamp.com' },
     { href: 'https://www.instagram.com/lavidaboheme/', text: 'http://instagram.com'},
     { href: 'mailto:management@yosoylavidaboheme.com', text: 'http://contacto.com' },
+    { href: 'https://www.patreon.com/LaVidaBoheme', text: 'http://patreon.com' },
   ];
 
-const events = [
+export const events = [
   {
     date: 'Sep.19',
     city: 'Cuautitlan Izcalli, Mex',
@@ -81,7 +77,7 @@ const events = [
   {
     date: '2025.. ',
     city: 'Lima, Peru',
-    venue: ' ... ... TBD',
+    venue: ' ... ... ...TBD',
     link: 'https://docs.google.com/forms/d/e/1FAIpQLSe678XwGTB6yZ0Izk9_iJaYvZ3uuYmc2_6ju5yrZpraOlZojQ/viewform?fbclid=PAZXh0bgNhZW0CMTEAAaapFEEMdGXMIEogssMEVbQs2m4EbyzXrVbRrj67oGgrvATKR_yVKSGgomQ_aem_iRFbFFm0c9D1tMwgOS67zg&pli=1',
   },
   {
@@ -109,59 +105,3 @@ const events = [
     link: 'https://shotgun.live/en/events/zey-zey-presents-chromeo-dj-set-2?utm_source=la-vida-boheme',
   },
 ];
-
-
-
-const LandingPage = () => {
-//     const [scrollingProgress, setScrollingProgress] = useState(0);
-  
-  
-//   useEffect(() => {
-//     const handleScroll = () => {
-//         const scrollTop = document.body.scrollTop;
-//         const docHeight = document.body.scrollHeight ;
-//         const winHeight = window.innerHeight;
-//         const scrollPercent = (scrollTop / (docHeight-winHeight)) * 100;
-//         setScrollingProgress(scrollPercent);
-        
-        
-//       };
-//     window.addEventListener('scroll', handleScroll);
-      
-//     return () => window.removeEventListener('scroll', handleScroll);
-//   }, []);
-//     console.log(scrollingProgress);
-
-  return (
-    <div>
-        {/* <div className="progress-container">
-      <div
-        className="progress-bar"
-        style={{ height: `${scrollingProgress}%` }}
-      ></div>
-    </div> */}
-    <div className="landing-page background-section animated-cursor">
-      
-      
-    </div>
-    <div className="content animated-cursor">
-        {events.map((event, index) => (
-          <a key={index} href={event.link} target="_blank" rel="noopener noreferrer">
-            <div className="event">
-              <p>{event.date}... ... ... ...{event.city}... ... ...{event.venue}</p>
-            </div>
-          </a>
-        ))}
-        <div className="footer">
-        {links.map((link, index) => (
-          <a key={index} href={link.href}>
-            {link.text}
-          </a>
-        ))}
-      </div>
-      </div>
-    </div>
-  );
-};
-
-export default LandingPage;
