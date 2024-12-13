@@ -1,13 +1,13 @@
 
 
 export const links = [
+    { href: '#', text: 'http://newsletter.com', onClick:true },
     { href: 'https://www.youtube.com/@lavidabohemev0', text: 'http://youtube.com' },
     { href: 'https://open.spotify.com/artist/5gs7iemsrjIJbz0ryFcy79', text: 'http://spotify.com' },
     { href: 'https://lavidaboheme.bandcamp.com/', text: 'http://bandcamp.com' },
     { href: 'https://www.instagram.com/lavidaboheme/', text: 'http://instagram.com'},
     { href: 'mailto:management@yosoylavidaboheme.com', text: 'http://contacto.com' },
     { href: 'https://www.patreon.com/LaVidaBoheme', text: 'http://patreon.com' },
-    { href: '#', text: 'http://newsletter.com', onClick:true },
     { href: 'https://www.x.com/vidaboheme', text: 'http://x.com' },
   ];
 
