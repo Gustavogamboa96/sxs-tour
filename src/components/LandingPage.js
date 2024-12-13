@@ -22,6 +22,10 @@ export default function LandingPage() {
     const handleCloseSignup = () => setOpenSignup(false);
     const handleOpenSignup = () => setOpenSignup(true);
 
+    const reopenNewsletter = () => {
+        handleOpenSignup();
+    }
+
 
     return (
         <div className='row allofit animated-cursor'>
@@ -40,10 +44,14 @@ export default function LandingPage() {
                         ))}
                     </div>
                     <div className='row footer align-items-flex-end justify-content-center '>
-                        <ul className='list-unstyled d-flex' style={{paddingLeft: '7.5%'}}>
+                        <ul className='list-unstyled row justify-content-center'>
                             {links.map((link, index) => (
-                                <li key={index} >
-                                    <a href={link.href} className="footer-link">
+                                <li key={index}
+                                className="col-12 col-sm-6 col-lg-3 mb-3" >
+                                    <a href={link.href} onClick={link.onClick ? (e) => {
+                                        e.preventDefault(); // Prevent navigation for links with onClick
+                                        reopenNewsletter();
+                                    } : undefined} className="footer-link d-block text-md-left text-xs-center">
                                         {link.text}
                                     </a>
                                 </li>

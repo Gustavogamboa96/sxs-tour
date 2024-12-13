@@ -46,12 +46,6 @@ html, body {
     text-decoration: underline;
   }
 
-  .footer li {
-    width: calc(33.33% - 20px); /* 33.33% per link, minus some margin */
-    margin-right: 20px; 
-    margin-bottom: 10px; /* Add margin between rows */
-  }
-
   .list-unstyled {
     /* ... other styles ... */
     flex-wrap: wrap;
@@ -80,6 +74,13 @@ html, body {
   .footer a {
     font-size: 0.8vh;
     letter-spacing: 2px;
+  }
+
+  .footer li {
+    /* width: calc(25.00% - 20px); 33.33% per link, minus some margin */
+    /* margin-right: 20px;  */
+    /* margin-bottom: 10px; Add margin between rows */
+    text-align: center !important;
   }
 }
 

@@ -35,6 +35,7 @@ export default function Signup(props) {
         localStorage.setItem('signed-up', 'true');
         setError(false);
         handleCloseSignup();
+        setEmail('');
       }else if(response.code === 'duplicate_parameter'){
         onSignupResponse("Ese email ya esta suscrito", false)
         handleCloseSignup();
