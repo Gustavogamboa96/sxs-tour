@@ -4,6 +4,7 @@ import './LandingPage.css'
 import Signup from './Signup'
 import { Snackbar } from '@mui/material'
 import Alert from '@mui/material/Alert';
+import MusicPlayer from './MusicPlayer'
 
 
 
@@ -29,12 +30,15 @@ export default function LandingPage() {
 
     return (
         <div className='row allofit animated-cursor'>
-            <div className="col-auto g-xl-0 pr-lg-0 pr-md-0 pr-sm-10" >
+            {/* <div className="col-auto g-xl-0 pr-lg-0 pr-md-0 pr-sm-10" >
                 <img src="/images/backgroud-mobile-compress.webp" alt="tour-banner" className="img-fluid" style={{ maxHeight: '100vh' }} />
-            </div>
-            <div className="col d-flex align-items-center justify-content-start" style={{ backgroundImage: "url('/images/backgroud-ruido-compress.webp')", paddingLeft: '5vw' }}>
+            </div> */}
+            <div className="bg-container col d-flex align-items-center justify-content-start flex-column min-vh-100" style={{ backgroundImage: "url('/images/cover-elcorodelasmasas.png')", paddingLeft: '5vw' }}>
                 <div>
-                    <div className='dates-div pb-l-3'>
+                    <div className='flex-grow-1' style={{marginBottom: '69vh'}}>
+                        <MusicPlayer/>
+                    </div>
+                    {/* <div className='dates-div pb-l-3'>
                         {events.map((event, index) => (
                             <a key={index} href={event.link} target="_blank" rel="noopener noreferrer">
                                 <div className="event">
@@ -42,8 +46,8 @@ export default function LandingPage() {
                                 </div>
                             </a>
                         ))}
-                    </div>
-                    <div className='row footer align-items-flex-end justify-content-center '>
+                    </div> */}
+                    <div className='row footer align-items-flex-end justify-content-center'>
                         <ul className='list-unstyled row justify-content-center'>
                             {links.map((link, index) => (
                                 <li key={index}

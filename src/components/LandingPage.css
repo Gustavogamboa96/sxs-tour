@@ -7,6 +7,16 @@ html, body {
     color: #3fea4b;
     overflow-x: hidden;
 }
+.bg-container {
+  /* background-image: url('/images/cover-elcorodelasmasas.png'); */
+  flex-direction: column;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh; /* Or use `min-height: 100vh;` if you prefer */
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
 
 .dates-div a {
     /* font-family: 'IBM Plex Sans', sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif; */
@@ -31,7 +41,7 @@ html, body {
     justify-content: center;
     flex-direction: row;
     gap: 20px; /* Space between links */
-    padding-top: 4%;
+    margin-top: auto;
 
   }
   
@@ -72,7 +82,7 @@ html, body {
     max-width: none;
     }
   .footer a {
-    font-size: 0.8vh;
+    font-size: 1.3vh;
     letter-spacing: 2px;
   }
 
