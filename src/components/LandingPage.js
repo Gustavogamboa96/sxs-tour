@@ -52,7 +52,7 @@ export default function LandingPage() {
                             {links.map((link, index) => (
                                 <li key={index}
                                 className="col-12 col-sm-6 col-lg-3 mb-3" >
-                                    <a href={link.href} onClick={link.onClick ? (e) => {
+                                    <a href={link.href} target="_blank" onClick={link.onClick ? (e) => {
                                         e.preventDefault(); // Prevent navigation for links with onClick
                                         reopenNewsletter();
                                     } : undefined} className="footer-link d-block text-md-left text-xs-center">

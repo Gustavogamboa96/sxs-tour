@@ -91,7 +91,8 @@ export default function Signup(props) {
               fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
               width: '100%', // Adjust the width as needed
               margin: 'auto', // Center the TextField horizontally  
-              paddingBottom: '2vh'
+              paddingBottom: '2vh',
+              textAlign: 'center'
           }}>
             Suscríbete a nuestro newsletter!
           </Typography>

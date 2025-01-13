@@ -83,16 +83,50 @@ export default function MusicPlayer() {
   const duration = 200; // seconds
   const [position, setPosition] = React.useState(32);
   const [paused, setPaused] = React.useState(true);
+  const [autoplaySuccess, setAutoplaySuccess] = React.useState(false);
+  const audioRef = React.useRef(null);
   function formatDuration(value) {
     const minute = Math.floor(value / 60);
     const secondLeft = value - minute * 60;
     return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
   }
-  const [audio] = React.useState(new Audio('/audio/elzar.wav')); // Replace with your audio file path
+  const [audio] = React.useState(new Audio('/audio/alcoropromowav.wav')); // Replace with your audio file path
 
   React.useEffect(() => {
-    audio.loop = true;  // Ensure the audio loops
+    audio.autoplay = true;
+    // audio.loop = true;  // Ensure the audio loops
+    audioRef.current = audio;
   }, [audio]);
+
+  React.useEffect(() => {
+    // audio.autoplay = true;
+
+    audio.addEventListener('playing', () => {
+        setAutoplaySuccess(true); 
+    });
+
+    if (audioRef.current) {
+      // Set up the event listener to ensure smooth looping
+      audioRef.current.addEventListener('ended', () => {
+        audioRef.current.currentTime = 0; // Reset the audio to the beginning
+        audioRef.current.play(); // Play immediately after resetting
+      });
+    }
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.removeEventListener('ended', () => {}); // Cleanup
+      }
+    };
+  }, []);
+
+  React.useEffect(() => {
+    
+    // Check if autoplay was successful
+    if (autoplaySuccess) {
+      setPaused(false); 
+    }
+  }, [autoplaySuccess]);
 
   const handlePlayPause = () => {
     if (paused) {

@@ -1,6 +1,7 @@
 
 
 export const links = [
+    { href: 'https://ditto.fm/al-coro-de-las-masas', text: 'http://presave.com' },
     { href: '#', text: 'http://newsletter.com', onClick:true },
     { href: 'https://www.youtube.com/@lavidabohemev0', text: 'http://youtube.com' },
     { href: 'https://open.spotify.com/artist/5gs7iemsrjIJbz0ryFcy79', text: 'http://spotify.com' },
@@ -8,7 +9,7 @@ export const links = [
     { href: 'https://www.instagram.com/lavidaboheme/', text: 'http://instagram.com'},
     { href: 'mailto:management@yosoylavidaboheme.com', text: 'http://contacto.com' },
     { href: 'https://www.patreon.com/LaVidaBoheme', text: 'http://patreon.com' },
-    { href: 'https://www.x.com/vidaboheme', text: 'http://x.com' },
+    // { href: 'https://www.x.com/vidaboheme', text: 'http://x.com' },
   ];
 
 export const events = [
