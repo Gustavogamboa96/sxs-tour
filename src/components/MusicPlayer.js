@@ -149,7 +149,7 @@ export default function MusicPlayer() {
               La Vida Bohème
             </Typography>
             <Typography noWrap>
-              <b>Al Coro De Las Masas!</b>
+              <b>¡Al Coro De Las Masas!</b>
             </Typography>
           </Box>
         </Box>
