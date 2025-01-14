@@ -33,7 +33,7 @@ export default function LandingPage() {
             {/* <div className="col-auto g-xl-0 pr-lg-0 pr-md-0 pr-sm-10" >
                 <img src="/images/backgroud-mobile-compress.webp" alt="tour-banner" className="img-fluid" style={{ maxHeight: '100vh' }} />
             </div> */}
-            <div className="bg-container col d-flex align-items-center justify-content-start flex-column min-vh-100" style={{ backgroundImage: "url('/images/cover-elcorodelasmasas.png')", paddingLeft: '5vw' }}>
+            <div className="bg-container col d-flex align-items-center justify-content-start flex-column min-vh-100" style={{ backgroundImage: "url('/images/cover-elcorodelasmasas.webp')", paddingLeft: '5vw' }}>
                 <div>
                     <div className='flex-grow-1' style={{marginBottom: '69vh'}}>
                         <MusicPlayer/>
