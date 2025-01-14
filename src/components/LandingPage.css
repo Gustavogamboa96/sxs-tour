@@ -96,8 +96,8 @@ html, body {
 
 @media (max-width: 1630px){
     .allofit {
-        background-image: url('../../public/images/backgroud-ruido-compress.webp');
-        background-repeat: repeat;
+        /* background-image: url('../../public/images/backgroud-ruido-compress.webp'); */
+        /* background-repeat: repeat; */
       }
 }
 
