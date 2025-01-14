@@ -67,7 +67,7 @@ export default function Signup(props) {
 
     };
     const signedUp = localStorage.getItem('signed-up');
-    
+
     useEffect(()=>{
       if(!signedUp){
         const timer = setTimeout(() => {
@@ -95,7 +95,7 @@ export default function Signup(props) {
               paddingBottom: '2vh',
               textAlign: 'center'
           }}>
-            Suscríbete a nuestro newsletter!
+            ¡Suscríbete a nuestro newsletter!
           </Typography>
           <TextField  
             id="outlined-basic" 

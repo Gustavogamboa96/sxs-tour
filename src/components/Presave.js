@@ -30,6 +30,22 @@ export default function Presave(props) {
     backgroundColor: 'rgba(0,0,0,0.08)',
   });
 
+  const StyledButton = styled(Button)(({ theme }) => ({
+    backgroundColor: '#3fea4b', // Your primary color
+    color: '#212121', // Text color
+    '&:hover': {
+      color: '#1a1c1a',
+      backgroundColor: '#3fea4b', // Adjust hover color if needed
+      opacity: 0.8, 
+    },
+    borderRadius: 5, // Adjust border radius as desired
+    padding: '12px 24px', // Adjust padding as desired
+    fontSize: '16px',
+    fontWeight: 600,
+    textTransform: 'uppercase',
+    transition: 'all 0.2s ease-in-out', 
+  }));
+
     const style = {
       position: 'absolute',
       top: '50%',
@@ -72,7 +88,7 @@ useEffect(()=>{
                 margin: 'auto', // Center the TextField horizontally  
                 paddingBottom: '2vh'
               }}>
-              Dale presave a nuestro nuevo single!
+              ¡Dale presave a nuestro nuevo single!
             </Typography>
             {/* <CoverImage>
 
@@ -84,7 +100,7 @@ useEffect(()=>{
           
             </CoverImage> */}
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button variant="contained" disableElevation
+            <StyledButton variant="contained" disableElevation
             component="a" // This makes the Button act like an anchor tag
             href="https://ditto.fm/al-coro-de-las-masas/presavecallback?context=pre_save&service=spotify&redirecturl&actionid&order=678279aba25e1ee52ea5558c&fpEnabled=false&user=Gustavo%20Gamboa%20Malaver&status=success&origin=presavecallback" // The link destination
             target="_blank" // Opens the link in a new tab (optional)
@@ -93,7 +109,7 @@ useEffect(()=>{
               backgroundColor: '#212121',
               }}>
                 Pre-save
-            </Button>
+            </StyledButton>
             </div>
           </Box>
         </Box>
