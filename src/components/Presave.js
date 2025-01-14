@@ -2,53 +2,33 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import addContact from '../api/brevo-create-contact';
 import React, { useEffect, useState } from 'react';
 import './Signup.css'
 
-export default function Signup(props) {
-  const {onSignupResponse, handleCloseSignup, handleOpenSignup, openSignup} = props;
+
+
+export default function Presave(props) {
+  const {handleClosePresave, handleOpenPresave, openPresave, openSignup} = props;
   // const [open, setOpen] = useState(false);
-  const [email, setEmail] = React.useState('');
-  const [error, setError] = React.useState(false);
+  // const [email, setEmail] = React.useState('');
+  // const [error, setError] = React.useState(false);
   // const handleOpen = () => setOpen(true);
   // const handleClose = () =>{
   //   setOpen(false);
   //   setEmail('');
   // } ;
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError(true);
-    } else {
-      // Handle successful submission, e.g., send email or perform other actions
-      console.log('Valid email:', email);
-      try{
-      const response = await addContact(email);
-      console.log(response);
-      if(response.id){
-        onSignupResponse("¡Listo, ya estás suscrito!", true)
-        localStorage.setItem('signed-up', 'true');
-        setError(false);
-        handleCloseSignup();
-        setEmail('');
-      }else if(response.code === 'duplicate_parameter'){
-        onSignupResponse("Ese email ya esta suscrito", false)
-        handleCloseSignup();
-      }else{
-        onSignupResponse("Hubo un problema al suscribirte", false)
-        handleCloseSignup();
-      }
-      }catch(error){
-        console.error(error);
-      }
-    }
-  };
-
+  const CoverImage = styled('div')({
+    width: 100,
+    height: 100,
+    objectFit: 'cover',
+    overflow: 'hidden',
+    flexShrink: 0,
+    borderRadius: 8,
+    backgroundColor: 'rgba(0,0,0,0.08)',
+  });
 
     const style = {
       position: 'absolute',
@@ -66,11 +46,10 @@ export default function Signup(props) {
       fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
 
     };
-    const signedUp = localStorage.getItem('signed-up');
-    useEffect(()=>{
-      if(!signedUp){
+useEffect(()=>{
+      if(!openSignup){
         const timer = setTimeout(() => {
-          handleOpenSignup();
+          handleOpenPresave();
         }, 1500)
         return () => clearTimeout(timer);
       }
@@ -79,8 +58,8 @@ export default function Signup(props) {
   return (
     <div>
       <Modal
-        open={openSignup}
-        onClose={handleCloseSignup}
+        open={openPresave}
+        onClose={handleClosePresave}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -95,7 +74,27 @@ export default function Signup(props) {
               }}>
               Dale presave a nuestro nuevo single!
             </Typography>
-            
+            {/* <CoverImage>
+
+            <img
+              alt="¡Al coro de las masas! - La Vida Bohème"
+              src="/images/cover-alcorodelasmasas.webp"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+          
+            </CoverImage> */}
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button variant="contained" disableElevation
+            component="a" // This makes the Button act like an anchor tag
+            href="https://ditto.fm/al-coro-de-las-masas/presavecallback?context=pre_save&service=spotify&redirecturl&actionid&order=678279aba25e1ee52ea5558c&fpEnabled=false&user=Gustavo%20Gamboa%20Malaver&status=success&origin=presavecallback" // The link destination
+            target="_blank" // Opens the link in a new tab (optional)
+            rel="noopener noreferrer" 
+            sx={{color: '#3fea4b',
+              backgroundColor: '#212121',
+              }}>
+                Pre-save
+            </Button>
+            </div>
           </Box>
         </Box>
       </Modal>

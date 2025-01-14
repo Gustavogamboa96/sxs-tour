@@ -67,6 +67,7 @@ export default function Signup(props) {
 
     };
     const signedUp = localStorage.getItem('signed-up');
+    
     useEffect(()=>{
       if(!signedUp){
         const timer = setTimeout(() => {

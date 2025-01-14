@@ -5,6 +5,7 @@ import Signup from './Signup'
 import { Snackbar } from '@mui/material'
 import Alert from '@mui/material/Alert';
 import MusicPlayer from './MusicPlayer'
+import Presave from './Presave'
 
 
 
@@ -13,6 +14,10 @@ export default function LandingPage() {
     const [snackbarMessage, setSnackbarMessage] = useState("")
     const [isSuccess, setIsSuccess] = useState(true)
     const [openSignup, setOpenSignup] = useState(false);
+
+    const [openPresave, setOpenPresave] = useState(false);
+    const handleOpenPresave = () => setOpenPresave(true);
+    const handleClosePresave = () => setOpenPresave(false);
 
     const handleSignupResponse = (message, success) => {
         setSnackbarMessage(message)
@@ -52,7 +57,7 @@ export default function LandingPage() {
                             {links.map((link, index) => (
                                 <li key={index}
                                 className="col-12 col-sm-6 col-lg-3 mb-3" >
-                                    <a href={link.href} target="_blank" onClick={link.onClick ? (e) => {
+                                    <a href={link.href} target="_blank" rel="noreferrer" onClick={link.onClick ? (e) => {
                                         e.preventDefault(); // Prevent navigation for links with onClick
                                         reopenNewsletter();
                                     } : undefined} className="footer-link d-block text-md-left text-xs-center">
@@ -70,6 +75,12 @@ export default function LandingPage() {
                 handleCloseSignup={handleCloseSignup}
                 onSignupResponse={handleSignupResponse}
             />
+            {!openSignup && <Presave
+            openPresave={openPresave}
+            handleOpenPresave={handleOpenPresave}
+            handleClosePresave={handleClosePresave}
+            openSignup={openSignup}
+            />}
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={3000}
