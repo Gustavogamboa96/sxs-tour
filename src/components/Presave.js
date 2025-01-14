@@ -51,7 +51,7 @@ export default function Presave(props) {
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      width: 400,
+      width: '30vw',
       bgcolor: 'background.paper',
       // border:  '2px solid #000',
       boxShadow: 24,
@@ -86,7 +86,8 @@ useEffect(()=>{
                 fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
                 width: '100%', // Adjust the width as needed
                 margin: 'auto', // Center the TextField horizontally  
-                paddingBottom: '2vh'
+                paddingBottom: '3.5vh',
+                textAlign: 'center'
               }}>
               ¡Dale presave a nuestro nuevo single!
             </Typography>
