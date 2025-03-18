@@ -5,7 +5,7 @@ import Signup from './Signup'
 import { Snackbar } from '@mui/material'
 import Alert from '@mui/material/Alert';
 import MusicPlayer from './MusicPlayer'
-import Presave from './Presave'
+import UpcomingDate from './UpcomingDate'
 
 
 
@@ -15,9 +15,12 @@ export default function LandingPage() {
     const [isSuccess, setIsSuccess] = useState(true)
     const [openSignup, setOpenSignup] = useState(false);
 
-    const [openPresave, setOpenPresave] = useState(false);
-    const handleOpenPresave = () => setOpenPresave(true);
-    const handleClosePresave = () => setOpenPresave(false);
+    const [openUpcomingDate, setOpenUpcomingDate] = useState(false);
+    const handleOpenUpcomingDate = () => setOpenUpcomingDate(true);
+    const handleCloseUpcomingDate = () =>{
+        setOpenSignup(true);
+        setOpenUpcomingDate(false);
+    }
 
     const handleSignupResponse = (message, success) => {
         setSnackbarMessage(message)
@@ -40,7 +43,7 @@ export default function LandingPage() {
             </div> */}
             <div className="bg-container col d-flex align-items-center justify-content-start flex-column min-vh-100" style={{ backgroundImage: "url('/images/cover-elcorodelasmasas.webp')", paddingLeft: '5vw' }}>
                 <div>
-                    <div className='flex-grow-1' style={{marginBottom: '69vh'}}>
+                    <div className='flex-grow-1' style={{marginBottom: '65vh'}}>
                         <MusicPlayer/>
                     </div>
                     {/* <div className='dates-div pb-l-3'>
@@ -69,17 +72,18 @@ export default function LandingPage() {
                     </div>
                 </div>
             </div>
-            <Signup
+            <UpcomingDate
+            openUpcomingDate={openUpcomingDate}
+            handleOpenUpcomingDate={handleOpenUpcomingDate}
+            handleCloseUpcomingDate={handleCloseUpcomingDate}
+            openSignup={openSignup}
+            />
+            {openSignup && <Signup
                 openSignup={openSignup}
                 handleOpenSignup={handleOpenSignup}
                 handleCloseSignup={handleCloseSignup}
                 onSignupResponse={handleSignupResponse}
-            />
-            {!openSignup && <Presave
-            openPresave={openPresave}
-            handleOpenPresave={handleOpenPresave}
-            handleClosePresave={handleClosePresave}
-            openSignup={openSignup}
+                openUpcomingDate={openUpcomingDate}
             />}
             <Snackbar
                 open={snackbarOpen}
