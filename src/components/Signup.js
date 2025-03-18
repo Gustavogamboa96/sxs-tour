@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import './Signup.css'
 
 export default function Signup(props) {
-  const {onSignupResponse, handleCloseSignup, handleOpenSignup, openSignup} = props;
+  const {onSignupResponse, handleCloseSignup, handleOpenSignup, openSignup, openUpcomingDate} = props;
   // const [open, setOpen] = useState(false);
   const [email, setEmail] = React.useState('');
   const [error, setError] = React.useState(false);
@@ -69,10 +69,10 @@ export default function Signup(props) {
     const signedUp = localStorage.getItem('signed-up');
 
     useEffect(()=>{
-      if(!signedUp){
+      if(!signedUp && openUpcomingDate){
         const timer = setTimeout(() => {
           handleOpenSignup();
-        }, 1500)
+        }, 1000)
         return () => clearTimeout(timer);
       }
     }, [])
