@@ -6,6 +6,7 @@ html, body {
     letter-spacing: 3px;
     color: #3fea4b;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 .bg-container {
   /* background-image: url('/images/cover-elcorodelasmasas.png'); */
@@ -62,6 +63,10 @@ html, body {
   }
   
 @media (max-width: 768px) {
+  html,body {
+    overflow-y: scroll;
+  }
+
 
   .col.d-flex.align-items-center.justify-content-start {
   max-width: 100%;
@@ -95,6 +100,9 @@ html, body {
 }
 
 @media (max-width: 1630px){
+  /* html,body {
+    overflow-y: hidden;
+  } */
     .allofit {
         /* background-image: url('../../public/images/backgroud-ruido-compress.webp'); */
         /* background-repeat: repeat; */
