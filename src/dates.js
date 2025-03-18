@@ -1,7 +1,7 @@
 
 
 export const links = [
-    { href: 'https://ditto.fm/al-coro-de-las-masas', text: 'http://presave.com' },
+    { href: 'https://tinyurl.com/bdjc393u', text: 'http://acustico-madrid.com' },
     { href: '#', text: 'http://newsletter.com', onClick:true },
     { href: 'https://www.youtube.com/@lavidabohemev0', text: 'http://youtube.com' },
     { href: 'https://open.spotify.com/artist/5gs7iemsrjIJbz0ryFcy79', text: 'http://spotify.com' },
