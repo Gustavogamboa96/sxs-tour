@@ -13,7 +13,7 @@ export default function LandingPage() {
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const [snackbarMessage, setSnackbarMessage] = useState("")
     const [isSuccess, setIsSuccess] = useState(true)
-    const [openSignup, setOpenSignup] = useState(false);
+    const [openSignup, setOpenSignup] = useState(true);
 
     const [openUpcomingDate, setOpenUpcomingDate] = useState(false);
     const handleOpenUpcomingDate = () => setOpenUpcomingDate(true);
@@ -72,12 +72,12 @@ export default function LandingPage() {
                     </div>
                 </div>
             </div>
-            <UpcomingDate
+            {/* <UpcomingDate
             openUpcomingDate={openUpcomingDate}
             handleOpenUpcomingDate={handleOpenUpcomingDate}
             handleCloseUpcomingDate={handleCloseUpcomingDate}
             openSignup={openSignup}
-            />
+            /> */}
             {openSignup && <Signup
                 openSignup={openSignup}
                 handleOpenSignup={handleOpenSignup}
