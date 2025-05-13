@@ -89,7 +89,7 @@ useEffect(()=>{
                 paddingBottom: '3.5vh',
                 textAlign: 'center'
               }}>
-              ¡Acústico en Madrid!
+              ¡Fechas en España!
             </Typography>
             {/* <CoverImage>
 
@@ -102,7 +102,7 @@ useEffect(()=>{
             </CoverImage> */}
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <img
-                        src="https://wzeweb-p-visuelorga-evn-affiche.s3.eu-west-1.amazonaws.com/affiche_1294214.png"
+                        src="https://dice-media.imgix.net/attachments/2025-05-06/079e8679-6343-4697-bb13-c8c1e17ef7a7.jpg?rect=1160%2C0%2C4640%2C4640&auto=format%2Ccompress&q=40&w=328&h=328&fit=crop&crop=faces%2Ccenter&dpr=2"
                         alt="Event Poster"
                         style={{ width: '50%', height: 'auto' }}
                     />
@@ -121,7 +121,7 @@ useEffect(()=>{
             </StyledButton> */}
             <Button variant="contained" color="primary"
             component="a" // This makes the Button act like an anchor tag
-            href='https://tinyurl.com/bdjc393u' // The link destination
+            href='https://www.eventim-light.com/es/a/68235206e8423f40cbf39bca/e/682355e9e8423f40cbf39bcf' // The link destination
             target="_blank" // Opens the link in a new tab (optional)
               sx={{
                 fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
@@ -134,7 +134,26 @@ useEffect(()=>{
                   color: '#3fea4b',
                 },
               }}>
-              Tickets
+              Tickets Madrid 26.11.25
+          </Button>
+</div>
+            <div style={{ marginTop: '5vh', display: 'flex', justifyContent: 'center' }}>
+          <Button variant="contained" color="primary"
+            component="a" // This makes the Button act like an anchor tag
+            href='https://dice.fm/event/53n3w8-la-vida-boheme-28th-nov-la-2-de-apolo-barcelona-tickets?pid=530cb286&_branch_match_id=1060721144327835601&utm_medium=partners_api&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8nMy9ZLyUxO1UvL1a9MsTQxT0lONTVItbQvyEyxNTU2SE4ysjBTqytKTUstKsrMS49PKsovL04tsnXOKMrPTQUAw7GvMEgAAAA%3D' // The link destination
+            target="_blank" // Opens the link in a new tab (optional)
+              sx={{
+                fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
+                backgroundColor: '#3fea4b',
+                color: 'black',
+                width: '100%', // Adjust the width as needed
+                margin: 'auto', // Center the TextField horizontally
+                '&:hover': {
+                  backgroundColor: 'black',
+                  color: '#3fea4b',
+                },
+              }}>
+              Tickets Barcelona 28.11.25
           </Button>
             </div>
           </Box>
