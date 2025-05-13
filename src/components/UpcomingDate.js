@@ -102,9 +102,9 @@ useEffect(()=>{
             </CoverImage> */}
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <img
-                        src="https://dice-media.imgix.net/attachments/2025-05-06/079e8679-6343-4697-bb13-c8c1e17ef7a7.jpg?rect=1160%2C0%2C4640%2C4640&auto=format%2Ccompress&q=40&w=328&h=328&fit=crop&crop=faces%2Ccenter&dpr=2"
+                        src="https://i.imgur.com/gZ1lQel.jpeg"
                         alt="Event Poster"
-                        style={{ width: '50%', height: 'auto' }}
+                        style={{ width: '100%', height: 'auto' }}
                     />
                 </div>
             {/* <img src="https://wzeweb-p-visuelorga-evn-affiche.s3.eu-west-1.amazonaws.com/affiche_1294214.png" alt="Event Poster" style={{ width: '50%',  height: 'auto'}} /> */}
