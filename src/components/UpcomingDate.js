@@ -81,7 +81,7 @@ useEffect(()=>{
       >
         <Box sx={style}>
           <Box>
-            <Typography id="modal-modal-title" variant="h6" component="h2"
+            {/* <Typography id="modal-modal-title" variant="h6" component="h2"
               sx={{
                 fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
                 width: '100%', // Adjust the width as needed
@@ -90,7 +90,7 @@ useEffect(()=>{
                 textAlign: 'center'
               }}>
               ¡Fechas en España!
-            </Typography>
+            </Typography> */}
             {/* <CoverImage>
 
             <img
@@ -102,9 +102,9 @@ useEffect(()=>{
             </CoverImage> */}
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <img
-                        src="https://i.imgur.com/gZ1lQel.jpeg"
+                        src="https://i.imgur.com/d1Bc4fP.jpeg"
                         alt="Event Poster"
-                        style={{ width: '100%', height: 'auto' }}
+                        style={{ width: '60%', height: 'auto' }}
                     />
                 </div>
             {/* <img src="https://wzeweb-p-visuelorga-evn-affiche.s3.eu-west-1.amazonaws.com/affiche_1294214.png" alt="Event Poster" style={{ width: '50%',  height: 'auto'}} /> */}
