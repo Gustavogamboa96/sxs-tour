@@ -4,7 +4,7 @@ html, body {
     height: 100%;
     width: 100%;
     letter-spacing: 3px;
-    color: #3fea4b;
+    color: #ff0000;
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -23,7 +23,7 @@ html, body {
     /* font-family: 'IBM Plex Sans', sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif; */
     font-weight: 700;
     font-style: bold;
-    color: #3fea4b !important;
+    color: #ff0000 !important;
     text-decoration: none;
     line-height: 2.5vh;
 }
@@ -47,7 +47,7 @@ html, body {
   }
   
   .footer a {
-    color: #3fea4b;
+    color: #ff0000;
     text-decoration: none;
     font-size: 0.7em;
   }
@@ -151,5 +151,4 @@ html, body {
     -webkit-animation: cursorAnimation 1s steps(10) infinite;
     animation: cursorAnimation 1s steps(10) infinite;
   }
-    /* ----------------------------mouse animation keyframes----------------------- */  
-  
+    /* ----------------------------mouse animation keyframes----------------------- */

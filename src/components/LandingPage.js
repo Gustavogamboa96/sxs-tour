@@ -17,7 +17,7 @@ export default function LandingPage() {
 
     const [openUpcomingDate, setOpenUpcomingDate] = useState(false);
     const handleOpenUpcomingDate = () => setOpenUpcomingDate(true);
-    const handleCloseUpcomingDate = () =>{
+    const handleCloseUpcomingDate = () => {
         setOpenSignup(true);
         setOpenUpcomingDate(false);
     }
@@ -26,8 +26,8 @@ export default function LandingPage() {
         setSnackbarMessage(message)
         setIsSuccess(success)
         setSnackbarOpen(true)
-      }
-    
+    }
+
     const handleCloseSignup = () => setOpenSignup(false);
     const handleOpenSignup = () => setOpenSignup(true);
 
@@ -37,33 +37,26 @@ export default function LandingPage() {
 
 
     return (
-        <div className='row allofit animated-cursor'>
-            {/* <div className="col-auto g-xl-0 pr-lg-0 pr-md-0 pr-sm-10" >
-                <img src="/images/backgroud-mobile-compress.webp" alt="tour-banner" className="img-fluid" style={{ maxHeight: '100vh' }} />
-            </div> */}
-            <div className="bg-container col d-flex align-items-center justify-content-start flex-column min-vh-100" style={{ backgroundImage: "url('/images/cover-elcorodelasmasas.webp')", paddingLeft: '5vw' }}>
-                <div>
-                    <div className='flex-grow-1' style={{marginBottom: '65vh'}}>
-                        <MusicPlayer/>
+        <div className='animated-cursor'>
+            <div className="bg-container d-flex align-items-center justify-content-start flex-column min-vh-100" style={{
+                backgroundImage: "url('/images/1.webp')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center 10%',
+                backgroundRepeat: 'no-repeat'
+            }}>
+                <div className="container">
+                    <div className='flex-grow-1' style={{ marginBottom: '65vh' }}>
+                        <MusicPlayer />
                     </div>
-                    {/* <div className='dates-div pb-l-3'>
-                        {events.map((event, index) => (
-                            <a key={index} href={event.link} target="_blank" rel="noopener noreferrer">
-                                <div className="event">
-                                    <p>{event.date}... ... ... ...{event.city}... ... ...{event.venue}</p>
-                                </div>
-                            </a>
-                        ))}
-                    </div> */}
-                    <div className='row footer align-items-flex-end justify-content-center'>
-                        <ul className='list-unstyled row justify-content-center'>
+                    <div className='footer d-flex justify-content-center'>
+                        <ul className='list-unstyled d-flex flex-wrap justify-content-center' style={{ maxWidth: '1200px' }}>
                             {links.map((link, index) => (
                                 <li key={index}
-                                className="col-12 col-sm-6 col-lg-3 mb-3" >
+                                    className="col-12 col-sm-6 col-lg-3 text-center" >
                                     <a href={link.href} target="_blank" rel="noreferrer" onClick={link.onClick ? (e) => {
-                                        e.preventDefault(); // Prevent navigation for links with onClick
+                                        e.preventDefault();
                                         reopenNewsletter();
-                                    } : undefined} className="footer-link d-block text-md-left text-xs-center">
+                                    } : undefined} className="footer-link">
                                         {link.text}
                                     </a>
                                 </li>
@@ -73,10 +66,10 @@ export default function LandingPage() {
                 </div>
             </div>
             <UpcomingDate
-            openUpcomingDate={openUpcomingDate}
-            handleOpenUpcomingDate={handleOpenUpcomingDate}
-            handleCloseUpcomingDate={handleCloseUpcomingDate}
-            openSignup={openSignup}
+                openUpcomingDate={openUpcomingDate}
+                handleOpenUpcomingDate={handleOpenUpcomingDate}
+                handleCloseUpcomingDate={handleCloseUpcomingDate}
+                openSignup={openSignup}
             />
             {openSignup && <Signup
                 openSignup={openSignup}
@@ -92,7 +85,7 @@ export default function LandingPage() {
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
                 sx={{ zIndex: 1300 }}
             >
-                <Alert severity={isSuccess ?"success" : "error"} sx={{ backgroundColor: isSuccess ? 'lightgreen' : 'lightcoral', width: '60vw', display: 'flex', justifyContent: 'center' }}>
+                <Alert severity={isSuccess ? "success" : "error"} sx={{ backgroundColor: isSuccess ? 'lightgreen' : 'lightcoral', width: '60vw', display: 'flex', justifyContent: 'center' }}>
                     {snackbarMessage}
                 </Alert>
             </Snackbar>

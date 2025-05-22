@@ -31,7 +31,7 @@ export default function UpcomingDate(props) {
   });
 
   const StyledButton = styled(Button)(({ theme }) => ({
-    backgroundColor: '#3fea4b', // Your primary color
+    backgroundColor: '#ff0000', // Your primary color
     color: '#212121', // Text color
     '&:hover': {
       color: '#1a1c1a',
@@ -56,7 +56,7 @@ export default function UpcomingDate(props) {
       // border:  '2px solid #000',
       boxShadow: 24,
       p: 4,
-      color: '#3fea4b',
+      color: '#ff0000',
       backgroundColor: '#212121',
       outline: 'none',
       fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
@@ -125,13 +125,13 @@ useEffect(()=>{
             target="_blank" // Opens the link in a new tab (optional)
               sx={{
                 fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-                backgroundColor: '#3fea4b',
+                backgroundColor: '#ff0000',
                 color: 'black',
                 width: '100%', // Adjust the width as needed
                 margin: 'auto', // Center the TextField horizontally
                 '&:hover': {
                   backgroundColor: 'black',
-                  color: '#3fea4b',
+                  color: '#ff0000',
                 },
               }}>
               Tickets Madrid 26.11.25
@@ -139,18 +139,18 @@ useEffect(()=>{
 </div>
             <div style={{ marginTop: '5vh', display: 'flex', justifyContent: 'center' }}>
           <Button variant="contained" color="primary"
-            component="a" // This makes the Button act like an anchor tag
-            href='https://dice.fm/event/53n3w8-la-vida-boheme-28th-nov-la-2-de-apolo-barcelona-tickets?pid=530cb286&_branch_match_id=1060721144327835601&utm_medium=partners_api&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8nMy9ZLyUxO1UvL1a9MsTQxT0lONTVItbQvyEyxNTU2SE4ysjBTqytKTUstKsrMS49PKsovL04tsnXOKMrPTQUAw7GvMEgAAAA%3D' // The link destination
-            target="_blank" // Opens the link in a new tab (optional)
+            component="a"
+            href='https://dice.fm/event/53n3w8-la-vida-boheme-28th-nov-la-2-de-apolo-barcelona-tickets?pid=530cb286&_branch_match_id=1060721144327835601&utm_medium=partners_api&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8nMy9ZLyUxO1UvL1a9MsTQxT0lONTVItbQvyEyxNTU2SE4ysjBTqytKTUstKsrMS49PKsovL04tsnXOKMrPTQUAw7GvMEgAAAA%3D'
+            target="_blank"
               sx={{
                 fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-                backgroundColor: '#3fea4b',
+                backgroundColor: '#ff0000',
                 color: 'black',
-                width: '100%', // Adjust the width as needed
-                margin: 'auto', // Center the TextField horizontally
+                width: '100%',
+                margin: 'auto',
                 '&:hover': {
                   backgroundColor: 'black',
-                  color: '#3fea4b',
+                  color: '#ff0000',
                 },
               }}>
               Tickets Barcelona 28.11.25

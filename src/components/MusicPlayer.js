@@ -144,30 +144,26 @@ export default function MusicPlayer() {
           <Box sx={{ ml: 1.5, minWidth: 0 }}>
             <Typography
               variant="caption"
-              sx={{ color: 'text.secondary', fontWeight: 500 }}
+              sx={{ color: '#ff0000', fontWeight: 500 }}
             >
               La Vida Bohème
             </Typography>
-            <Typography noWrap>
+            <Typography noWrap sx={{ color: '#ff0000' }}>
               <b>¡Al Coro De Las Masas!</b>
             </Typography>
           </Box>
         </Box>
 
         <Box
-          sx={(theme) => ({
+          sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'left',
-            // paddingLeft: '1.5vw',
             mt: -1,
             '& svg': {
-              color: '#000',
-              ...theme.applyStyles('dark', {
-                color: '#fff',
-              }),
+              color: '#ff0000',
             },
-          })}
+          }}
         >
           <IconButton aria-label="previous song">
             <FastRewindRounded fontSize="large" />

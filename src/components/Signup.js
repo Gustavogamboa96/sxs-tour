@@ -60,7 +60,7 @@ export default function Signup(props) {
       // border:  '2px solid #000',
       boxShadow: 24,
       p: 4,
-      color: '#3fea4b',
+      color: '#ff0000',
       backgroundColor: '#212121',
       outline: 'none',
       fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
@@ -102,14 +102,14 @@ export default function Signup(props) {
             label="Email" 
               variant="outlined"
               InputLabelProps={{
-                style: { color: '#3fea4b' },
+                style: { color: '#ff0000' },
               }}
               sx={{
                 '.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline ': {
-                  borderColor: '#3fea4b',
+                  borderColor: '#ff0000',
                 },
                 '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#3fea4b', /* Replace 'green' with your desired color */
+                  borderColor: '#ff0000',
                 },
                 '& .MuiOutlinedInput-input': {
                   color: 'white',
@@ -130,13 +130,13 @@ export default function Signup(props) {
             <Button onClick={handleSubmit} variant="contained" color="primary"
               sx={{
                 fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-                backgroundColor: '#3fea4b',
+                backgroundColor: '#ff0000',
                 color: 'black',
                 width: '100%', // Adjust the width as needed
                 margin: 'auto', // Center the TextField horizontally
                 '&:hover': {
                   backgroundColor: 'black',
-                  color: '#3fea4b',
+                  color: '#ff0000',
                 },
               }}>
               Suscribir
