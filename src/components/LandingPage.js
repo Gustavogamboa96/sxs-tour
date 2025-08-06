@@ -39,12 +39,25 @@ export default function LandingPage() {
     return (
         <div className='animated-cursor'>
             <div className="bg-container d-flex align-items-center justify-content-start flex-column min-vh-100" style={{
-                backgroundImage: "url('/images/1.webp')",
-                backgroundSize: 'cover',
-                backgroundPosition: 'center 10%',
-                backgroundRepeat: 'no-repeat'
+                backgroundColor: '#000000',
+                position: 'relative',
             }}>
-                <div className="container">
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        zIndex: 0
+                    }}
+                >
+                    <source src="/images/EntLoop1.webm" type="video/webm" />
+                </video>
+                <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                     <div className='flex-grow-1' style={{ marginBottom: '65vh' }}>
                         <MusicPlayer />
                     </div>

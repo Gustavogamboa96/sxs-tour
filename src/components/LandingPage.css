@@ -9,6 +9,7 @@ html, body {
     overflow-y: hidden;
 }
 .bg-container {
+  background-color: #000000;
   /* background-image: url('/images/cover-elcorodelasmasas.png'); */
   flex-direction: column;
   background-size: cover;
