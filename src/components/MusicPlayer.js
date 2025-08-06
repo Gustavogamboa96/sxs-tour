@@ -149,7 +149,7 @@ export default function MusicPlayer() {
               La Vida Bohème
             </Typography>
             <Typography noWrap sx={{ color: '#ff0000' }}>
-              <b>¡Al Coro De Las Masas!</b>
+              <b>Entretenimiento</b>
             </Typography>
           </Box>
         </Box>
@@ -165,12 +165,16 @@ export default function MusicPlayer() {
             },
           }}
         >
-          <IconButton aria-label="previous song">
+          <IconButton 
+            aria-label="previous song"
+            sx={{ '&:hover': { cursor: 'unset' } }}
+          >
             <FastRewindRounded fontSize="large" />
           </IconButton>
           <IconButton
             aria-label={paused ? 'play' : 'pause'}
             onClick={handlePlayPause}
+            sx={{ '&:hover': { cursor: 'unset' } }}
           >
             {paused ? (
               <PlayArrowRounded sx={{ fontSize: '3rem' }} />
@@ -178,7 +182,10 @@ export default function MusicPlayer() {
               <PauseRounded sx={{ fontSize: '3rem' }} />
             )}
           </IconButton>
-          <IconButton aria-label="next song">
+          <IconButton 
+            aria-label="next song"
+            sx={{ '&:hover': { cursor: 'unset' } }}
+          >
             <FastForwardRounded fontSize="large" />
           </IconButton>
         </Box>
