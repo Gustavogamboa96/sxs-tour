@@ -50,7 +50,7 @@ html, body {
   .footer a {
     color: #B71C1C;
     text-decoration: none;
-    font-size: 0.7em;
+    font-size: 0.9em;
   }
   
   .footer a:hover {
@@ -88,7 +88,7 @@ html, body {
     max-width: none;
     }
   .footer a {
-    font-size: 1.3vh;
+    font-size: 1.5vh;
     letter-spacing: 2px;
   }
 
