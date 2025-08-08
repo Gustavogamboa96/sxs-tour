@@ -20,22 +20,12 @@ export default function Presave(props) {
   //   setOpen(false);
   //   setEmail('');
   // } ;
-  const CoverImage = styled('div')({
-    width: 100,
-    height: 100,
-    objectFit: 'cover',
-    overflow: 'hidden',
-    flexShrink: 0,
-    borderRadius: 8,
-    backgroundColor: 'rgba(0,0,0,0.08)',
-  });
-
   const StyledButton = styled(Button)(({ theme }) => ({
-    backgroundColor: '#3fea4b', // Your primary color
+    backgroundColor: '#B71C1C', // Your primary color
     color: '#212121', // Text color
     '&:hover': {
       color: '#1a1c1a',
-      backgroundColor: '#3fea4b', // Adjust hover color if needed
+      backgroundColor: '#B71C1C', // Adjust hover color if needed
       opacity: 0.8, 
     },
     borderRadius: 5, // Adjust border radius as desired
@@ -56,20 +46,13 @@ export default function Presave(props) {
       // border:  '2px solid #000',
       boxShadow: 24,
       p: 4,
-      color: '#3fea4b',
+      color: '#B71C1C',
       backgroundColor: '#212121',
       outline: 'none',
       fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
 
     };
-useEffect(()=>{
-      if(!openSignup){
-        const timer = setTimeout(() => {
-          handleOpenPresave();
-        }, 1500)
-        return () => clearTimeout(timer);
-      }
-    }, [])
+// Component mounts ready to be shown by parent
 
   return (
     <div>
@@ -81,7 +64,7 @@ useEffect(()=>{
       >
         <Box sx={style}>
           <Box>
-            <Typography id="modal-modal-title" variant="h6" component="h2"
+            {/* <Typography id="modal-modal-title" variant="h6" component="h2"
               sx={{
                 fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
                 width: '100%', // Adjust the width as needed
@@ -90,27 +73,32 @@ useEffect(()=>{
                 textAlign: 'center'
               }}>
               ¡Dale presave a nuestro nuevo single!
-            </Typography>
-            {/* <CoverImage>
-
-            <img
-              alt="¡Al coro de las masas! - La Vida Bohème"
-              src="/images/cover-alcorodelasmasas.webp"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-          
-            </CoverImage> */}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <StyledButton variant="contained" disableElevation
-            component="a" // This makes the Button act like an anchor tag
-            href="https://ditto.fm/al-coro-de-las-masas/presavecallback?context=pre_save&service=spotify&redirecturl&actionid&order=678279aba25e1ee52ea5558c&fpEnabled=false&user=Gustavo%20Gamboa%20Malaver&status=success&origin=presavecallback" // The link destination
-            target="_blank" // Opens the link in a new tab (optional)
-            rel="noopener noreferrer" 
-            sx={{color: '#3fea4b',
-              backgroundColor: '#212121',
+            </Typography> */}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <img
+                    src="/images/entretenimiento-cover.jpeg"
+                    alt="Entretenimiento - La Vida Bohème"
+                    style={{ width: '60%', height: 'auto' }}
+                />
+            </div>
+            <div style={{ marginTop: '5vh', display: 'flex', justifyContent: 'center' }}>
+            <Button variant="contained" color="primary"
+            component="a"
+            href="https://ditto.fm/entretenimiento-la-vida-boheme"
+            target="_blank"
+              sx={{
+                fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
+                backgroundColor: '#B71C1C',
+                color: 'black',
+                width: '100%',
+                margin: 'auto',
+                '&:hover': {
+                  backgroundColor: 'black',
+                  color: '#B71C1C',
+                },
               }}>
-                Pre-save
-            </StyledButton>
+              Pre-save
+            </Button>
             </div>
           </Box>
         </Box>

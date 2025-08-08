@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { links, events } from '../dates'
 import './LandingPage.css'
 import Signup from './Signup'
@@ -6,6 +6,7 @@ import { Snackbar } from '@mui/material'
 import Alert from '@mui/material/Alert';
 import MusicPlayer from './MusicPlayer'
 import UpcomingDate from './UpcomingDate'
+import Presave from './Presave'
 import BentoWidget from './BentoWidget'
 
 
@@ -15,13 +16,28 @@ export default function LandingPage() {
     const [snackbarMessage, setSnackbarMessage] = useState("")
     const [isSuccess, setIsSuccess] = useState(true)
     const [openSignup, setOpenSignup] = useState(false);
-
+    const [openPresave, setOpenPresave] = useState(false);
     const [openUpcomingDate, setOpenUpcomingDate] = useState(false);
+
+    const handleOpenPresave = () => setOpenPresave(true);
+    const handleClosePresave = () => {
+        setOpenUpcomingDate(true);
+        setOpenPresave(false);
+    }
+
     const handleOpenUpcomingDate = () => setOpenUpcomingDate(true);
     const handleCloseUpcomingDate = () => {
         setOpenSignup(true);
         setOpenUpcomingDate(false);
     }
+
+    // Auto-show presave modal on component mount
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            handleOpenPresave();
+        }, 1500);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleSignupResponse = (message, success) => {
         setSnackbarMessage(message)
@@ -79,6 +95,12 @@ export default function LandingPage() {
                     </div>
                 </div>
             </div>
+            <Presave 
+                openPresave={openPresave}
+                handleOpenPresave={handleOpenPresave}
+                handleClosePresave={handleClosePresave}
+                openSignup={openSignup}
+            />
             <UpcomingDate
                 openUpcomingDate={openUpcomingDate}
                 handleOpenUpcomingDate={handleOpenUpcomingDate}

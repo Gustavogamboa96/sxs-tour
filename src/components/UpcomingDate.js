@@ -62,14 +62,7 @@ export default function UpcomingDate(props) {
       fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
 
     };
-useEffect(()=>{
-      if(!openSignup){
-        const timer = setTimeout(() => {
-          handleOpenUpcomingDate();
-        }, 1500)
-        return () => clearTimeout(timer);
-      }
-    }, [])
+// Component mounts ready to be shown by parent
 
   return (
     <div>
