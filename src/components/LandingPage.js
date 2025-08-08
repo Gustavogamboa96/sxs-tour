@@ -6,6 +6,7 @@ import { Snackbar } from '@mui/material'
 import Alert from '@mui/material/Alert';
 import MusicPlayer from './MusicPlayer'
 import UpcomingDate from './UpcomingDate'
+import BentoWidget from './BentoWidget'
 
 
 
@@ -102,6 +103,7 @@ export default function LandingPage() {
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
+            <BentoWidget />
         </div>
     )
 }
