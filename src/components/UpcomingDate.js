@@ -31,7 +31,7 @@ export default function UpcomingDate(props) {
   });
 
   const StyledButton = styled(Button)(({ theme }) => ({
-    backgroundColor: '#ff0000', // Your primary color
+    backgroundColor: '#B71C1C', // Your primary color
     color: '#212121', // Text color
     '&:hover': {
       color: '#1a1c1a',
@@ -56,7 +56,7 @@ export default function UpcomingDate(props) {
       // border:  '2px solid #000',
       boxShadow: 24,
       p: 4,
-      color: '#ff0000',
+      color: '#B71C1C',
       backgroundColor: '#212121',
       outline: 'none',
       fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
@@ -125,13 +125,13 @@ useEffect(()=>{
             target="_blank" // Opens the link in a new tab (optional)
               sx={{
                 fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-                backgroundColor: '#ff0000',
+                backgroundColor: '#B71C1C',
                 color: 'black',
                 width: '100%', // Adjust the width as needed
                 margin: 'auto', // Center the TextField horizontally
                 '&:hover': {
                   backgroundColor: 'black',
-                  color: '#ff0000',
+                  color: '#B71C1C',
                 },
               }}>
               Tickets Madrid 26.11.25
@@ -144,13 +144,13 @@ useEffect(()=>{
             target="_blank"
               sx={{
                 fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-                backgroundColor: '#ff0000',
+                backgroundColor: '#B71C1C',
                 color: 'black',
                 width: '100%',
                 margin: 'auto',
                 '&:hover': {
                   backgroundColor: 'black',
-                  color: '#ff0000',
+                  color: '#B71C1C',
                 },
               }}>
               Tickets Barcelona 28.11.25

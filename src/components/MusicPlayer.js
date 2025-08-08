@@ -144,11 +144,11 @@ export default function MusicPlayer() {
           <Box sx={{ ml: 1.5, minWidth: 0 }}>
             <Typography
               variant="caption"
-              sx={{ color: '#ff0000', fontWeight: 500 }}
+              sx={{ color: '#B71C1C', fontWeight: 600 }}
             >
               La Vida Bohème
             </Typography>
-            <Typography noWrap sx={{ color: '#ff0000' }}>
+            <Typography noWrap sx={{ color: '#B71C1C' }}>
               <b>Entretenimiento</b>
             </Typography>
           </Box>
@@ -161,7 +161,7 @@ export default function MusicPlayer() {
             justifyContent: 'left',
             mt: -1,
             '& svg': {
-              color: '#ff0000',
+              color: '#B71C1C',
             },
           }}
         >

@@ -4,7 +4,7 @@ html, body {
     height: 100%;
     width: 100%;
     letter-spacing: 3px;
-    color: #ff0000;
+    color: #B71C1C;
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -24,7 +24,7 @@ html, body {
     /* font-family: 'IBM Plex Sans', sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif; */
     font-weight: 700;
     font-style: bold;
-    color: #ff0000 !important;
+    color: #B71C1C !important;
     text-decoration: none;
     line-height: 2.5vh;
 }
@@ -48,7 +48,7 @@ html, body {
   }
   
   .footer a {
-    color: #ff0000;
+    color: #B71C1C;
     text-decoration: none;
     font-size: 0.7em;
   }

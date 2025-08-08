@@ -102,14 +102,14 @@ export default function Signup(props) {
             label="Email" 
               variant="outlined"
               InputLabelProps={{
-                style: { color: '#ff0000' },
+                style: { color: '#B71C1C' },
               }}
               sx={{
                 '.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline ': {
-                  borderColor: '#ff0000',
+                  borderColor: '#B71C1C',
                 },
                 '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#ff0000',
+                  borderColor: '#B71C1C',
                 },
                 '& .MuiOutlinedInput-input': {
                   color: 'white',
@@ -130,13 +130,13 @@ export default function Signup(props) {
             <Button onClick={handleSubmit} variant="contained" color="primary"
               sx={{
                 fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-                backgroundColor: '#ff0000',
+                backgroundColor: '#B71C1C',
                 color: 'black',
                 width: '100%', // Adjust the width as needed
                 margin: 'auto', // Center the TextField horizontally
                 '&:hover': {
                   backgroundColor: 'black',
-                  color: '#ff0000',
+                  color: '#B71C1C',
                 },
               }}>
               Suscribir
