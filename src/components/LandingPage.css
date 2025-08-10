@@ -1,78 +1,112 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 
-html, body {
-    height: 100%;
-    width: 100%;
-    letter-spacing: 3px;
-    color: #B71C1C;
-    overflow-x: hidden;
-    overflow-y: hidden;
+html,
+body {
+  height: 100%;
+  width: 100%;
+  letter-spacing: 3px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
+
+/* Background video styles */
+.background-video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* @media (max-width: 668px) {
+    .music-player-margin-bottom{
+    margin-bottom: 45vh !important;
+  }
+} */
+
+@media  (max-width: 768px) {
+  .background-video {
+    width: auto;
+    max-width: 100vw;
+    height: 100vh;
+    object-fit: fill;
+  }
+
+  .music-player-margin-bottom{
+    margin-bottom: 51vh !important;
+  }
+}
+
+  .music-player-margin-bottom {
+    margin-bottom: 65vh;
+  }
 .bg-container {
   background-color: #000000;
-  /* background-image: url('/images/cover-elcorodelasmasas.png'); */
   flex-direction: column;
   background-size: cover;
   background-position: center;
-  min-height: 100vh; /* Or use `min-height: 100vh;` if you prefer */
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 
 .dates-div a {
-    /* font-family: 'IBM Plex Sans', sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif; */
-    font-weight: 700;
-    font-style: bold;
-    color: #B71C1C !important;
-    text-decoration: none;
-    line-height: 2.5vh;
+  font-weight: 700;
+  font-style: bold;
+  color: #B71C1C !important;
+  text-decoration: none;
+  line-height: 2.5vh;
 }
 
 .dates-div a:hover {
-    cursor: unset;
-    text-decoration: underline;
+  cursor: unset;
+  text-decoration: underline;
 }
 
 .footer {
-    font-family: 'IBM Plex Sans', sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
-    font-weight: 700;
-    font-style: bold;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    gap: 20px; /* Space between links */
-    margin-top: auto;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-weight: 700;
+  font-style: bold;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 20px;
+  /* Space between links */
+  margin-top: auto;
 
-  }
-  
-  .footer a {
-    color: #B71C1C;
-    text-decoration: none;
-    font-size: 0.9em;
-  }
-  
-  .footer a:hover {
-    cursor: unset;
-    text-decoration: underline;
-  }
+}
 
-  .list-unstyled {
-    /* ... other styles ... */
-    flex-wrap: wrap;
-  }
-  
+.footer a {
+  color: #B71C1C;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.footer a:hover {
+  cursor: unset;
+  text-decoration: underline;
+}
+
+.list-unstyled {
+  /* ... other styles ... */
+  flex-wrap: wrap;
+}
+
 @media (max-width: 768px) {
-  html,body {
+
+  html,
+  body {
     overflow-y: scroll;
   }
 
 
   .col.d-flex.align-items-center.justify-content-start {
-  max-width: 100%;
+    max-width: 100%;
   }
-  .dates-div{
+
+  .dates-div {
     max-width: 100%;
     padding-top: 20px;
     padding-left: 10px;
@@ -80,13 +114,14 @@ html, body {
     line-height: 160%;
     white-space: nowrap;
     letter-spacing: 1.8px;
-}
+  }
 
-.dates-div a{
+  .dates-div a {
     line-height: 150%;
     width: 100%;
     max-width: none;
-    }
+  }
+
   .footer a {
     font-size: 1.5vh;
     letter-spacing: 2px;
@@ -100,56 +135,116 @@ html, body {
   }
 }
 
-@media (max-width: 1630px){
-  /* html,body {
-    overflow-y: hidden;
-  } */
-    .allofit {
-        /* background-image: url('../../public/images/backgroud-ruido-compress.webp'); */
-        /* background-repeat: repeat; */
-      }
+@media (max-width: 1630px) {
+  /* Media query placeholder for future use */
 }
 
 @media (min-width: 1630px) {
-    .dates-div {
-      padding-bottom: 10vh; /* Adjust the padding as needed */
-    }
+  .dates-div {
+    padding-bottom: 10vh;
+    /* Adjust the padding as needed */
   }
+}
 
 
 
 
-   /* ----------------------------mouse animation keyframes----------------------- */
-   @-webkit-keyframes cursorAnimation {
-    0% { cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto; }
-    10% { cursor: url('../../public/images/frame_01_delay-0.1s.gif'), auto; }
-    20% { cursor: url('../../public/images/frame_02_delay-0.1s.gif'), auto; }
-    30% { cursor: url('../../public/images/frame_03_delay-0.1s.gif'), auto; }
-    40% { cursor: url('../../public/images/frame_04_delay-0.1s.gif'), auto; }
-    50% { cursor: url('../../public/images/frame_05_delay-0.1s.gif'), auto; }
-    60% { cursor: url('../../public/images/frame_06_delay-0.1s.gif'), auto; }
-    70% { cursor: url('../../public/images/frame_07_delay-0.1s.gif'), auto; }
-    80% { cursor: url('../../public/images/frame_08_delay-0.1s.gif'), auto; }
-    90% { cursor: url('../../public/images/frame_09_delay-0.1s.gif'), auto; }
-    100% { cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto; }
+/* ----------------------------mouse animation keyframes----------------------- */
+@-webkit-keyframes cursorAnimation {
+  0% {
+    cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto;
   }
-  
-  @keyframes cursorAnimation {
-    0% { cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto; }
-    10% { cursor: url('../../public/images/frame_01_delay-0.1s.gif'), auto; }
-    20% { cursor: url('../../public/images/frame_02_delay-0.1s.gif'), auto; }
-    30% { cursor: url('../../public/images/frame_03_delay-0.1s.gif'), auto; }
-    40% { cursor: url('../../public/images/frame_04_delay-0.1s.gif'), auto; }
-    50% { cursor: url('../../public/images/frame_05_delay-0.1s.gif'), auto; }
-    60% { cursor: url('../../public/images/frame_06_delay-0.1s.gif'), auto; }
-    70% { cursor: url('../../public/images/frame_07_delay-0.1s.gif'), auto; }
-    80% { cursor: url('../../public/images/frame_08_delay-0.1s.gif'), auto; }
-    90% { cursor: url('../../public/images/frame_09_delay-0.1s.gif'), auto; }
-    100% { cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto; }
+
+  10% {
+    cursor: url('../../public/images/frame_01_delay-0.1s.gif'), auto;
   }
-  
-  .animated-cursor {
-    -webkit-animation: cursorAnimation 1s steps(10) infinite;
-    animation: cursorAnimation 1s steps(10) infinite;
+
+  20% {
+    cursor: url('../../public/images/frame_02_delay-0.1s.gif'), auto;
   }
-    /* ----------------------------mouse animation keyframes----------------------- */
+
+  30% {
+    cursor: url('../../public/images/frame_03_delay-0.1s.gif'), auto;
+  }
+
+  40% {
+    cursor: url('../../public/images/frame_04_delay-0.1s.gif'), auto;
+  }
+
+  50% {
+    cursor: url('../../public/images/frame_05_delay-0.1s.gif'), auto;
+  }
+
+  60% {
+    cursor: url('../../public/images/frame_06_delay-0.1s.gif'), auto;
+  }
+
+  70% {
+    cursor: url('../../public/images/frame_07_delay-0.1s.gif'), auto;
+  }
+
+  80% {
+    cursor: url('../../public/images/frame_08_delay-0.1s.gif'), auto;
+  }
+
+  90% {
+    cursor: url('../../public/images/frame_09_delay-0.1s.gif'), auto;
+  }
+
+  100% {
+    cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto;
+  }
+}
+
+@keyframes cursorAnimation {
+  0% {
+    cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto;
+  }
+
+  10% {
+    cursor: url('../../public/images/frame_01_delay-0.1s.gif'), auto;
+  }
+
+  20% {
+    cursor: url('../../public/images/frame_02_delay-0.1s.gif'), auto;
+  }
+
+  30% {
+    cursor: url('../../public/images/frame_03_delay-0.1s.gif'), auto;
+  }
+
+  40% {
+    cursor: url('../../public/images/frame_04_delay-0.1s.gif'), auto;
+  }
+
+  50% {
+    cursor: url('../../public/images/frame_05_delay-0.1s.gif'), auto;
+  }
+
+  60% {
+    cursor: url('../../public/images/frame_06_delay-0.1s.gif'), auto;
+  }
+
+  70% {
+    cursor: url('../../public/images/frame_07_delay-0.1s.gif'), auto;
+  }
+
+  80% {
+    cursor: url('../../public/images/frame_08_delay-0.1s.gif'), auto;
+  }
+
+  90% {
+    cursor: url('../../public/images/frame_09_delay-0.1s.gif'), auto;
+  }
+
+  100% {
+    cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto;
+  }
+}
+
+.animated-cursor {
+  -webkit-animation: cursorAnimation 1s steps(10) infinite;
+  animation: cursorAnimation 1s steps(10) infinite;
+}
+
+/* ----------------------------mouse animation keyframes----------------------- */

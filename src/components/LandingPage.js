@@ -64,18 +64,12 @@ export default function LandingPage() {
                     loop
                     muted
                     playsInline
-                    style={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        zIndex: 0
-                    }}
+                    className="background-video"
                 >
                     <source src="/images/MuchachosAfueraTeaser1.webm" type="video/webm" />
                 </video>
                 <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-                    <div className='flex-grow-1' style={{ marginBottom: '65vh' }}>
+                    <div className='flex-grow-1 music-player-margin-bottom'>
                         <MusicPlayer />
                     </div>
                     <div className='footer d-flex justify-content-center'>
