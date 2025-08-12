@@ -66,7 +66,7 @@ export default function LandingPage() {
                     playsInline
                     className="background-video"
                 >
-                    <source src="/images/MuchachosAfueraTeaser1.webm" type="video/webm" />
+                    <source src="/images/LOOP3Contexto.webm" type="video/webm" />
                 </video>
                 <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                     <div className='flex-grow-1 music-player-margin-bottom'>
