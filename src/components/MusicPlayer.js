@@ -79,7 +79,7 @@ const TinyText = styled(Typography)({
   letterSpacing: 0.2,
 });
 
-export default function MusicPlayer() {
+export default function MusicPlayer({ filename = 'alcoropromowav.wav' }) {
   const duration = 200; // seconds
   const [position, setPosition] = React.useState(32);
   const [paused, setPaused] = React.useState(true);
@@ -90,7 +90,7 @@ export default function MusicPlayer() {
     const secondLeft = value - minute * 60;
     return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
   }
-  const [audio] = React.useState(new Audio('/audio/alcoropromowav.wav')); // Replace with your audio file path
+  const [audio] = React.useState(new Audio(`/audio/${filename}`));
 
   React.useEffect(() => {
     audio.autoplay = true;
@@ -137,6 +137,14 @@ export default function MusicPlayer() {
     setPaused(!paused);
   };
 
+  const handleRewind = () => {
+    audio.currentTime = 0; // Reset to start of the song
+    if (paused) {
+      audio.play();
+      setPaused(false);
+    }
+  };
+
   return (
     <Box sx={{ width: '100%', overflow: 'hidden', position: 'relative', p: 3 }}>
       {/* <Widget> */}
@@ -166,8 +174,9 @@ export default function MusicPlayer() {
           }}
         >
           <IconButton 
-            aria-label="previous song"
-            sx={{ '&:hover': { cursor: 'unset' } }}
+            aria-label="restart song"
+            onClick={handleRewind}
+            sx={{ '&:hover': { cursor: 'pointer' } }}
           >
             <FastRewindRounded fontSize="large" />
           </IconButton>
