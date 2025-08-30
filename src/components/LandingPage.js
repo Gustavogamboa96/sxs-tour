@@ -70,7 +70,9 @@ export default function LandingPage() {
                 </video>
                 <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                     <div className='flex-grow-1 music-player-margin-bottom'>
-                        <MusicPlayer />
+                        <MusicPlayer
+                        title={"¡COÑO!"}
+                        />
                     </div>
                     <div className='footer d-flex justify-content-center'>
                         <ul className='list-unstyled d-flex flex-wrap justify-content-center' style={{ maxWidth: '1200px' }}>

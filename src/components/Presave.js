@@ -76,15 +76,15 @@ export default function Presave(props) {
             </Typography> */}
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <img
-                    src="/images/entretenimiento-cover.jpeg"
-                    alt="Entretenimiento - La Vida Bohème"
+                    src="https://cloudinary-cdn.ffm.to/s--SAeKXt6I--/f_webp/https%3A%2F%2Fimagestore.ffm.to%2Flink%2Ff3ed95ffaa8758de570a3b2d8148d215.jpeg"
+                    alt="¡COÑO! - La Vida Bohème"
                     style={{ width: '60%', height: 'auto' }}
                 />
             </div>
             <div style={{ marginTop: '5vh', display: 'flex', justifyContent: 'center' }}>
             <Button variant="contained" color="primary"
             component="a"
-            href="https://ditto.fm/entretenimiento-la-vida-boheme"
+            href="https://ditto.fm/cono-la-vida-boheme"
             target="_blank"
               sx={{
                 fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
@@ -97,7 +97,7 @@ export default function Presave(props) {
                   color: '#B71C1C',
                 },
               }}>
-              Pre-save
+              Pre-save ¡COÑO!
             </Button>
             </div>
           </Box>
