@@ -73,19 +73,19 @@ const EntertainmentPage = () => {
         <div className={`player-container ${fadeInPlayer ? 'fade-in' : ''}`}>
           <div className="music-player-wrapper">
             {signupSuccess && <MusicPlayer 
-              filename="FINAL_Entretenimiento!_ver2eqd2444_1.wav" 
-              title="Entretenimiento"
+              filename="cono.wav" 
+              title="¡COÑO!"
             />}
           </div>
         </div>
       ) : (
         <div className="signup-prompt">
-          <h2>¡Suscríbete para escuchar!</h2>
+          {/* <h2>¡Denuncia a tus vecinos para escuchar!</h2> */}
           <button 
             onClick={handleOpenSignup} 
             className="signup-button"
           >
-            Suscribirme
+            Denuncia
           </button>
         </div>
       )}
@@ -96,6 +96,7 @@ const EntertainmentPage = () => {
         handleCloseSignup={handleCloseSignup}
         onSignupResponse={handleSignupResponse}
         openUpcomingDate={false}
+        title="¡Denuncia a tus vecinos para escuchar!"
       />
       
       <Snackbar
