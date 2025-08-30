@@ -10,12 +10,6 @@
 
 .player-container {
   padding: 20px;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-
-.player-container.fade-in {
-  opacity: 1;
 }
 
 .signup-prompt {
@@ -43,10 +37,4 @@
   background-color: black;
   color: #B71C1C;
   border: 1px solid #B71C1C;
-}
-
-.signup-message {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #B71C1C;
 }

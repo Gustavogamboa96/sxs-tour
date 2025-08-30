@@ -1,5 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 
 html, body {
-    font-family: 'IBM Plex Sans', sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+/* Fix modal centering issues */
+.MuiModal-root {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.modal-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.4s ease;
+    position: relative !important;
+    margin: auto !important;
+    max-width: 90vw !important;
+}
+
+.modal-content.modal-fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+    transition: opacity 0.5s ease !important;
 }

@@ -11,17 +11,17 @@ const EntertainmentPage = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
-  const [fadeIn, setFadeIn] = useState(false);
   
   // Check if user has already signed up (from localStorage)
   useEffect(() => {
     const signedUp = localStorage.getItem('signed-up');
     if (signedUp === 'true') {
       setSignupSuccess(true);
-      setFadeIn(true);
     } else {
       // If not signed up, open the signup modal automatically
-      setOpenSignup(true);
+      setTimeout(() => {
+        setOpenSignup(true);
+      }, 300);
     }
   }, []);
 
@@ -35,20 +35,17 @@ const EntertainmentPage = () => {
     
     if (success) {
       handleCloseSignup();
-      // Set a small delay before showing the music player with fade effect
+      // Set a small delay before showing the music player
       setTimeout(() => {
         setSignupSuccess(true);
-        setTimeout(() => {
-          setFadeIn(true);
-        }, 100);
-      }, 500);
+      }, 300);
     }
   };
 
   return (
     <div className="entertainment-page">
       {signupSuccess ? (
-        <div className={`player-container ${fadeIn ? 'fade-in' : ''}`}>
+        <div className="player-container">
           <MusicPlayer filename="FINAL_Entretenimiento!_ver2eqd2444_1.wav" />
         </div>
       ) : (
@@ -76,7 +73,7 @@ const EntertainmentPage = () => {
         autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        sx={{ zIndex: 1300 }}
+        sx={{ zIndex: 1400 }}
       >
         <Alert 
           severity={isSuccess ? "success" : "error"} 
