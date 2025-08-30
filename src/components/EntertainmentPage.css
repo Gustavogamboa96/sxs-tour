@@ -10,6 +10,26 @@
 
 .player-container {
   padding: 20px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-container.fade-in {
+  opacity: 1;
+}
+
+.music-player-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .signup-prompt {

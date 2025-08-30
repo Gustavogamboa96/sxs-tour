@@ -8,15 +8,21 @@ import './EntertainmentPage.css';
 const EntertainmentPage = () => {
   const [openSignup, setOpenSignup] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [fadeInPlayer, setFadeInPlayer] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   
   // Check if user has already signed up (from localStorage)
   useEffect(() => {
     const signedUp = localStorage.getItem('signed-up');
     if (signedUp === 'true') {
       setSignupSuccess(true);
+      // Add a small delay before fading in the player
+      setTimeout(() => {
+        setFadeInPlayer(true);
+      }, 500);
     } else {
       // If not signed up, open the signup modal automatically
       setTimeout(() => {
@@ -24,6 +30,15 @@ const EntertainmentPage = () => {
       }, 300);
     }
   }, []);
+
+  // Apply fade-in effect whenever signupSuccess changes to true
+  useEffect(() => {
+    if (signupSuccess) {
+      setTimeout(() => {
+        setFadeInPlayer(true);
+      }, 500);
+    }
+  }, [signupSuccess]);
 
   const handleOpenSignup = () => setOpenSignup(true);
   const handleCloseSignup = () => setOpenSignup(false);
@@ -34,19 +49,34 @@ const EntertainmentPage = () => {
     setSnackbarOpen(true);
     
     if (success) {
-      handleCloseSignup();
-      // Set a small delay before showing the music player
+      // Set transitioning state to prevent UI flicker
+      setIsTransitioning(true);
+      
+      // The modal will fade out (handled by the Signup component)
+      // Don't close the modal immediately, let it fade out first
       setTimeout(() => {
-        setSignupSuccess(true);
-      }, 300);
+        handleCloseSignup();
+        
+        // Wait for modal to fully fade out, then show music player
+        setTimeout(() => {
+          setSignupSuccess(true);
+          setIsTransitioning(false);
+          // Fade-in is handled by the useEffect above
+        }, 300);
+      }, 500);
     }
   };
 
   return (
     <div className="entertainment-page">
-      {signupSuccess ? (
-        <div className="player-container">
-          <MusicPlayer filename="FINAL_Entretenimiento!_ver2eqd2444_1.wav" />
+      {signupSuccess || isTransitioning ? (
+        <div className={`player-container ${fadeInPlayer ? 'fade-in' : ''}`}>
+          <div className="music-player-wrapper">
+            {signupSuccess && <MusicPlayer 
+              filename="FINAL_Entretenimiento!_ver2eqd2444_1.wav" 
+              title="Entretenimiento"
+            />}
+          </div>
         </div>
       ) : (
         <div className="signup-prompt">

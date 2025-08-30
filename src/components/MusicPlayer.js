@@ -79,7 +79,7 @@ const TinyText = styled(Typography)({
   letterSpacing: 0.2,
 });
 
-export default function MusicPlayer({ filename = 'alcoropromowav.wav' }) {
+export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = 'Entretenimiento' }) {
   const duration = 200; // seconds
   const [position, setPosition] = React.useState(32);
   const [paused, setPaused] = React.useState(true);
@@ -146,10 +146,17 @@ export default function MusicPlayer({ filename = 'alcoropromowav.wav' }) {
   };
 
   return (
-    <Box sx={{ width: '100%', overflow: 'hidden', position: 'relative', p: 3 }}>
+    <Box sx={{ 
+      width: '100%', 
+      overflow: 'hidden', 
+      position: 'relative', 
+      p: 3,
+      margin: '0 auto',
+      textAlign: 'center'
+    }}>
       {/* <Widget> */}
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ ml: 1.5, minWidth: 0 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+          <Box sx={{ textAlign: 'center' }}>
             <Typography
               variant="caption"
               sx={{ color: '#B71C1C', fontWeight: 600 }}
@@ -157,7 +164,7 @@ export default function MusicPlayer({ filename = 'alcoropromowav.wav' }) {
               La Vida Bohème
             </Typography>
             <Typography noWrap sx={{ color: '#B71C1C' }}>
-              <b>Entretenimiento</b>
+              <b>{title}</b>
             </Typography>
           </Box>
         </Box>
@@ -166,8 +173,9 @@ export default function MusicPlayer({ filename = 'alcoropromowav.wav' }) {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'left',
-            mt: -1,
+            justifyContent: 'center',
+            mt: 2,
+            marginTop: 0,
             '& svg': {
               color: '#B71C1C',
             },
