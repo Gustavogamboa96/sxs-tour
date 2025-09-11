@@ -1,18 +1,19 @@
 
 
 export const links = [
-  { href: '#', text: 'http://newsletter.com', onClick:true },
+  { href: 'https://www.diggersfactory.com/vinyl/328059/la-vida-boheme-tierra-de-nadie', text: 'http://vinilos.com' },
+  { href: '#', text: 'http://newsletter.com', onClick: true },
   { href: 'https://www.eventim-light.com/es/a/68235206e8423f40cbf39bca/e/682355e9e8423f40cbf39bcf', text: 'http://tickets-madrid.com' },
   { href: 'https://dice.fm/event/53n3w8-la-vida-boheme-28th-nov-la-2-de-apolo-barcelona-tickets?pid=530cb286&_branch_match_id=1060721144327835601&utm_medium=partners_api&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8nMy9ZLyUxO1UvL1a9MsTQxT0lONTVItbQvyEyxNTU2SE4ysjBTqytKTUstKsrMS49PKsovL04tsnXOKMrPTQUAw7GvMEgAAAA%3D', text: 'http://tickets-barcelona.com' },
   { href: 'https://shotgun.live/es/events/zeyzey-presents-la-vida-boheme', text: 'http://tickets-miami.com' },
-    { href: 'https://www.youtube.com/@lavidabohemev0', text: 'http://youtube.com' },
-    { href: 'https://open.spotify.com/artist/5gs7iemsrjIJbz0ryFcy79', text: 'http://spotify.com' },
-    // { href: 'https://lavidaboheme.bandcamp.com/', text: 'http://bandcamp.com' },
-    { href: 'https://www.instagram.com/lavidaboheme/', text: 'http://instagram.com'},
-    { href: 'mailto:management@yosoylavidaboheme.com', text: 'http://contacto.com' },
-    // { href: 'https://www.patreon.com/LaVidaBoheme', text: 'http://patreon.com' },
-    // { href: 'https://www.x.com/vidaboheme', text: 'http://x.com' },
-  ];
+  { href: 'https://www.youtube.com/@lavidabohemev0', text: 'http://youtube.com' },
+  { href: 'https://open.spotify.com/prerelease/5OsFK0Nzr0wEU7OsGG00PH?si=7jhBdvgSQs65FcTnBw2tdA', text: 'http://spotify.com' },
+  // { href: 'https://lavidaboheme.bandcamp.com/', text: 'http://bandcamp.com' },
+  // { href: 'https://www.instagram.com/lavidaboheme/', text: 'http://instagram.com'},
+  { href: 'mailto:management@yosoylavidaboheme.com', text: 'http://contacto.com' },
+  // { href: 'https://www.patreon.com/LaVidaBoheme', text: 'http://patreon.com' },
+  // { href: 'https://www.x.com/vidaboheme', text: 'http://x.com' },
+];
 
 export const events = [
   {
