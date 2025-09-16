@@ -1,0 +1,78 @@
+.terminal-player-container {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  border: 1px solid #B71C1C;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background-color: #B71C1C;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+
+.terminal-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 5px 10px;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid #B71C1C;
+}
+
+.terminal-title-text {
+  color: #B71C1C;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.terminal-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.terminal-control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.terminal-control-close {
+  background-color: #ff5f56;
+}
+
+.terminal-control-minimize {
+  background-color: #ffbd2e;
+}
+
+.terminal-control-maximize {
+  background-color: #27c93f;
+}
+
+/* Animation for terminal opening */
+@keyframes terminalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.terminal-fade-in {
+  animation: terminalFadeIn 0.3s ease-out forwards;
+}

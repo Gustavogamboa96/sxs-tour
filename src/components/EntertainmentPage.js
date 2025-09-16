@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import MusicPlayer from './MusicPlayer';
 import Signup from './Signup';
-import { Snackbar } from '@mui/material';
+import TerminalPlayer from './TerminalPlayer';
+import { Snackbar, Button } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import './EntertainmentPage.css';
 
@@ -13,6 +14,7 @@ const EntertainmentPage = () => {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [openTerminal, setOpenTerminal] = useState(false);
   
   // Check if user has already signed up (from localStorage)
   useEffect(() => {
@@ -40,10 +42,31 @@ const EntertainmentPage = () => {
     }
   }, [signupSuccess]);
 
+  // Add keyboard shortcut for terminal
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      // Alt+T keyboard shortcut to open terminal
+      if (event.altKey && event.key === 't' && signupSuccess) {
+        setOpenTerminal(prev => !prev);
+      }
+      // Escape key to close terminal
+      if (event.key === 'Escape' && openTerminal) {
+        setOpenTerminal(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [openTerminal, signupSuccess]);
+
   const handleOpenSignup = () => setOpenSignup(true);
   const handleCloseSignup = () => setOpenSignup(false);
   
   const handleSignupResponse = (message, success) => {
+    console.log("Signup response:", message, success);
     setSnackbarMessage(message);
     setIsSuccess(success);
     setSnackbarOpen(true);
@@ -51,17 +74,27 @@ const EntertainmentPage = () => {
     if (success) {
       // Set transitioning state to prevent UI flicker
       setIsTransitioning(true);
+      console.log("Starting transition process");
       
       // The modal will fade out (handled by the Signup component)
       // Don't close the modal immediately, let it fade out first
       setTimeout(() => {
+        console.log("Closing signup modal");
         handleCloseSignup();
         
         // Wait for modal to fully fade out, then show music player
         setTimeout(() => {
+          console.log("Setting signup success");
           setSignupSuccess(true);
           setIsTransitioning(false);
           // Fade-in is handled by the useEffect above
+          
+          // Open terminal after a delay
+          console.log("Scheduling terminal to open");
+          setTimeout(() => {
+            console.log("Opening terminal now");
+            setOpenTerminal(true);
+          }, 1500);
         }, 300);
       }, 500);
     }
@@ -72,10 +105,30 @@ const EntertainmentPage = () => {
       {signupSuccess || isTransitioning ? (
         <div className={`player-container ${fadeInPlayer ? 'fade-in' : ''}`}>
           <div className="music-player-wrapper">
-            {signupSuccess && <MusicPlayer 
-              filename="cono.wav" 
-              title="¡COÑO!"
-            />}
+            {signupSuccess && (
+              <>
+                <MusicPlayer 
+                  filename="cono.wav" 
+                  title="¡COÑO!"
+                />
+                <Button 
+                  onClick={() => setOpenTerminal(true)}
+                  variant="contained"
+                  sx={{
+                    backgroundColor: '#B71C1C',
+                    color: 'black',
+                    marginTop: '20px',
+                    '&:hover': {
+                      backgroundColor: 'black',
+                      color: '#B71C1C',
+                      border: '1px solid #B71C1C',
+                    },
+                  }}
+                >
+                  Abrir Terminal
+                </Button>
+              </>
+            )}
           </div>
         </div>
       ) : (
@@ -97,6 +150,11 @@ const EntertainmentPage = () => {
         onSignupResponse={handleSignupResponse}
         openUpcomingDate={false}
         title="¡Denuncia a tus vecinos para escuchar!"
+      />
+      
+      <TerminalPlayer 
+        open={openTerminal} 
+        onClose={() => setOpenTerminal(false)} 
       />
       
       <Snackbar

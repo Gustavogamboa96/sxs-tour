@@ -10,6 +10,7 @@ export const links = [
   { href: 'https://open.spotify.com/prerelease/5OsFK0Nzr0wEU7OsGG00PH?si=7jhBdvgSQs65FcTnBw2tdA', text: 'http://spotify.com' },
   // { href: 'https://lavidaboheme.bandcamp.com/', text: 'http://bandcamp.com' },
   // { href: 'https://www.instagram.com/lavidaboheme/', text: 'http://instagram.com'},
+  { href: '#', text: 'http://terminal.com', isTerminal: true },
   { href: 'mailto:management@yosoylavidaboheme.com', text: 'http://contacto.com' },
   // { href: 'https://www.patreon.com/LaVidaBoheme', text: 'http://patreon.com' },
   // { href: 'https://www.x.com/vidaboheme', text: 'http://x.com' },

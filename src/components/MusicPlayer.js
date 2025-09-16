@@ -79,69 +79,155 @@ const TinyText = styled(Typography)({
   letterSpacing: 0.2,
 });
 
-export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = 'Entretenimiento' }) {
+export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = 'Entretenimiento', terminalMode = false, onError = null }) {
   const duration = 200; // seconds
   const [position, setPosition] = React.useState(32);
   const [paused, setPaused] = React.useState(true);
   const [autoplaySuccess, setAutoplaySuccess] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const audioRef = React.useRef(null);
   function formatDuration(value) {
     const minute = Math.floor(value / 60);
     const secondLeft = value - minute * 60;
     return `${minute}:${secondLeft < 10 ? `0${secondLeft}` : secondLeft}`;
   }
-  const [audio] = React.useState(new Audio(`/audio/${filename}`));
-
+  
+  // Create audio element with error handling
+  const [audio, setAudio] = React.useState(null);
+  const [audioError, setAudioError] = React.useState(false);
+  
+  // Initialize audio with error handling - SIMPLIFIED VERSION
   React.useEffect(() => {
-    audio.autoplay = true;
-    // audio.loop = true;  // Ensure the audio loops
-    audioRef.current = audio;
-  }, [audio]);
-
-  React.useEffect(() => {
-    // audio.autoplay = true;
-
-    audio.addEventListener('playing', () => {
-        setAutoplaySuccess(true); 
-    });
-
-    if (audioRef.current) {
-      // Set up the event listener to ensure smooth looping
-      audioRef.current.addEventListener('ended', () => {
-        audioRef.current.currentTime = 0; // Reset the audio to the beginning
-        audioRef.current.play(); // Play immediately after resetting
-      });
+    console.log('Creating audio for file:', filename);
+    
+    // Don't reset loading state if we're changing from loading to playing
+    if (!audio) {
+      setLoading(true);
     }
-
+    setAudioError(false);
+    
+    // Only clean up previous audio if filename has changed
+    if (audioRef.current && audioRef.current.src && !audioRef.current.src.includes(encodeURIComponent(filename))) {
+      try {
+        audioRef.current.pause();
+        audioRef.current.src = '';
+      } catch (error) {
+        console.log('Error cleaning up previous audio:', error);
+      }
+    } else if (audioRef.current && audioRef.current.src) {
+      // If it's the same file, don't recreate the audio element
+      console.log('Same audio file, skipping recreation');
+      return;
+    }
+    
+    // Create a new audio element with proper error handling
+    try {
+      const newAudio = new Audio(`/audio/${filename}`);
+      
+      newAudio.addEventListener('error', (e) => {
+        console.error('Audio error:', e);
+        // Still set audioError state but don't show visual error
+        setAudioError(true);
+        setLoading(false);
+        // Don't call onError to prevent error messages in the UI
+        // if (onError) {
+        //   onError(`Error loading audio file`);
+        // }
+      });
+      
+      newAudio.addEventListener('canplaythrough', () => {
+        setLoading(false);
+      });
+      
+      newAudio.addEventListener('playing', () => {
+        setAutoplaySuccess(true);
+        setPaused(false);
+        // Make sure loading is set to false when playing starts
+        setLoading(false);
+      });
+      
+      // Set audio autoplay to true
+      newAudio.autoplay = true;
+      
+      setAudio(newAudio);
+      audioRef.current = newAudio;
+      
+      // Attempt to play the audio
+      const playPromise = newAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.error('Error auto-playing audio:', error);
+          // Don't call onError to prevent error messages in the UI
+          // if (onError) {
+          //   onError(`Error playing audio: ${error.message}`);
+          // }
+        });
+      }
+    } catch (error) {
+      console.error('Error creating audio element:', error);
+      setAudioError(true);
+      setLoading(false);
+      // Don't call onError to prevent error messages in the UI
+      // if (onError) {
+      //   onError(`Error creating audio element: ${error.message}`);
+      // }
+    }
+    
+    // Cleanup function
     return () => {
-      if (audioRef.current) {
-        audioRef.current.removeEventListener('ended', () => {}); // Cleanup
+      // Only clean up if we're actually changing to a new song
+      // This prevents cleanup during re-renders that don't change the song
+      if (audioRef.current && (!filename || !audioRef.current.src.includes(encodeURIComponent(filename)))) {
+        try {
+          audioRef.current.pause();
+          audioRef.current.src = '';
+        } catch (e) {
+          console.log('Error during audio cleanup:', e);
+        }
       }
     };
-  }, []);
-
-  React.useEffect(() => {
-    
-    // Check if autoplay was successful
-    if (autoplaySuccess) {
-      setPaused(false); 
-    }
-  }, [autoplaySuccess]);
+  }, [filename]);
 
   const handlePlayPause = () => {
-    if (paused) {
-      audio.play();
-    } else {
-      audio.pause();
+    if (!audio) return;
+    
+    try {
+      if (paused) {
+        audio.play().catch(error => {
+          console.error('Error playing audio:', error);
+          // Don't show error in UI
+        });
+      } else {
+        audio.pause();
+      }
+      setPaused(!paused);
+    } catch (error) {
+      console.error('Error in play/pause:', error);
+      // Don't call onError to prevent error messages in the UI
+      // if (onError) {
+      //   onError(`Error controlling playback: ${error.message}`);
+      // }
     }
-    setPaused(!paused);
   };
 
   const handleRewind = () => {
-    audio.currentTime = 0; // Reset to start of the song
-    if (paused) {
-      audio.play();
-      setPaused(false);
+    if (!audio) return;
+    
+    try {
+      audio.currentTime = 0; // Reset to start of the song
+      if (paused) {
+        audio.play().catch(error => {
+          console.error('Error playing audio after rewind:', error);
+          // Don't show error in UI
+        });
+        setPaused(false);
+      }
+    } catch (error) {
+      console.error('Error in rewind:', error);
+      // Don't call onError to prevent error messages in the UI
+      // if (onError) {
+      //   onError(`Error rewinding: ${error.message}`);
+      // }
     }
   };
 
@@ -154,123 +240,99 @@ export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = '
       margin: '0 auto',
       textAlign: 'center'
     }}>
-      {/* <Widget> */}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography
-              variant="caption"
-              sx={{ color: '#B71C1C', fontWeight: 600 }}
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography
+            variant="caption"
+            sx={{ 
+              color: terminalMode ? '#B71C1C' : '#B71C1C', 
+              fontWeight: 600 
+            }}
+          >
+            La Vida Bohème
+          </Typography>
+          <Typography noWrap sx={{ color: terminalMode ? '#B71C1C' : '#B71C1C' }}>
+            <b>{title}</b>
+          </Typography>
+          {/* Don't show loading or error messages */}
+          {/* {loading && !audioError && (
+            <Typography 
+              sx={{ 
+                color: terminalMode ? '#B71C1C' : '#B71C1C', 
+                fontSize: '0.8rem',
+                marginTop: '4px'
+              }}
             >
-              La Vida Bohème
+              Cargando audio...
             </Typography>
-            <Typography noWrap sx={{ color: '#B71C1C' }}>
-              <b>{title}</b>
+          )}
+          {audioError && (
+            <Typography 
+              sx={{ 
+                color: '#FF0000', 
+                fontSize: '0.8rem',
+                marginTop: '4px'
+              }}
+            >
+              Error cargando audio
             </Typography>
-          </Box>
+          )} */}
         </Box>
+      </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            mt: 2,
-            marginTop: 0,
-            '& svg': {
-              color: '#B71C1C',
-            },
-          }}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          mt: 2,
+          marginTop: 0,
+          '& svg': {
+            color: terminalMode ? '#B71C1C' : '#B71C1C',
+          },
+        }}
+      >
+        <IconButton 
+          aria-label="restart song"
+          onClick={handleRewind}
+          sx={{ '&:hover': { cursor: 'pointer' } }}
         >
-          <IconButton 
-            aria-label="restart song"
-            onClick={handleRewind}
-            sx={{ '&:hover': { cursor: 'pointer' } }}
-          >
-            <FastRewindRounded fontSize="large" />
-          </IconButton>
-          <IconButton
-            aria-label={paused ? 'play' : 'pause'}
-            onClick={handlePlayPause}
-            sx={{ '&:hover': { cursor: 'unset' } }}
-          >
-            {paused ? (
-              <PlayArrowRounded sx={{ fontSize: '3rem' }} />
-            ) : (
-              <PauseRounded sx={{ fontSize: '3rem' }} />
-            )}
-          </IconButton>
-          <IconButton 
-            aria-label="next song"
-            sx={{ '&:hover': { cursor: 'unset' } }}
-          >
-            <FastForwardRounded fontSize="large" />
-          </IconButton>
-        </Box>
-        {/* <Slider
-          aria-label="time-indicator"
-          size="small"
-          value={position}
-          min={0}
-          step={1}
-          max={duration}
-          onChange={(_, value) => setPosition(value)}
-          sx={(t) => ({
-            color: 'rgba(0,0,0,0.87)',
-            height: 4,
-            '& .MuiSlider-thumb': {
-              width: 8,
-              height: 8,
-              transition: '0.3s cubic-bezier(.47,1.64,.41,.8)',
-              '&::before': {
-                boxShadow: '0 2px 12px 0 rgba(0,0,0,0.4)',
-              },
-              '&:hover, &.Mui-focusVisible': {
-                boxShadow: `0px 0px 0px 8px ${'rgb(0 0 0 / 16%)'}`,
-                ...t.applyStyles('dark', {
-                  boxShadow: `0px 0px 0px 8px ${'rgb(255 255 255 / 16%)'}`,
-                }),
-              },
-              '&.Mui-active': {
-                width: 20,
-                height: 20,
-              },
-            },
-            '& .MuiSlider-rail': {
-              opacity: 0.28,
-            },
-            ...t.applyStyles('dark', {
-              color: '#fff',
+          <FastRewindRounded fontSize="large" />
+        </IconButton>
+        <IconButton
+          aria-label={paused ? 'play' : 'pause'}
+          onClick={handlePlayPause}
+          sx={{ '&:hover': { cursor: 'unset' } }}
+        >
+          {paused ? (
+            <PlayArrowRounded sx={{ fontSize: '3rem' }} />
+          ) : (
+            <PauseRounded sx={{ fontSize: '3rem' }} />
+          )}
+        </IconButton>
+        <IconButton 
+          aria-label="next song"
+          sx={{ '&:hover': { cursor: 'unset' } }}
+        >
+          <FastForwardRounded fontSize="large" />
+        </IconButton>
+      </Box>
+      <Stack
+        spacing={2}
+        direction="row"
+        sx={(theme) => ({
+          mb: 1,
+          px: 1,
+          '& > svg': {
+            color: 'rgba(0,0,0,0.4)',
+            ...theme.applyStyles?.('dark', {
+              color: 'rgba(255,255,255,0.4)',
             }),
-          })}
-        />
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            mt: -2,
-          }}
-        >
-          <TinyText>{formatDuration(position)}</TinyText>
-          <TinyText>-{formatDuration(duration - position)}</TinyText>
-        </Box> */}
-        <Stack
-          spacing={2}
-          direction="row"
-          sx={(theme) => ({
-            mb: 1,
-            px: 1,
-            '& > svg': {
-              color: 'rgba(0,0,0,0.4)',
-              ...theme.applyStyles('dark', {
-                color: 'rgba(255,255,255,0.4)',
-              }),
-            },
-          })}
-          alignItems="center"
-        >
-        </Stack>
-      {/* </Widget> */}
+          },
+        })}
+        alignItems="center"
+      >
+      </Stack>
     </Box>
   );
 }

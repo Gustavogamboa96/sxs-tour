@@ -8,6 +8,7 @@ import MusicPlayer from './MusicPlayer'
 import UpcomingDate from './UpcomingDate'
 import Presave from './Presave'
 import BentoWidget from './BentoWidget'
+import TerminalPlayer from './TerminalPlayer'
 
 
 
@@ -18,6 +19,7 @@ export default function LandingPage() {
     const [openSignup, setOpenSignup] = useState(false);
     const [openPresave, setOpenPresave] = useState(false);
     const [openUpcomingDate, setOpenUpcomingDate] = useState(false);
+    const [openTerminal, setOpenTerminal] = useState(false);
 
     const handleOpenPresave = () => setOpenPresave(true);
     const handleClosePresave = () => {
@@ -39,13 +41,46 @@ export default function LandingPage() {
         return () => clearTimeout(timer);
     }, []);
 
+    // Add keyboard shortcut for terminal
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            // Alt+T keyboard shortcut to open terminal
+            if (event.altKey && event.key === 't') {
+                setOpenTerminal(prev => !prev);
+            }
+            // Escape key to close terminal
+            if (event.key === 'Escape' && openTerminal) {
+                setOpenTerminal(false);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [openTerminal]);
+
     const handleSignupResponse = (message, success) => {
         setSnackbarMessage(message)
         setIsSuccess(success)
         setSnackbarOpen(true)
+        
+        // Modal closing and terminal opening are handled in handleCloseSignup
+        setTimeout(() => {
+            handleCloseSignup();
+        }, 500);
     }
 
-    const handleCloseSignup = () => setOpenSignup(false);
+    const handleCloseSignup = () => {
+        setOpenSignup(false);
+        
+        // Open terminal after signup is closed
+        setTimeout(() => {
+            setOpenTerminal(true);
+        }, 1000);
+    };
+    
     const handleOpenSignup = () => setOpenSignup(true);
 
     const reopenNewsletter = () => {
@@ -71,18 +106,42 @@ export default function LandingPage() {
                 <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                     <div className='flex-grow-1 music-player-margin-bottom'>
                         <MusicPlayer
-                        title={"¡COÑO!"}
+                            title={"¡COÑO!"}
                         />
+                        {localStorage.getItem('signed-up') === 'true' && (
+                            <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                                <button 
+                                    onClick={() => setOpenTerminal(true)} 
+                                    className="signup-button"
+                                    style={{ 
+                                        backgroundColor: '#B71C1C',
+                                        color: 'black',
+                                        border: 'none',
+                                        padding: '8px 16px',
+                                        cursor: 'pointer',
+                                        borderRadius: '4px',
+                                        transition: 'all 0.3s ease'
+                                    }}
+                                >
+                                    Abrir Terminal
+                                </button>
+                            </div>
+                        )}
                     </div>
                     <div className='footer d-flex justify-content-center'>
                         <ul className='list-unstyled d-flex flex-wrap justify-content-center' style={{ maxWidth: '1200px' }}>
                             {links.map((link, index) => (
                                 <li key={index}
                                     className="col-12 col-sm-6 col-lg-3 text-center" >
-                                    <a href={link.href} target="_blank" rel="noreferrer" onClick={link.onClick ? (e) => {
-                                        e.preventDefault();
-                                        reopenNewsletter();
-                                    } : undefined} className="footer-link">
+                                    <a href={link.href} target="_blank" rel="noreferrer" onClick={
+                                        link.onClick ? (e) => {
+                                            e.preventDefault();
+                                            reopenNewsletter();
+                                        } : link.isTerminal ? (e) => {
+                                            e.preventDefault();
+                                            setOpenTerminal(true);
+                                        } : undefined
+                                    } className="footer-link">
                                         {link.text}
                                     </a>
                                 </li>
@@ -122,6 +181,12 @@ export default function LandingPage() {
                 </Alert>
             </Snackbar>
             <BentoWidget />
+            
+            {/* Terminal Player */}
+            <TerminalPlayer 
+                open={openTerminal} 
+                onClose={() => setOpenTerminal(false)} 
+            />
         </div>
     )
 }
