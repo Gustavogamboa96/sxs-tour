@@ -68,17 +68,10 @@ const SONGS = {
 // Help text - Will be dynamically updated when the component renders
 const generateHelpText = (songs) => `
 Comandos disponibles:
-- [CANCIÓN]: Reproduce una canción escribiendo su nombre (ej., ULISES)
-- PLAY [CANCIÓN]: Alternativa para reproducir una canción (ej., PLAY ULISES)
-- STOP: Detiene la reproducción actual
-- LIST: Muestra todas las canciones disponibles
+- [CANCIÓN]: Reproduce una canción escribiendo su nombre.
 - HELP: Muestra este mensaje de ayuda
 - CLEAR: Limpia el terminal (no detiene la reproducción)
-- EXIT: Cierra el terminal
-
-Canciones disponibles:
-${Object.keys(songs).map((key, index) => `${index + 1}. ${key} - ${songs[key].title}`).join('\n')}
-`;
+- EXIT: Cierra el terminal`;
 
 const TerminalOutput = styled('div')({
   fontFamily: 'monospace',
@@ -144,7 +137,7 @@ const CloseButton = styled(IconButton)({
 
 export default function TerminalPlayer({ open, onClose }) {
   const [command, setCommand] = useState('');
-  const [output, setOutput] = useState('¡Bienvenido al Terminal de Música de La Vida Bohème!\nEscribe HELP para ver los comandos disponibles.\nPrueba escribir "ALCORO" para reproducir una muestra.\n\n> ');
+  const [output, setOutput] = useState('Ciudadano sea usted bienvenido al Terminal La Vida Bohème!\nEscribe HELP para ver los comandos disponibles.\n> ');
   const [currentSong, setCurrentSong] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const terminalOutputRef = useRef(null);
