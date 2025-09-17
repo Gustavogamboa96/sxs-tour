@@ -21,6 +21,67 @@
   margin-left: 2px;
 }
 
+.typing-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background-color: #B71C1C;
+  animation: blink 0.7s step-end infinite;
+  vertical-align: middle;
+  margin-left: 2px;
+  font-weight: bold;
+}
+
+/* New approach for block cursor */
+@keyframes blink-caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Terminal input field with block cursor */
+.terminal-input .MuiInputBase-input {
+  color: #B71C1C !important;
+  caret-color: transparent !important; /* Hide the default cursor */
+  position: relative;
+}
+
+/* Create block cursor using a pseudo-element */
+.terminal-input .MuiInputBase-input::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+  height: 18px;
+  background-color: #B71C1C;
+  animation: blink-caret 1s step-end infinite;
+}
+
+/* Animation for the block cursor */
+@keyframes cursor-blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-block {
+  display: inline-block;
+  width: 10px;
+  height: 18px;
+  background-color: #B71C1C;
+  vertical-align: middle;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* Add glow to input consistent with terminal */
+.MuiOutlinedInput-root {
+  box-shadow: 0 0 20px rgba(183, 28, 28, 0.5) !important;
+  transition: box-shadow 0.3s ease;
+}
+
+.MuiOutlinedInput-root:focus-within {
+  box-shadow: 0 0 20px rgba(183, 28, 28, 0.7) !important;
+}
+
 .terminal-title {
   display: flex;
   justify-content: space-between;
