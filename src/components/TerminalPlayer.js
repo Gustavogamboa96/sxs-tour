@@ -70,7 +70,7 @@ const SONGS = {
 const generateHelpText = (songs) => `
 Comandos disponibles:
 - [CANCIÓN]: Reproduce una canción escribiendo su nombre.
-- HELP: Muestra este mensaje de ayuda
+- SOS: Muestra este mensaje de ayuda
 - CLEAR: Limpia el terminal (no detiene la reproducción)
 - EXIT: Cierra el terminal`;
 
@@ -245,7 +245,7 @@ export default function TerminalPlayer({ open, onClose }) {
       
       // Start fresh with welcome message
       setTimeout(() => {
-        simulateTyping('Ciudadano sea usted bienvenido al Terminal de La Vida Bohème!\nEscribe HELP para ver los comandos disponibles.\n> ', () => {
+        simulateTyping('ALTO CIUDADANO\n\nBienvenido al sistema Terminal de La Vida Boheme\n\nEscribe SOS para ver los comandos disponibles\n> ', () => {
           setIsFirstLoad(false);
           // Focus the input after welcome message is done
           setTimeout(() => {
@@ -399,7 +399,7 @@ export default function TerminalPlayer({ open, onClose }) {
     const commandOutput = `${output}${cleanCommand}\n`;
     setOutput(commandOutput);
 
-    if (upperCmd === 'HELP') {
+    if (upperCmd === 'SOS') {
       response = generateHelpText(SONGS);
     } else if (upperCmd === 'LIST') {
       response = 'Canciones disponibles:\n';
@@ -451,7 +451,7 @@ export default function TerminalPlayer({ open, onClose }) {
         setShowMusicPlayer(true);
       }
     } else {
-      response = `Comando no reconocido: ${cmd}. Escribe HELP para ver los comandos disponibles.`;
+      response = `Comando no reconocido: ${cmd}. Escribe SOS para ver los comandos disponibles.`;
     }
 
     // Start typing the response after a small delay
