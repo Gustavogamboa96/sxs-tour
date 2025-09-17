@@ -12,14 +12,27 @@ import './Signup.css'
 
 export default function Presave(props) {
   const {handleClosePresave, handleOpenPresave, openPresave, openSignup} = props;
-  // const [open, setOpen] = useState(false);
-  // const [email, setEmail] = React.useState('');
-  // const [error, setError] = React.useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () =>{
-  //   setOpen(false);
-  //   setEmail('');
-  // } ;
+  const [modalFaded, setModalFaded] = useState(false);
+
+  // Control modal fade effect
+  useEffect(() => {
+    if (openPresave) {
+      setTimeout(() => {
+        setModalFaded(true);
+      }, 100);
+    } else {
+      setModalFaded(false);
+    }
+  }, [openPresave]);
+
+  // Custom close handler with fade
+  const handleModalClose = () => {
+    setModalFaded(false);
+    setTimeout(() => {
+      handleClosePresave();
+    }, 300);
+  };
+  
   const StyledButton = styled(Button)(({ theme }) => ({
     backgroundColor: '#B71C1C', // Your primary color
     color: '#212121', // Text color
@@ -37,20 +50,15 @@ export default function Presave(props) {
   }));
 
     const style = {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: 425,
       bgcolor: 'background.paper',
-      // border:  '2px solid #000',
       boxShadow: 24,
       p: 4,
       color: '#B71C1C',
       backgroundColor: '#212121',
       outline: 'none',
       fontFamily:'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-
+      width: 425,
+      maxWidth: '90vw',
     };
 // Component mounts ready to be shown by parent
 
@@ -58,11 +66,19 @@ export default function Presave(props) {
     <div>
       <Modal
         open={openPresave}
-        onClose={handleClosePresave}
+        onClose={handleModalClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+        BackdropProps={{
+          className: "modal-backdrop"
+        }}
       >
-        <Box sx={style}>
+        <Box sx={style} className={`modal-content ${modalFaded ? 'modal-fade-in' : ''}`}>
           <Box>
             {/* <Typography id="modal-modal-title" variant="h6" component="h2"
               sx={{

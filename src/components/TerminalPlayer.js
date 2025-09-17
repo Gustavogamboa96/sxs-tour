@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import MusicPlayer from './MusicPlayer';
 import '../styles/TerminalPlayer.css';
+import './Signup.css'; // Import fade animation styles
 
 // Song mapping - Using the exact filenames from the public/audio directory
 const SONGS = {
@@ -148,6 +149,18 @@ export default function TerminalPlayer({ open, onClose }) {
   const [isTyping, setIsTyping] = useState(false);
   const terminalOutputRef = useRef(null);
   const inputRef = useRef(null);
+  const [modalFaded, setModalFaded] = useState(false);
+
+  // Control modal fade effect
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        setModalFaded(true);
+      }, 100);
+    } else {
+      setModalFaded(false);
+    }
+  }, [open]);
 
   // This state specifically manages whether the music player should be rendered
   // It's separate from currentSong which holds the song data
@@ -462,16 +475,20 @@ export default function TerminalPlayer({ open, onClose }) {
 
   // Handle clean close of terminal
   const handleClose = () => {
-    // First hide the music player
-    setShowMusicPlayer(false);
-    // Then clear song data after a short delay
+    // First fade out the modal
+    setModalFaded(false);
+    // Then hide the music player after a delay
     setTimeout(() => {
-      setCurrentSong(null);
-      // Then close the terminal
-      if (onClose) {
-        onClose();
-      }
-    }, 100);
+      setShowMusicPlayer(false);
+      // Then clear song data after a short delay
+      setTimeout(() => {
+        setCurrentSong(null);
+        // Then close the terminal
+        if (onClose) {
+          onClose();
+        }
+      }, 100);
+    }, 300);
   };
 
   return (
@@ -488,6 +505,9 @@ export default function TerminalPlayer({ open, onClose }) {
       }}
       disableScrollLock={false} // Enable scroll lock to prevent background scrolling
       disableAutoFocus={true} // Disable auto focus to let our custom focus handling work
+      BackdropProps={{
+        className: "modal-backdrop"
+      }}
     >
       <TerminalBox
         sx={{
@@ -496,6 +516,7 @@ export default function TerminalPlayer({ open, onClose }) {
           display: 'flex',
           flexDirection: 'column',
         }}
+        className={`modal-content ${modalFaded ? 'modal-fade-in' : ''}`}
       >
         <CloseButton onClick={handleClose} aria-label="close">
           <CloseIcon />

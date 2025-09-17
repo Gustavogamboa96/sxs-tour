@@ -6,6 +6,27 @@
   border: 1px solid #B71C1C;
 }
 
+/* Import the modal animation styles from Signup.css */
+/* Add smoother transitions for modal content */
+.modal-content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.4s ease;
+  position: relative !important;
+  margin: auto !important;
+}
+
+.modal-content.modal-fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Modal backdrop transition */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  transition: opacity 0.5s ease !important;
+}
+
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
