@@ -87,6 +87,25 @@
   box-shadow: 0 0 20px rgba(183, 28, 28, 0.7) !important;
 }
 
+/* Mobile specific styles */
+@media (max-width: 768px) {
+  /* Make the terminal more touch-friendly */
+  .MuiOutlinedInput-root {
+    min-height: 50px;
+  }
+  
+  .terminal-input-field {
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    padding: 12px !important;
+  }
+  
+  /* Ensure terminal fits well on mobile screens */
+  .MuiModal-root {
+    align-items: flex-end !important;
+    padding-bottom: 20px;
+  }
+}
+
 .terminal-title {
   display: flex;
   justify-content: space-between;

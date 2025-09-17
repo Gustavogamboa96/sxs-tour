@@ -189,6 +189,33 @@ export default function TerminalPlayer({ open, onClose }) {
     }, typingSpeed);
   };
 
+  // Handle mobile keyboard and viewport adjustments
+  useEffect(() => {
+    if (!open) return; // Only run when terminal is open
+    
+    // Function to handle resize events (including virtual keyboard appearance)
+    const handleResize = () => {
+      if (window.innerWidth <= 768 && inputRef.current) {
+        const inputElement = inputRef.current.querySelector('input');
+        if (inputElement && document.activeElement === inputElement) {
+          // When input is focused and virtual keyboard likely appeared
+          setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+            inputElement.scrollIntoView({ block: 'center' });
+          }, 100);
+        }
+      }
+    };
+    
+    // Add resize listener for keyboard appearance
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [open]);
+  
   // Initialize terminal with welcome message when opened
   useEffect(() => {
     if (open) {
@@ -244,6 +271,39 @@ export default function TerminalPlayer({ open, onClose }) {
     }
   }, [open, isTyping, isFirstLoad]);
   
+  // Effect to scroll to input field on mobile devices
+  useEffect(() => {
+    // Function to check if device is mobile (based on screen width)
+    const isMobileDevice = () => {
+      return window.innerWidth <= 768; // Common breakpoint for mobile devices
+    };
+
+    // Function to scroll to input field
+    const scrollToInput = () => {
+      if (inputRef.current && isMobileDevice()) {
+        // Get the input element
+        const inputElement = inputRef.current.querySelector('input');
+        if (inputElement) {
+          // Focus the input element
+          inputElement.focus();
+          
+          // Scroll the element into view with smooth behavior
+          setTimeout(() => {
+            inputElement.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+          }, 300); // Delay to ensure the modal is fully opened
+        }
+      }
+    };
+
+    // Scroll to input when terminal is opened and after typing is complete
+    if (open && !isFirstLoad && !isTyping) {
+      scrollToInput();
+    }
+  }, [open, isFirstLoad, isTyping]);
+  
   // Additional effect to refocus after typing completes
   useEffect(() => {
     if (!isTyping && !isFirstLoad && inputRef.current) {
@@ -274,7 +334,7 @@ export default function TerminalPlayer({ open, onClose }) {
     ? `${command}█`
     : command;
 
-  // Focus handler - places cursor at the end
+  // Focus handler - places cursor at the end and scrolls into view on mobile
   const handleInputFocus = (e) => {
     if (e.target) {
       setTimeout(() => {
@@ -286,6 +346,13 @@ export default function TerminalPlayer({ open, onClose }) {
         if (inputElement) {
           const length = inputElement.value.length;
           inputElement.setSelectionRange(length, length);
+          
+          // On mobile, ensure input is visible when focused
+          if (window.innerWidth <= 768) {
+            setTimeout(() => {
+              inputElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+          }
         }
       }, 10);
     }
@@ -416,14 +483,31 @@ export default function TerminalPlayer({ open, onClose }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        padding: { xs: '16px', sm: 0 }, // Add padding on mobile
+        overflow: 'auto', // Allow scrolling within modal
       }}
+      disableScrollLock={false} // Enable scroll lock to prevent background scrolling
+      disableAutoFocus={true} // Disable auto focus to let our custom focus handling work
     >
-      <TerminalBox>
+      <TerminalBox
+        sx={{
+          width: { xs: '95%', sm: '80%' }, // Make it wider on mobile
+          maxHeight: { xs: '90vh', sm: 'none' }, // Limit height on mobile
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <CloseButton onClick={handleClose} aria-label="close">
           <CloseIcon />
         </CloseButton>
         
-        <TerminalOutput ref={terminalOutputRef}>
+        <TerminalOutput 
+          ref={terminalOutputRef}
+          sx={{
+            height: { xs: '50vh', sm: '60vh' }, // Slightly shorter on mobile
+            overflow: 'auto',
+          }}
+        >
           {output}
           {isTyping && <span className="typing-cursor">▋</span>}
           {/* Hide error messages */}
