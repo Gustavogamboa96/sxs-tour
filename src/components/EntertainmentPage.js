@@ -111,22 +111,6 @@ const EntertainmentPage = () => {
                   filename="cono.wav" 
                   title="¡COÑO!"
                 />
-                <Button 
-                  onClick={() => setOpenTerminal(true)}
-                  variant="contained"
-                  sx={{
-                    backgroundColor: '#B71C1C',
-                    color: 'black',
-                    marginTop: '20px',
-                    '&:hover': {
-                      backgroundColor: 'black',
-                      color: '#B71C1C',
-                      border: '1px solid #B71C1C',
-                    },
-                  }}
-                >
-                  Abrir Terminal
-                </Button>
               </>
             )}
           </div>

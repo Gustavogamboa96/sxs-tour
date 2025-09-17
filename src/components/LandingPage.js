@@ -108,25 +108,6 @@ export default function LandingPage() {
                         <MusicPlayer
                             title={"¡COÑO!"}
                         />
-                        {localStorage.getItem('signed-up') === 'true' && (
-                            <div style={{ textAlign: 'center', marginTop: '10px' }}>
-                                <button 
-                                    onClick={() => setOpenTerminal(true)} 
-                                    className="signup-button"
-                                    style={{ 
-                                        backgroundColor: '#B71C1C',
-                                        color: 'black',
-                                        border: 'none',
-                                        padding: '8px 16px',
-                                        cursor: 'pointer',
-                                        borderRadius: '4px',
-                                        transition: 'all 0.3s ease'
-                                    }}
-                                >
-                                    Abrir Terminal
-                                </button>
-                            </div>
-                        )}
                     </div>
                     <div className='footer d-flex justify-content-center'>
                         <ul className='list-unstyled d-flex flex-wrap justify-content-center' style={{ maxWidth: '1200px' }}>
