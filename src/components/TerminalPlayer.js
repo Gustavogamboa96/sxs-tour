@@ -207,6 +207,11 @@ export default function TerminalPlayer({ open, onClose }) {
       setTimeout(() => {
         simulateTyping('Ciudadano sea usted bienvenido al Terminal de La Vida Bohème!\nEscribe HELP para ver los comandos disponibles.\n> ', () => {
           setIsFirstLoad(false);
+          // Focus the input after welcome message is done
+          setTimeout(() => {
+            const inputElement = inputRef.current?.querySelector('input');
+            if (inputElement) inputElement.focus();
+          }, 100);
         });
       }, 100);
     }
@@ -233,7 +238,8 @@ export default function TerminalPlayer({ open, onClose }) {
   useEffect(() => {
     if (open && inputRef.current && !isTyping && !isFirstLoad) {
       setTimeout(() => {
-        inputRef.current.focus();
+        // Focus specifically on the input element
+        inputRef.current.querySelector('input').focus();
       }, 100);
     }
   }, [open, isTyping, isFirstLoad]);
@@ -241,7 +247,11 @@ export default function TerminalPlayer({ open, onClose }) {
   // Additional effect to refocus after typing completes
   useEffect(() => {
     if (!isTyping && !isFirstLoad && inputRef.current) {
-      inputRef.current.focus();
+      // Focus specifically on the input element
+      const inputElement = inputRef.current.querySelector('input');
+      if (inputElement) {
+        inputElement.focus();
+      }
     }
   }, [isTyping, isFirstLoad]);
 
@@ -268,8 +278,15 @@ export default function TerminalPlayer({ open, onClose }) {
   const handleInputFocus = (e) => {
     if (e.target) {
       setTimeout(() => {
-        const length = e.target.value.length;
-        e.target.setSelectionRange(length, length);
+        // Make sure we're working with the actual input element
+        const inputElement = e.target.tagName === 'INPUT' ? 
+          e.target : 
+          inputRef.current?.querySelector('input');
+        
+        if (inputElement) {
+          const length = inputElement.value.length;
+          inputElement.setSelectionRange(length, length);
+        }
       }, 10);
     }
   };
@@ -441,8 +458,14 @@ export default function TerminalPlayer({ open, onClose }) {
           onChange={handleCommandChange}
           onKeyDown={handleKeyDown}
           onFocus={handleInputFocus}
-          autoFocus
+          autoFocus={!isTyping && !isFirstLoad}
           disabled={isTyping || isFirstLoad}
+          InputProps={{
+            autoFocus: true,
+            classes: {
+              input: 'terminal-input-field'
+            }
+          }}
           inputProps={{
             style: { 
               caretColor: 'transparent',

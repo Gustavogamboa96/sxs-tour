@@ -72,6 +72,11 @@
   animation: cursor-blink 1s step-end infinite;
 }
 
+/* Style for the terminal input field specifically */
+.terminal-input-field {
+  caret-color: transparent !important;
+}
+
 /* Add glow to input consistent with terminal */
 .MuiOutlinedInput-root {
   box-shadow: 0 0 20px rgba(183, 28, 28, 0.5) !important;
