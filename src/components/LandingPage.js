@@ -13,6 +13,12 @@ import TerminalPlayer from './TerminalPlayer'
 
 
 export default function LandingPage() {
+    // Configuration flags - set these to true/false to enable/disable specific modals
+    const ENABLE_PRESAVE = false;     // Set to false to skip the Presave modal
+    const ENABLE_UPCOMING = true;    // Set to false to skip the UpcomingDate modal
+    const ENABLE_SIGNUP = true;      // Set to false to skip the Signup modal
+    const ENABLE_TERMINAL = false;   // Set to false to skip the Terminal (already false)
+    
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const [snackbarMessage, setSnackbarMessage] = useState("")
     const [isSuccess, setIsSuccess] = useState(true)
@@ -23,20 +29,40 @@ export default function LandingPage() {
 
     const handleOpenPresave = () => setOpenPresave(true);
     const handleClosePresave = () => {
-        setOpenUpcomingDate(true);
         setOpenPresave(false);
+        // Start next modal in sequence based on enabled flags
+        setTimeout(() => {
+            if (ENABLE_UPCOMING) {
+                setOpenUpcomingDate(true);
+            } else if (ENABLE_SIGNUP) {
+                setOpenSignup(true);
+            }
+        }, 300);
     }
 
     const handleOpenUpcomingDate = () => setOpenUpcomingDate(true);
     const handleCloseUpcomingDate = () => {
-        setOpenSignup(true);
         setOpenUpcomingDate(false);
+        // Start next modal in sequence based on enabled flags
+        setTimeout(() => {
+            if (ENABLE_SIGNUP) {
+                setOpenSignup(true);
+            }
+        }, 300);
     }
 
-    // Auto-show presave modal on component mount
+    // Auto-show modal sequence on component mount
     useEffect(() => {
         const timer = setTimeout(() => {
-            handleOpenPresave();
+            // Determine which modal to show first based on enabled flags
+            if (ENABLE_PRESAVE) {
+                handleOpenPresave();
+            } else if (ENABLE_UPCOMING) {
+                handleOpenUpcomingDate();
+            } else if (ENABLE_SIGNUP) {
+                handleOpenSignup();
+            }
+            // If all are disabled, no modals will show
         }, 1500);
         return () => clearTimeout(timer);
     }, []);
@@ -75,10 +101,12 @@ export default function LandingPage() {
     const handleCloseSignup = () => {
         setOpenSignup(false);
         
-        // Open terminal after signup is closed
-        setTimeout(() => {
-            setOpenTerminal(true);
-        }, 1000);
+        // Show terminal based on enabled flag
+        if (ENABLE_TERMINAL) {
+            setTimeout(() => {
+                setOpenTerminal(true);
+            }, 1000);
+        }
     };
     
     const handleOpenSignup = () => setOpenSignup(true);
@@ -106,7 +134,8 @@ export default function LandingPage() {
                 <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                     <div className='flex-grow-1 music-player-margin-bottom'>
                         <MusicPlayer
-                            title={"¡COÑO!"}
+                            title={"Pobres Románticos"}
+                            filename={"05.wav"}
                         />
                     </div>
                     <div className='footer d-flex justify-content-center'>
@@ -131,25 +160,37 @@ export default function LandingPage() {
                     </div>
                 </div>
             </div>
-            <Presave 
-                openPresave={openPresave}
-                handleOpenPresave={handleOpenPresave}
-                handleClosePresave={handleClosePresave}
-                openSignup={openSignup}
-            />
-            <UpcomingDate
-                openUpcomingDate={openUpcomingDate}
-                handleOpenUpcomingDate={handleOpenUpcomingDate}
-                handleCloseUpcomingDate={handleCloseUpcomingDate}
-                openSignup={openSignup}
-            />
-            {openSignup && <Signup
-                openSignup={openSignup}
-                handleOpenSignup={handleOpenSignup}
-                handleCloseSignup={handleCloseSignup}
-                onSignupResponse={handleSignupResponse}
-                openUpcomingDate={openUpcomingDate}
-            />}
+            {/* PRESAVE MODAL - Control with ENABLE_PRESAVE flag at top of component */}
+            {ENABLE_PRESAVE && (
+                <Presave 
+                    openPresave={openPresave}
+                    handleOpenPresave={handleOpenPresave}
+                    handleClosePresave={handleClosePresave}
+                    openSignup={openSignup}
+                />
+            )}
+            {/* END PRESAVE MODAL */}
+            {/* UPCOMING DATE MODAL - Control with ENABLE_UPCOMING flag at top of component */}
+            {ENABLE_UPCOMING && (
+                <UpcomingDate
+                    openUpcomingDate={openUpcomingDate}
+                    handleOpenUpcomingDate={handleOpenUpcomingDate}
+                    handleCloseUpcomingDate={handleCloseUpcomingDate}
+                    openSignup={openSignup}
+                />
+            )}
+            {/* END UPCOMING DATE MODAL */}
+            {/* SIGNUP MODAL - Control with ENABLE_SIGNUP flag at top of component */}
+            {ENABLE_SIGNUP && openSignup && (
+                <Signup
+                    openSignup={openSignup}
+                    handleOpenSignup={handleOpenSignup}
+                    handleCloseSignup={handleCloseSignup}
+                    onSignupResponse={handleSignupResponse}
+                    openUpcomingDate={openUpcomingDate}
+                />
+            )}
+            {/* END SIGNUP MODAL */}
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={3000}
@@ -163,11 +204,14 @@ export default function LandingPage() {
             </Snackbar>
             <BentoWidget />
             
-            {/* Terminal Player */}
-            <TerminalPlayer 
-                open={openTerminal} 
-                onClose={() => setOpenTerminal(false)} 
-            />
+            {/* TERMINAL PLAYER - Control with ENABLE_TERMINAL flag at top of component */}
+            {ENABLE_TERMINAL && (
+                <TerminalPlayer 
+                    open={openTerminal} 
+                    onClose={() => setOpenTerminal(false)} 
+                />
+            )}
+            {/* END TERMINAL PLAYER */}
         </div>
     )
 }
