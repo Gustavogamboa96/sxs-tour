@@ -9,6 +9,7 @@ import UpcomingDate from './UpcomingDate'
 import Presave from './Presave'
 import BentoWidget from './BentoWidget'
 import TerminalPlayer from './TerminalPlayer'
+import ChatBot from './ChatBot'
 
 
 
@@ -18,6 +19,7 @@ export default function LandingPage() {
     const ENABLE_UPCOMING = true;    // Set to false to skip the UpcomingDate modal
     const ENABLE_SIGNUP = true;      // Set to false to skip the Signup modal
     const ENABLE_TERMINAL = false;   // Set to false to skip the Terminal (already false)
+    const ENABLE_CHATBOT = true;     // Set to true to enable the ChatBot after signup
     
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const [snackbarMessage, setSnackbarMessage] = useState("")
@@ -26,6 +28,7 @@ export default function LandingPage() {
     const [openPresave, setOpenPresave] = useState(false);
     const [openUpcomingDate, setOpenUpcomingDate] = useState(false);
     const [openTerminal, setOpenTerminal] = useState(false);
+    const [openChatBot, setOpenChatBot] = useState(false);
 
     const handleOpenPresave = () => setOpenPresave(true);
     const handleClosePresave = () => {
@@ -101,12 +104,19 @@ export default function LandingPage() {
     const handleCloseSignup = () => {
         setOpenSignup(false);
         
-        // Show terminal based on enabled flag
-        if (ENABLE_TERMINAL) {
-            setTimeout(() => {
+        // Show terminal or chatbot based on enabled flags
+        setTimeout(() => {
+            if (ENABLE_TERMINAL) {
                 setOpenTerminal(true);
-            }, 1000);
-        }
+            } else if (ENABLE_CHATBOT) {
+                setOpenChatBot(true);
+            }
+        }, 1000);
+    };
+
+    // Handler for closing the ChatBot
+    const handleCloseChatBot = () => {
+        setOpenChatBot(false);
     };
     
     const handleOpenSignup = () => setOpenSignup(true);
@@ -212,6 +222,15 @@ export default function LandingPage() {
                 />
             )}
             {/* END TERMINAL PLAYER */}
+            
+            {/* CHATBOT - Control with ENABLE_CHATBOT flag at top of component */}
+            {ENABLE_CHATBOT && (
+                <ChatBot 
+                    open={openChatBot} 
+                    onClose={handleCloseChatBot} 
+                />
+            )}
+            {/* END CHATBOT */}
         </div>
     )
 }

@@ -1,0 +1,96 @@
+/* ChatBot styling - extending TerminalPlayer styles */
+
+/* Typing indicator animation */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.typing-indicator span {
+  height: 8px;
+  width: 8px;
+  margin: 0 2px;
+  background-color: #B71C1C;
+  border-radius: 50%;
+  display: inline-block;
+  animation: typing-bounce 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes typing-bounce {
+  0%, 80%, 100% { 
+    transform: scale(0);
+  }
+  40% { 
+    transform: scale(1.0);
+  }
+}
+
+/* Message formatting */
+pre {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 8px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+code {
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+/* Adjust link colors */
+a {
+  color: #ff6b6b;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Message style enhancements */
+.user-message {
+  text-align: right;
+}
+
+.assistant-message {
+  text-align: left;
+}
+
+/* Animation for new messages */
+@keyframes message-appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply animation to messages */
+.new-message {
+  animation: message-appear 0.3s ease-out forwards;
+}
+
+/* Styling for mobile devices */
+@media (max-width: 768px) {
+  .chat-output {
+    height: 60vh;
+  }
+  
+  .message-container {
+    max-width: 90%;
+  }
+}
