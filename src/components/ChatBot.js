@@ -248,11 +248,19 @@ export default function ChatBot({ open, onClose }) {
         (chunk) => {
           fullResponse += chunk;
           
+          // Create a special streaming version with character animation
+          const streamedContent = [...fullResponse].map((char, i) => {
+            const isNewChar = i >= fullResponse.length - chunk.length;
+            return isNewChar 
+              ? `<span class="streaming-character">${char}</span>`
+              : char;
+          }).join('');
+          
           // Update the assistant's message with each chunk
           setMessages(prevMessages => 
             prevMessages.map(msg => 
               msg.id === assistantMessageId 
-                ? { ...msg, content: fullResponse }
+                ? { ...msg, content: fullResponse, streamingContent: streamedContent }
                 : msg
             )
           );
@@ -336,7 +344,11 @@ export default function ChatBot({ open, onClose }) {
         >
           {messages.map(message => (
             <MessageContainer key={message.id} messagetype={message.role}>
-              {message.content}
+              {message.role === MESSAGE_TYPE.ASSISTANT && message.streamingContent ? (
+                <span dangerouslySetInnerHTML={{ __html: message.streamingContent }} />
+              ) : (
+                message.content
+              )}
             </MessageContainer>
           ))}
           {isTyping && (

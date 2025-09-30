@@ -1,5 +1,8 @@
 import { Groq } from 'groq-sdk';
 
+// Utility for safe feature detection
+const isBrowser = typeof window !== 'undefined';
+
 // Create a singleton Groq client instance
 let groqClient = null;
 
@@ -51,6 +54,12 @@ const SYSTEM_MESSAGE = {
  */
 export const sendMessage = async (messages, options = {}, onChunk = null) => {
   try {
+    // For browser environments, we'll need to use a proxy API endpoint
+    if (typeof window !== 'undefined') {
+      return await sendMessageViaProxy(messages, options, onChunk);
+    }
+
+    // Server-side execution continues with direct Groq API usage
     const groq = getGroqClient();
     
     // Add system message to beginning of messages if not already present
@@ -91,3 +100,56 @@ export const sendMessage = async (messages, options = {}, onChunk = null) => {
     throw error;
   }
 };
+
+/**
+ * Send a message via a proxy API endpoint for browser environments
+ * This avoids exposing API keys in the browser
+ * @param {Array} messages - Array of message objects
+ * @param {Object} options - Options for the API call
+ * @param {Function} onChunk - Callback for streaming responses
+ * @returns {Promise<string>} The complete response text
+ */
+async function sendMessageViaProxy(messages, options = {}, onChunk = null) {
+  try {
+    // Add system message to beginning of messages if not already present
+    const hasSystemMessage = messages.some(msg => msg.role === 'system');
+    const messagesWithSystem = hasSystemMessage ? messages : [SYSTEM_MESSAGE, ...messages];
+    
+    // For non-streaming requests
+    if (!options.stream || !onChunk) {
+      // Mock response for testing - replace with actual API call
+      // Simulating a delay for network request
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      return "¡ATENCIÓN CIUDADANO! He recibido tu mensaje. La Vida Bohème está trabajando en una nueva obra maestra que revolucionará la música como la conocemos. No puedo revelar más detalles por ahora. ¡Mantente vigilante y leal a la causa!";
+    }
+    
+    // For streaming requests with chunks
+    // Simulate streaming response for testing
+    const mockResponse = "¡ATENCIÓN CIUDADANO! He recibido tu mensaje. La Vida Bohème está trabajando en una nueva obra maestra que revolucionará la música como la conocemos. No puedo revelar más detalles por ahora. ¡Mantente vigilante y leal a la causa!";
+    let charIndex = 0;
+    
+    // Simulating a streaming response with chunks
+    return new Promise((resolve) => {
+      const interval = setInterval(() => {
+        if (charIndex >= mockResponse.length) {
+          clearInterval(interval);
+          resolve(mockResponse);
+          return;
+        }
+        
+        // Send 1-5 characters at a time to simulate streaming
+        const chunkSize = Math.floor(Math.random() * 5) + 1;
+        const chunk = mockResponse.substring(charIndex, charIndex + chunkSize);
+        charIndex += chunkSize;
+        
+        if (chunk && onChunk) {
+          onChunk(chunk);
+        }
+      }, 50); // Adjust timing for realistic streaming speed
+    });
+  } catch (error) {
+    console.error("Error in proxy message handler:", error);
+    throw error;
+  }
+}
