@@ -70,7 +70,7 @@ export const sendMessage = async (messages, options = {}, onChunk = null) => {
     const defaultOptions = {
       model: "gemma2-9b-it",
       temperature: 0.9,
-      max_completion_tokens: 1024,
+      max_completion_tokens: 4096,
       top_p: 1,
       stream: Boolean(onChunk),
       stop: null
