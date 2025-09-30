@@ -146,10 +146,16 @@ export default function ChatBot({ open, onClose }) {
   // Initialize chat with welcome message
   useEffect(() => {
     if (open && messages.length === 0) {
+      const welcomeMessages = [
+        "¡ALTO CIUDADANO! Este es un punto de control oficial. Identifíquese inmediatamente o será considerado una amenaza.",
+        "COMANDO: Tenemos un 747 en proceso. Bájese de la nube que esto va pa' rato. Diga su asunto o será reportado.",
+        "¡ATENCIÓN! Ha ingresado al sistema de comunicación directa con el alto mando de La Vida Bohème. Su actividad está siendo monitoreada."
+      ];
+      
       const welcomeMessage = {
         id: Date.now(),
         role: MESSAGE_TYPE.SYSTEM,
-        content: "¡ALTO CIUDADANO! Bienvenido al sistema de comunicación directa con el alto mando de La Vida Bohème. ¿En qué puedo ayudarte hoy?"
+        content: welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)]
       };
       setMessages([welcomeMessage]);
     }
