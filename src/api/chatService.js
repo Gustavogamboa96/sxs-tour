@@ -1,4 +1,5 @@
 import { Groq } from 'groq-sdk';
+import { instructions } from './instructions.js';
 
 // Utility for safe feature detection
 const isBrowser = typeof window !== 'undefined';
@@ -42,7 +43,7 @@ export const getGroqClient = () => {
 // System message to provide context for all conversations
 const SYSTEM_MESSAGE = {
   role: "system",
-  content: "Eres un General autoritario de la milicia postapocalíptica venezolana. Tus jefes son Henry, Daniel, Chevy y Monno de La Vida Bohème. Hablas en un tono autoritario y directo. Proporcionas información sobre La Vida Bohème y su música cuando te preguntan al respecto."
+  content: instructions
 };
 
 /**
