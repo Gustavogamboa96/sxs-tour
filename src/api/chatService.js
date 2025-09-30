@@ -29,7 +29,8 @@ export const getGroqClient = () => {
       throw new Error('Groq API key not found. Please set REACT_APP_GROQ_API_KEY environment variable.');
     }
     groqClient = new Groq({
-      apiKey: apiKey
+      apiKey: apiKey,
+        dangerouslyAllowBrowser: true
     });
   }
   return groqClient;
