@@ -4,6 +4,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import addContact from '../api/brevo-create-contact';
 import React, { useEffect, useState } from 'react';
 import './Signup.css'
@@ -59,6 +61,14 @@ export default function UpcomingDate(props) {
     transition: 'all 0.2s ease-in-out',
   }));
 
+  const CloseButton = styled(IconButton)({
+    position: 'absolute',
+    right: '10px',
+    top: '10px',
+    color: '#B71C1C',
+    zIndex: 10,
+  });
+
   const style = {
     bgcolor: 'background.paper',
     boxShadow: 24,
@@ -69,6 +79,7 @@ export default function UpcomingDate(props) {
     fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
     width: 425,
     maxWidth: '90vw',
+    position: 'relative',
   };
   // Component mounts ready to be shown by parent
 
@@ -89,6 +100,9 @@ export default function UpcomingDate(props) {
         }}
       >
         <Box sx={style} className={`modal-content ${modalFaded ? 'modal-fade-in' : ''}`}>
+          <CloseButton onClick={handleModalClose} aria-label="close">
+            <CloseIcon />
+          </CloseButton>
           <Box>
             {/* <Typography id="modal-modal-title" variant="h6" component="h2"
               sx={{
@@ -179,7 +193,7 @@ export default function UpcomingDate(props) {
 
               <Button variant="contained" color="primary"
                 component="a"
-                href='#' // Add the actual NYC ticket link here
+                href='https://dice.fm/event/xek7ma-ghost-sound-yerba-de-la-buena-present-la-vida-boheme-18th-dec-the-sultan-room-new-york-tickets' // Add the actual NYC ticket link here
                 target="_blank"
                 sx={{
                   fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',

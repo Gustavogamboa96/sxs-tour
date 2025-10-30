@@ -31,8 +31,7 @@ const ChatOutput = styled('div')({
   backgroundColor: '#212121',
   borderRadius: '4px 4px 0 0',
   fontSize: '16px',
-  border: '2px solid #B71C1C',
-  borderBottom: 'none',
+  border: 'none',
   '&::-webkit-scrollbar': {
     width: '8px',
   },
@@ -40,7 +39,7 @@ const ChatOutput = styled('div')({
     background: '#0f0f0f',
   },
   '&::-webkit-scrollbar-thumb': {
-    background: '#B71C1C',
+    background: '#666',
     borderRadius: '4px',
   },
 });
@@ -52,30 +51,25 @@ const ChatInput = styled(TextField)({
     fontFamily: 'IBM Plex Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
     fontSize: '16px',
     borderRadius: '0 0 4px 4px',
-    boxShadow: '0 0 20px rgba(183, 28, 28, 0.5)',
     '& fieldset': {
-      borderColor: '#B71C1C',
-      borderTopWidth: '0px',
-      borderWidth: '2px',
+      border: 'none',
     },
     '&:hover fieldset': {
-      borderColor: '#B71C1C',
+      border: 'none',
     },
     '&.Mui-focused fieldset': {
-      borderColor: '#B71C1C',
-      borderWidth: '2px',
+      border: 'none',
     },
   },
   '& .MuiInputLabel-root': {
-    color: '#B71C1C',
+    color: '#888',
   },
 });
 
 const ChatBox = styled(Box)({
-  width: '60%',
+  width: '33vw',
   maxWidth: '500px',
   position: 'relative',
-  boxShadow: '0 0 20px rgba(183, 28, 28, 0.5)',
   borderRadius: '5px',
 });
 
@@ -88,7 +82,7 @@ const CloseButton = styled(IconButton)({
 });
 
 const SendButton = styled(IconButton)({
-  color: '#B71C1C',
+  color: '#888',
 });
 
 // Message styling based on role
@@ -366,7 +360,7 @@ export default function ChatBot({ open, onClose }) {
     >
       <ChatBox
         sx={{
-          width: { xs: '95%', sm: '80%' },
+          width: { xs: '95%', sm: '33vw' },
           maxHeight: { xs: '90vh', sm: 'none' },
           display: 'flex',
           flexDirection: 'column',
@@ -431,7 +425,7 @@ export default function ChatBot({ open, onClose }) {
             sx={{
               marginTop: '-2px',
               '& .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#B71C1C !important',
+                border: 'none !important',
               }
             }}
           />

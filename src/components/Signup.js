@@ -3,9 +3,20 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material/styles';
 import addContact from '../api/brevo-create-contact';
 import React, { useEffect, useState } from 'react';
 import './Signup.css'
+
+const CloseButton = styled(IconButton)({
+  position: 'absolute',
+  right: '10px',
+  top: '10px',
+  color: '#B71C1C',
+  zIndex: 10,
+});
 
 export default function Signup(props) {
   const {onSignupResponse, handleCloseSignup, handleOpenSignup, openSignup, openUpcomingDate, title = "REGÍSTRESE CIUDADANO"} = props;
@@ -78,6 +89,7 @@ export default function Signup(props) {
     fontFamily: 'IBM Plex Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
     width: '400px',
     maxWidth: '90vw',
+    position: 'relative',
   };
   
   const signedUp = localStorage.getItem('signed-up');
@@ -108,6 +120,9 @@ export default function Signup(props) {
         }}
       >
         <Box sx={style} className={`modal-content ${modalFaded ? 'modal-fade-in' : ''}`}>
+          <CloseButton onClick={handleModalClose} aria-label="close">
+            <CloseIcon />
+          </CloseButton>
           <Box>
             <Typography 
               id="modal-modal-title" 
