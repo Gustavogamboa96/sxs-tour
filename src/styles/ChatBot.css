@@ -98,7 +98,7 @@ a:hover {
 
 .streaming-character {
   display: inline-block;
-  animation: character-appear 0.2s ease-out forwards;
+  animation: character-appear 0.3s ease-out forwards;
 }
 
 /* Styling for mobile devices */

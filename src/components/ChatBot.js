@@ -22,13 +22,13 @@ const MESSAGE_TYPE = {
 
 // Styled components borrowed and adapted from TerminalPlayer
 const ChatOutput = styled('div')({
-  fontFamily: 'monospace',
+  fontFamily: 'IBM Plex Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
   padding: '15px',
   whiteSpace: 'pre-wrap',
   color: 'white',
   height: '60vh',
   overflowY: 'auto',
-  backgroundColor: 'rgba(0, 0, 0, 0.9)',
+  backgroundColor: '#212121',
   borderRadius: '4px 4px 0 0',
   fontSize: '16px',
   border: '2px solid #B71C1C',
@@ -48,8 +48,8 @@ const ChatOutput = styled('div')({
 const ChatInput = styled(TextField)({
   '& .MuiOutlinedInput-root': {
     color: 'white',
-    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-    fontFamily: 'monospace',
+    backgroundColor: '#212121',
+    fontFamily: 'IBM Plex Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
     fontSize: '16px',
     borderRadius: '0 0 4px 4px',
     boxShadow: '0 0 20px rgba(183, 28, 28, 0.5)',
@@ -72,8 +72,8 @@ const ChatInput = styled(TextField)({
 });
 
 const ChatBox = styled(Box)({
-  width: '80%',
-  maxWidth: '700px',
+  width: '60%',
+  maxWidth: '500px',
   position: 'relative',
   boxShadow: '0 0 20px rgba(183, 28, 28, 0.5)',
   borderRadius: '5px',
@@ -248,30 +248,68 @@ export default function ChatBot({ open, onClose }) {
       
       // Call API with streaming response
       let fullResponse = '';
+      let currentDisplayIndex = 0;
+      
       await sendMessage(
         conversationHistory,
         { stream: true },
         (chunk) => {
           fullResponse += chunk;
           
-          // Create a special streaming version with character animation
-          const streamedContent = [...fullResponse].map((char, i) => {
-            const isNewChar = i >= fullResponse.length - chunk.length;
-            return isNewChar 
-              ? `<span class="streaming-character">${char}</span>`
-              : char;
-          }).join('');
+          // Remove quotes from the response if they wrap the entire message
+          let cleanResponse = fullResponse;
+          if (cleanResponse.startsWith('"') && cleanResponse.endsWith('"') && cleanResponse.length > 2) {
+            cleanResponse = cleanResponse.slice(1, -1);
+          }
           
-          // Update the assistant's message with each chunk
+          // Don't update display immediately - let the interval handle it
           setMessages(prevMessages => 
             prevMessages.map(msg => 
               msg.id === assistantMessageId 
-                ? { ...msg, content: fullResponse, streamingContent: streamedContent }
+                ? { ...msg, fullContent: cleanResponse, content: cleanResponse.substring(0, currentDisplayIndex) }
                 : msg
             )
           );
         }
       );
+      
+      // Create a typing effect that finishes in about 2 seconds
+      const startTypingEffect = () => {
+        const typingInterval = setInterval(() => {
+          setMessages(prevMessages => {
+            const assistantMsg = prevMessages.find(msg => msg.id === assistantMessageId);
+            if (!assistantMsg || !assistantMsg.fullContent) {
+              clearInterval(typingInterval);
+              return prevMessages;
+            }
+            
+            if (currentDisplayIndex >= assistantMsg.fullContent.length) {
+              clearInterval(typingInterval);
+              return prevMessages;
+            }
+            
+            currentDisplayIndex++;
+            const visibleContent = assistantMsg.fullContent.substring(0, currentDisplayIndex);
+            
+            // Create streaming version with character animation for new characters
+            const streamedContent = [...visibleContent].map((char, i) => {
+              const isNewChar = i === currentDisplayIndex - 1;
+              return isNewChar 
+                ? `<span class="streaming-character">${char}</span>`
+                : char;
+            }).join('');
+            
+            return prevMessages.map(msg => 
+              msg.id === assistantMessageId 
+                ? { ...msg, content: visibleContent, streamingContent: streamedContent }
+                : msg
+            );
+          });
+        }, 15); // 15ms delay between each character for faster typing
+      };
+      
+      // Start typing effect after a brief delay to ensure fullContent is set
+      setTimeout(startTypingEffect, 100);
       
     } catch (error) {
       console.error("Error sending message:", error);

@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import './Signup.css'
 
 export default function Signup(props) {
-  const {onSignupResponse, handleCloseSignup, handleOpenSignup, openSignup, openUpcomingDate, title = "¡Suscríbete a nuestro newsletter!"} = props;
+  const {onSignupResponse, handleCloseSignup, handleOpenSignup, openSignup, openUpcomingDate, title = "REGÍSTRESE CIUDADANO"} = props;
   const [email, setEmail] = useState('');
   const [error, setError] = useState(false);
   const [modalFaded, setModalFaded] = useState(false);
@@ -167,7 +167,7 @@ export default function Signup(props) {
                 },
               }}
             >
-              Suscribir
+              REGISTRARSE
             </Button>
           </Box>
         </Box>

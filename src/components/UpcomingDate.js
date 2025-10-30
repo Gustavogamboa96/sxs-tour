@@ -117,36 +117,40 @@ export default function UpcomingDate(props) {
               />
             </div>
             {/* <img src="https://wzeweb-p-visuelorga-evn-affiche.s3.eu-west-1.amazonaws.com/affiche_1294214.png" alt="Event Poster" style={{ width: '50%',  height: 'auto'}} /> */}
-            <div style={{ marginTop: '5vh', display: 'flex', justifyContent: 'center' }}>
-              {/* <StyledButton variant="contained" disableElevation
-            component="a" // This makes the Button act like an anchor tag
-            href="https://tinyurl.com/bdjc393u" // The link destination
-            target="_blank" // Opens the link in a new tab (optional)
-            rel="noopener noreferrer" 
-            sx={{color: '#3fea4b',
-              backgroundColor: '#212121',
-              }}>
-                Entradas
-            </StyledButton> */}
+            <div style={{ 
+              marginTop: '3vh', 
+              display: 'grid', 
+              gridTemplateColumns: '1fr 1fr',
+              gridTemplateRows: '1fr 1fr',
+              gap: '15px',
+              width: '100%'
+            }}>
               <Button variant="contained" color="primary"
-                component="a" // This makes the Button act like an anchor tag
-                href='https://www.eventim-light.com/es/a/68235206e8423f40cbf39bca/e/682355e9e8423f40cbf39bcf' // The link destination
-                target="_blank" // Opens the link in a new tab (optional)
+                component="a"
+                href='https://www.eventim-light.com/es/a/68235206e8423f40cbf39bca/e/682355e9e8423f40cbf39bcf'
+                target="_blank"
                 sx={{
                   fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
                   backgroundColor: '#B71C1C',
                   color: 'black',
-                  width: '100%', // Adjust the width as needed
-                  margin: 'auto', // Center the TextField horizontally
+                  height: '55px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  lineHeight: '1.1',
                   '&:hover': {
                     backgroundColor: 'black',
                     color: '#B71C1C',
                   },
                 }}>
-                Tickets Madrid 26.11.25
+                <div>Madrid</div>
+                <div>26.11.25</div>
               </Button>
-            </div>
-            <div style={{ marginTop: '5vh', display: 'flex', justifyContent: 'center' }}>
+
               <Button variant="contained" color="primary"
                 component="a"
                 href='https://dice.fm/event/53n3w8-la-vida-boheme-28th-nov-la-2-de-apolo-barcelona-tickets?pid=530cb286&_branch_match_id=1060721144327835601&utm_medium=partners_api&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8nMy9ZLyUxO1UvL1a9MsTQxT0lONTVItbQvyEyxNTU2SE4ysjBTqytKTUstKsrMS49PKsovL04tsnXOKMrPTQUAw7GvMEgAAAA%3D'
@@ -155,17 +159,50 @@ export default function UpcomingDate(props) {
                   fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
                   backgroundColor: '#B71C1C',
                   color: 'black',
-                  width: '100%',
-                  margin: 'auto',
+                  height: '55px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  lineHeight: '1.1',
                   '&:hover': {
                     backgroundColor: 'black',
                     color: '#B71C1C',
                   },
                 }}>
-                Tickets Barcelona 28.11.25
+                <div>Barcelona</div>
+                <div>28.11.25</div>
               </Button>
-            </div>
-            <div style={{ marginTop: '5vh', display: 'flex', justifyContent: 'center' }}>
+
+              <Button variant="contained" color="primary"
+                component="a"
+                href='#' // Add the actual NYC ticket link here
+                target="_blank"
+                sx={{
+                  fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
+                  backgroundColor: '#B71C1C',
+                  color: 'black',
+                  height: '55px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  lineHeight: '1.1',
+                  '&:hover': {
+                    backgroundColor: 'black',
+                    color: '#B71C1C',
+                  },
+                }}>
+                <div>NYC</div>
+                <div>18.12.25</div>
+              </Button>
+
               <Button variant="contained" color="primary"
                 component="a"
                 href='https://shotgun.live/es/events/zeyzey-presents-la-vida-boheme'
@@ -174,14 +211,22 @@ export default function UpcomingDate(props) {
                   fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
                   backgroundColor: '#B71C1C',
                   color: 'black',
-                  width: '100%',
-                  margin: 'auto',
+                  height: '55px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  lineHeight: '1.1',
                   '&:hover': {
                     backgroundColor: 'black',
                     color: '#B71C1C',
                   },
                 }}>
-                Tickets Miami 20.12.25
+                <div>Miami</div>
+                <div>20.12.25</div>
               </Button>
             </div>
           </Box>
