@@ -6,6 +6,8 @@ export const links = [
   { href: 'https://www.eventim-light.com/es/a/68235206e8423f40cbf39bca/e/682355e9e8423f40cbf39bcf', text: 'http://tickets-madrid.com' },
   { href: 'https://dice.fm/event/53n3w8-la-vida-boheme-28th-nov-la-2-de-apolo-barcelona-tickets?pid=530cb286&_branch_match_id=1060721144327835601&utm_medium=partners_api&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8nMy9ZLyUxO1UvL1a9MsTQxT0lONTVItbQvyEyxNTU2SE4ysjBTqytKTUstKsrMS49PKsovL04tsnXOKMrPTQUAw7GvMEgAAAA%3D', text: 'http://tickets-barcelona.com' },
   { href: 'https://shotgun.live/es/events/zeyzey-presents-la-vida-boheme', text: 'http://tickets-miami.com' },
+  { href: 'https://dice.fm/event/xek7ma-ghost-sound-yerba-de-la-buena-present-la-vida-boheme-18th-dec-the-sultan-room-new-york-tickets', text: 'http://tickets-nyc.com' },
+  { href: 'https://ticketplate.com/checkout/la-vida-boheme-202512222100', text: 'http://tickets-caracas.com' },
   { href: 'https://www.youtube.com/@lavidabohemev0', text: 'http://youtube.com' },
   { href: 'https://open.spotify.com/prerelease/5OsFK0Nzr0wEU7OsGG00PH?si=7jhBdvgSQs65FcTnBw2tdA', text: 'http://spotify.com' },
   // { href: 'https://lavidaboheme.bandcamp.com/', text: 'http://bandcamp.com' },

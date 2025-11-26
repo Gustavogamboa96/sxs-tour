@@ -34,7 +34,7 @@ export default function UpcomingDate(props) {
       handleCloseUpcomingDate();
     }, 300);
   };
-  
+
   const CoverImage = styled('div')({
     width: 100,
     height: 100,
@@ -131,11 +131,11 @@ export default function UpcomingDate(props) {
               />
             </div>
             {/* <img src="https://wzeweb-p-visuelorga-evn-affiche.s3.eu-west-1.amazonaws.com/affiche_1294214.png" alt="Event Poster" style={{ width: '50%',  height: 'auto'}} /> */}
-            <div style={{ 
-              marginTop: '3vh', 
-              display: 'grid', 
+            <div style={{
+              marginTop: '3vh',
+              display: 'grid',
               gridTemplateColumns: '1fr 1fr',
-              gridTemplateRows: '1fr 1fr',
+              gridTemplateRows: 'repeat(3, 1fr)',
               gap: '15px',
               width: '100%'
             }}>
@@ -241,6 +241,35 @@ export default function UpcomingDate(props) {
                 }}>
                 <div>Miami</div>
                 <div>20.12.25</div>
+              </Button>
+
+              <Button variant="contained" color="primary"
+                component="a"
+                href='https://ticketplate.com/checkout/la-vida-boheme-202512222100'
+                target="_blank"
+                sx={{
+                  gridColumn: 'span 2',
+                  justifySelf: 'center',
+                  width: 'calc(50% - 7.5px)',
+                  fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
+                  backgroundColor: '#B71C1C',
+                  color: 'black',
+                  height: '55px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  lineHeight: '1.1',
+                  '&:hover': {
+                    backgroundColor: 'black',
+                    color: '#B71C1C',
+                  },
+                }}>
+                <div>Caracas</div>
+                <div>22.12.25</div>
               </Button>
             </div>
           </Box>
