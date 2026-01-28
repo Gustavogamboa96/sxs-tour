@@ -12,6 +12,9 @@ import FastRewindRounded from '@mui/icons-material/FastRewindRounded';
 import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded';
 
+// R2 storage base URL for audio files
+const AUDIO_BASE_URL = 'https://pub-888858389efa48b3b71fde9b5a222c27.r2.dev/audio';
+
 const WallPaper = styled('div')({
   position: 'absolute',
   width: '100%',
@@ -122,7 +125,7 @@ export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = '
     
     // Create a new audio element with proper error handling
     try {
-      const newAudio = new Audio(`/audio/${filename}`);
+      const newAudio = new Audio(`${AUDIO_BASE_URL}/${filename}`);
       
       newAudio.addEventListener('error', (e) => {
         console.error('Audio error:', e);
