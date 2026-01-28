@@ -28,9 +28,9 @@ export const initGroqClient = (apiKey) => {
 export const getGroqClient = () => {
   if (!groqClient) {
     // Use environment variable if available, otherwise throw an error
-    const apiKey = process.env.REACT_APP_GROQ_API_KEY;
+    const apiKey = import.meta.env.VITE_GROQ_API_KEY;
     if (!apiKey) {
-      throw new Error('Groq API key not found. Please set REACT_APP_GROQ_API_KEY environment variable.');
+      throw new Error('Groq API key not found. Please set VITE_GROQ_API_KEY environment variable.');
     }
     groqClient = new Groq({
       apiKey: apiKey,

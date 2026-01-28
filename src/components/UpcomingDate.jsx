@@ -133,6 +133,39 @@ export default function UpcomingDate(props) {
             {/* <img src="https://wzeweb-p-visuelorga-evn-affiche.s3.eu-west-1.amazonaws.com/affiche_1294214.png" alt="Event Poster" style={{ width: '50%',  height: 'auto'}} /> */}
             <div style={{
               marginTop: '3vh',
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%'
+            }}>
+              <Button variant="contained" color="primary"
+                component="a"
+                href='https://lavidaboheme.square.site/'
+                target="_blank"
+                sx={{
+                  fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
+                  backgroundColor: '#B71C1C',
+                  color: 'black',
+                  height: '55px',
+                  width: '50%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  lineHeight: '1.1',
+                  '&:hover': {
+                    backgroundColor: 'black',
+                    color: '#B71C1C',
+                  },
+                }}>
+                Merch
+              </Button>
+            </div>
+
+            {/* Commented out date buttons
+            <div style={{
+              marginTop: '3vh',
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
               gridTemplateRows: 'repeat(3, 1fr)',
@@ -193,7 +226,7 @@ export default function UpcomingDate(props) {
 
               <Button variant="contained" color="primary"
                 component="a"
-                href='https://dice.fm/event/xek7ma-ghost-sound-yerba-de-la-buena-present-la-vida-boheme-18th-dec-the-sultan-room-new-york-tickets' // Add the actual NYC ticket link here
+                href='https://dice.fm/event/xek7ma-ghost-sound-yerba-de-la-buena-present-la-vida-boheme-18th-dec-the-sultan-room-new-york-tickets'
                 target="_blank"
                 sx={{
                   fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
@@ -272,6 +305,7 @@ export default function UpcomingDate(props) {
                 <div>22.12.25</div>
               </Button>
             </div>
+            */}
           </Box>
         </Box>
       </Modal>

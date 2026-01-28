@@ -16,7 +16,7 @@ import ChatBot from './ChatBot'
 export default function LandingPage() {
     // Configuration flags - set these to true/false to enable/disable specific modals
     const ENABLE_PRESAVE = false;     // Set to false to skip the Presave modal
-    const ENABLE_UPCOMING = true;    // Set to false to skip the UpcomingDate modal
+    const ENABLE_UPCOMING = false;    // Set to false to skip the UpcomingDate modal
     const ENABLE_SIGNUP = true;      // Set to false to skip the Signup modal
     const ENABLE_TERMINAL = false;   // Set to false to skip the Terminal (already false)
     const ENABLE_CHATBOT = true;     // Set to true to enable the ChatBot after signup

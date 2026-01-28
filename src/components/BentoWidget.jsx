@@ -4,7 +4,7 @@ import "./BentoWidget.css";
 export default function BentoWidget() {
   return (
     <a
-      href="https://bento.me/gustra"
+      href="https://gustra.codes"
       target="_blank"
       rel="noopener noreferrer"
       className="bento-widget"
