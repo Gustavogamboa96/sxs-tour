@@ -1,4 +1,4 @@
-const apiKey = import.meta.env.VITE_API_KEY;
+const apiKey = process.env.REACT_APP_API_KEY;
 const listId = 3; //refers to fan-emails 
 
 export default async function addContact(email){
