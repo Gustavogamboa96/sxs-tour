@@ -1,7 +1,7 @@
 
 
 export const links = [
-  { href: 'https://yerbayork.com/', text: 'http://merch.com' },
+  { href: 'https://yerbayork.com/', text: 'http://merch-oficial.com' },
   { href: '#', text: 'http://newsletter.com', onClick: true },
   { href: 'https://www.youtube.com/@lavidabohemev0', text: 'http://youtube.com' },
   { href: 'https://open.spotify.com/prerelease/5OsFK0Nzr0wEU7OsGG00PH?si=7jhBdvgSQs65FcTnBw2tdA', text: 'http://spotify.com' },
