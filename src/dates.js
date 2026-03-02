@@ -2,10 +2,11 @@
 
 export const links = [
   { href: 'https://yerbayork.com/', text: 'http://merch.com' },
+  { href: '#', text: 'http://fechas.com', isUpcoming: true },
   { href: '#', text: 'http://newsletter.com', onClick: true },
   { href: 'https://www.youtube.com/@lavidabohemev0', text: 'http://youtube.com' },
   { href: 'https://open.spotify.com/prerelease/5OsFK0Nzr0wEU7OsGG00PH?si=7jhBdvgSQs65FcTnBw2tdA', text: 'http://spotify.com' },
-  { href: 'https://lavidaboheme.bandcamp.com/', text: 'http://bandcamp.com' },
+  // { href: 'https://lavidaboheme.bandcamp.com/', text: 'http://bandcamp.com' },
   // { href: 'https://www.instagram.com/lavidaboheme/', text: 'http://instagram.com'},
   // { href: '#', text: 'http://terminal.com', isTerminal: true },
   { href: 'mailto:management@yosoylavidaboheme.com', text: 'http://contacto.com' },

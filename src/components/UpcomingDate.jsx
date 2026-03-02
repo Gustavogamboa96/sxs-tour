@@ -125,7 +125,7 @@ export default function UpcomingDate(props) {
             </CoverImage> */}
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <img
-                src="https://i.imgur.com/d1Bc4fP.jpeg"
+                src="/images/LVB-Tour3.webp"
                 alt="Event Poster"
                 style={{ width: '60%', height: 'auto' }}
               />
@@ -133,21 +133,22 @@ export default function UpcomingDate(props) {
             {/* <img src="https://wzeweb-p-visuelorga-evn-affiche.s3.eu-west-1.amazonaws.com/affiche_1294214.png" alt="Event Poster" style={{ width: '50%',  height: 'auto'}} /> */}
             <div style={{
               marginTop: '3vh',
-              display: 'flex',
-              justifyContent: 'center',
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '15px',
               width: '100%'
             }}>
               <Button variant="contained" color="primary"
                 component="a"
-                href='https://lavidaboheme.square.site/'
+                href='https://tickets.eticketablanca.com/event/la-vida-boheme-en-bogota-zt7g5h?eventId=69a1ed9a466ecddf5b0f88f7'
                 target="_blank"
                 sx={{
                   fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
                   backgroundColor: '#B71C1C',
                   color: 'black',
                   height: '55px',
-                  width: '50%',
                   display: 'flex',
+                  flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'center',
                   fontSize: '13px',
@@ -159,7 +160,63 @@ export default function UpcomingDate(props) {
                     color: '#B71C1C',
                   },
                 }}>
-                Merch
+                <div>Bogotá</div>
+                <div>13.05.25</div>
+              </Button>
+
+              <Button variant="contained" color="primary"
+                component="a"
+                href='https://tickets.eticketablanca.com/event/la-vida-boheme-en-medellin-a41p87?eventId=69a1fdf638f9dd34e6c103c6'
+                target="_blank"
+                sx={{
+                  fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
+                  backgroundColor: '#B71C1C',
+                  color: 'black',
+                  height: '55px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  lineHeight: '1.1',
+                  '&:hover': {
+                    backgroundColor: 'black',
+                    color: '#B71C1C',
+                  },
+                }}>
+                <div>Medellín</div>
+                <div>14.05.25</div>
+              </Button>
+
+              <Button variant="contained" color="primary"
+                component="a"
+                href='#'
+                target="_blank"
+                sx={{
+                  gridColumn: 'span 2',
+                  justifySelf: 'center',
+                  width: 'calc(50% - 7.5px)',
+                  fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
+                  backgroundColor: '#B71C1C',
+                  color: 'black',
+                  height: '55px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '13px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  lineHeight: '1.1',
+                  '&:hover': {
+                    backgroundColor: 'black',
+                    color: '#B71C1C',
+                  },
+                }}>
+                <div>Panamá</div>
+                <div>15.05.25</div>
               </Button>
             </div>
 

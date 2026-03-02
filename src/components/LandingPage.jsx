@@ -16,7 +16,7 @@ import ChatBot from './ChatBot'
 export default function LandingPage() {
     // Configuration flags - set these to true/false to enable/disable specific modals
     const ENABLE_PRESAVE = false;     // Set to false to skip the Presave modal
-    const ENABLE_UPCOMING = false;    // Set to false to skip the UpcomingDate modal
+    const ENABLE_UPCOMING = true;    // Set to false to skip the UpcomingDate modal
     const ENABLE_SIGNUP = true;      // Set to false to skip the Signup modal
     const ENABLE_TERMINAL = false;   // Set to false to skip the Terminal (already false)
     const ENABLE_CHATBOT = true;     // Set to true to enable the ChatBot after signup
@@ -29,6 +29,7 @@ export default function LandingPage() {
     const [openUpcomingDate, setOpenUpcomingDate] = useState(false);
     const [openTerminal, setOpenTerminal] = useState(false);
     const [openChatBot, setOpenChatBot] = useState(false);
+    const [isOnboardingSequence, setIsOnboardingSequence] = useState(false);
 
     const handleOpenPresave = () => setOpenPresave(true);
     const handleClosePresave = () => {
@@ -46,17 +47,21 @@ export default function LandingPage() {
     const handleOpenUpcomingDate = () => setOpenUpcomingDate(true);
     const handleCloseUpcomingDate = () => {
         setOpenUpcomingDate(false);
-        // Start next modal in sequence based on enabled flags
-        setTimeout(() => {
-            if (ENABLE_SIGNUP) {
-                setOpenSignup(true);
-            }
-        }, 300);
+        // Start next modal in sequence based on enabled flags (only during onboarding)
+        if (isOnboardingSequence) {
+            setTimeout(() => {
+                if (ENABLE_SIGNUP) {
+                    setOpenSignup(true);
+                }
+                setIsOnboardingSequence(false);
+            }, 300);
+        }
     }
 
     // Auto-show modal sequence on component mount
     useEffect(() => {
         const timer = setTimeout(() => {
+            setIsOnboardingSequence(true);
             // Determine which modal to show first based on enabled flags
             if (ENABLE_PRESAVE) {
                 handleOpenPresave();
@@ -160,6 +165,9 @@ export default function LandingPage() {
                                         } : link.isTerminal ? (e) => {
                                             e.preventDefault();
                                             setOpenTerminal(true);
+                                        } : link.isUpcoming ? (e) => {
+                                            e.preventDefault();
+                                            setOpenUpcomingDate(true);
                                         } : undefined
                                     } className="footer-link">
                                         {link.text}
