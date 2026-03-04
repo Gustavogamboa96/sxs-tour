@@ -3,18 +3,19 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import addContact from '../api/brevo-create-contact';
+import CircularProgress from '@mui/material/CircularProgress';
 import React, { useEffect, useState } from 'react';
+import { useTourDates } from '../hooks/useTourDates';
 import './Signup.css'
 
 
 
 export default function UpcomingDate(props) {
-  const { handleCloseUpcomingDate, handleOpenUpcomingDate, openUpcomingDate, openSignup } = props;
+  const { handleCloseUpcomingDate, openUpcomingDate } = props;
   const [modalFaded, setModalFaded] = useState(false);
+  const { tourDates, banner, loading, error } = useTourDates();
 
   // Control modal fade effect
   useEffect(() => {
@@ -34,32 +35,6 @@ export default function UpcomingDate(props) {
       handleCloseUpcomingDate();
     }, 300);
   };
-
-  const CoverImage = styled('div')({
-    width: 100,
-    height: 100,
-    objectFit: 'cover',
-    overflow: 'hidden',
-    flexShrink: 0,
-    borderRadius: 8,
-    backgroundColor: 'rgba(0,0,0,0.08)',
-  });
-
-  const StyledButton = styled(Button)(({ theme }) => ({
-    backgroundColor: '#B71C1C', // Your primary color
-    color: '#212121', // Text color
-    '&:hover': {
-      color: '#1a1c1a',
-      backgroundColor: '#3fea4b', // Adjust hover color if needed
-      opacity: 0.8,
-    },
-    borderRadius: 5, // Adjust border radius as desired
-    padding: '12px 24px', // Adjust padding as desired
-    fontSize: '16px',
-    fontWeight: 600,
-    textTransform: 'uppercase',
-    transition: 'all 0.2s ease-in-out',
-  }));
 
   const CloseButton = styled(IconButton)({
     position: 'absolute',
@@ -104,121 +79,85 @@ export default function UpcomingDate(props) {
             <CloseIcon />
           </CloseButton>
           <Box>
-            {/* <Typography id="modal-modal-title" variant="h6" component="h2"
-              sx={{
-                fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-                width: '100%', // Adjust the width as needed
-                margin: 'auto', // Center the TextField horizontally  
-                paddingBottom: '3.5vh',
-                textAlign: 'center'
-              }}>
-              ¡Fechas en España!
-            </Typography> */}
-            {/* <CoverImage>
-
-            <img
-              alt="¡Al coro de las masas! - La Vida Bohème"
-              src="/images/cover-alcorodelasmasas.webp"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-          
-            </CoverImage> */}
+            {/* Banner Image */}
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <img
-                src="/images/LVB-Tour3.webp"
+                src={banner || "/images/LVB-Tour3.webp"}
                 alt="Event Poster"
                 style={{ width: '60%', height: 'auto' }}
               />
             </div>
-            {/* <img src="https://wzeweb-p-visuelorga-evn-affiche.s3.eu-west-1.amazonaws.com/affiche_1294214.png" alt="Event Poster" style={{ width: '50%',  height: 'auto'}} /> */}
-            <div style={{
-              marginTop: '3vh',
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '15px',
-              width: '100%'
-            }}>
-              <Button variant="contained" color="primary"
-                component="a"
-                href='https://tickets.eticketablanca.com/event/la-vida-boheme-en-bogota-zt7g5h?eventId=69a1ed9a466ecddf5b0f88f7'
-                target="_blank"
-                sx={{
-                  fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-                  backgroundColor: '#B71C1C',
-                  color: 'black',
-                  height: '55px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  fontSize: '13px',
-                  fontWeight: 'bold',
-                  textTransform: 'uppercase',
-                  lineHeight: '1.1',
-                  '&:hover': {
-                    backgroundColor: 'black',
-                    color: '#B71C1C',
-                  },
-                }}>
-                <div>Bogotá</div>
-                <div>13.05.25</div>
-              </Button>
 
-              <Button variant="contained" color="primary"
-                component="a"
-                href='https://tickets.eticketablanca.com/event/la-vida-boheme-en-medellin-a41p87?eventId=69a1fdf638f9dd34e6c103c6'
-                target="_blank"
-                sx={{
-                  fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-                  backgroundColor: '#B71C1C',
-                  color: 'black',
-                  height: '55px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  fontSize: '13px',
-                  fontWeight: 'bold',
-                  textTransform: 'uppercase',
-                  lineHeight: '1.1',
-                  '&:hover': {
-                    backgroundColor: 'black',
-                    color: '#B71C1C',
-                  },
-                }}>
-                <div>Medellín</div>
-                <div>14.05.25</div>
-              </Button>
-
-              <Button variant="contained" color="primary"
-                component="a"
-                href='#'
-                target="_blank"
-                sx={{
-                  gridColumn: 'span 2',
-                  justifySelf: 'center',
-                  width: 'calc(50% - 7.5px)',
-                  fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
-                  backgroundColor: '#B71C1C',
-                  color: 'black',
-                  height: '55px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  fontSize: '13px',
-                  fontWeight: 'bold',
-                  textTransform: 'uppercase',
-                  lineHeight: '1.1',
-                  '&:hover': {
-                    backgroundColor: 'black',
-                    color: '#B71C1C',
-                  },
-                }}>
-                <div>Panamá</div>
-                <div>15.05.25</div>
-              </Button>
-            </div>
+            {/* Tour Dates */}
+            {loading && (
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3vh' }}>
+                <CircularProgress sx={{ color: '#B71C1C' }} />
+              </div>
+            )}
+            
+            {!loading && error && (
+              <Typography sx={{ color: '#B71C1C', textAlign: 'center', marginTop: '3vh' }}>
+                Error loading dates
+              </Typography>
+            )}
+            
+            {!loading && !error && tourDates.length > 0 && (
+              <div style={{
+                marginTop: '3vh',
+                display: 'grid',
+                gridTemplateColumns: tourDates.length === 1 ? '1fr' : '1fr 1fr',
+                gap: '15px',
+                width: '100%'
+              }}>
+                {tourDates.map((date) => {
+                  // For odd number of dates, make the last one span full width and center it
+                  const dateIndex = tourDates.indexOf(date);
+                  const isLastOdd = tourDates.length % 2 === 1 && dateIndex === tourDates.length - 1;
+                  return (
+                    <Button
+                      key={`${date.fecha}-${date.lugar}`}
+                      variant="contained"
+                      color="primary"
+                      component="a"
+                      href={date.ticketLink}
+                      target="_blank"
+                      sx={{
+                        ...(isLastOdd && {
+                          gridColumn: 'span 2',
+                          justifySelf: 'center',
+                          width: 'calc(50% - 7.5px)',
+                        }),
+                        fontFamily: 'IBM Plex Sans, sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif',
+                        backgroundColor: '#B71C1C',
+                        color: 'black',
+                        height: '55px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        fontSize: '13px',
+                        fontWeight: 'bold',
+                        textTransform: 'uppercase',
+                        lineHeight: '1.1',
+                        '&:hover': {
+                          backgroundColor: 'black',
+                          color: '#B71C1C',
+                        },
+                      }}
+                    >
+                      <div>{date.lugar}</div>
+                      <div>{date.fecha}</div>
+                    </Button>
+                  );
+                })}
+              </div>
+            )}
+            
+            {!loading && !error && tourDates.length === 0 && (
+              <Typography sx={{ color: '#B71C1C', textAlign: 'center', marginTop: '3vh' }}>
+                No upcoming dates
+              </Typography>
+            )}
 
             {/* Commented out date buttons
             <div style={{

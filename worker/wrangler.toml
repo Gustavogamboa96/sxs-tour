@@ -1,0 +1,15 @@
+name = "tour-dates-worker"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# Development settings
+[dev]
+port = 8787
+
+# Environment variables (set the actual SHEET_ID via wrangler secret or dashboard)
+[vars]
+# SHEET_ID is set as a secret, not here
+
+# Production environment
+[env.production]
+# Add your production-specific settings here if needed
