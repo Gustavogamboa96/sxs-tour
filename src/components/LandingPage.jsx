@@ -110,12 +110,9 @@ export default function LandingPage() {
     const handleCloseSignup = () => {
         setOpenSignup(false);
         
-        // Show terminal or chatbot based on enabled flags
         setTimeout(() => {
             if (ENABLE_TERMINAL) {
                 setOpenTerminal(true);
-            } else if (ENABLE_CHATBOT) {
-                setOpenChatBot(true);
             }
         }, 1000);
     };
@@ -124,6 +121,27 @@ export default function LandingPage() {
     const handleCloseChatBot = () => {
         setOpenChatBot(false);
     };
+
+    // Secret keyword: typing "chatbot" anywhere on the page opens the ChatBot
+    useEffect(() => {
+        if (!ENABLE_CHATBOT) return;
+        const secret = 'chatbot';
+        let buffer = '';
+        const handleKeyPress = (e) => {
+            const tag = e.target.tagName;
+            if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
+            buffer += e.key.toLowerCase();
+            if (buffer.length > secret.length) {
+                buffer = buffer.slice(-secret.length);
+            }
+            if (buffer === secret) {
+                buffer = '';
+                setOpenChatBot(true);
+            }
+        };
+        window.addEventListener('keypress', handleKeyPress);
+        return () => window.removeEventListener('keypress', handleKeyPress);
+    }, []);
     
     const handleOpenSignup = () => setOpenSignup(true);
 

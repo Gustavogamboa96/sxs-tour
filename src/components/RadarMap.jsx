@@ -83,6 +83,74 @@ function isInView(lon, lat, bounds) {
   return lon >= bounds.lonMin && lon <= bounds.lonMax && lat >= bounds.latMin && lat <= bounds.latMax;
 }
 
+function ClampedTooltip({ dot, containerRef, onMouseEnter, onMouseLeave, isMobile }) {
+  const tooltipRef = useRef(null);
+  const [style, setStyle] = useState({});
+
+  useEffect(() => {
+    const el = tooltipRef.current;
+    const container = containerRef.current;
+    if (!el || !container) return;
+    const cRect = container.getBoundingClientRect();
+    const tRect = el.getBoundingClientRect();
+    const MARGIN = 6;
+
+    let left = dot.x;
+    let translateX = '-50%';
+    let top = null;
+    let bottom = null;
+
+    // Flip below if too close to the top
+    const spaceAbove = dot.y;
+    if (spaceAbove < tRect.height + 18) {
+      top = dot.y + 14;
+    } else {
+      bottom = cRect.height - dot.y + 12;
+    }
+
+    // Horizontal clamping
+    const halfW = tRect.width / 2;
+    if (dot.x - halfW < MARGIN) {
+      left = MARGIN;
+      translateX = '0';
+    } else if (dot.x + halfW > cRect.width - MARGIN) {
+      left = cRect.width - MARGIN;
+      translateX = '-100%';
+    }
+
+    const newStyle = { left, transform: `translateX(${translateX})` };
+    if (top != null) newStyle.top = top;
+    else newStyle.bottom = bottom;
+    setStyle(newStyle);
+  }, [dot.x, dot.y, containerRef]);
+
+  return (
+    <div
+      ref={tooltipRef}
+      className="radar-tooltip"
+      style={style}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      <div className="radar-tooltip__city">{dot.city}</div>
+      {dot.dates.map((d, i) => (
+        <div key={i} className="radar-tooltip__date-row">
+          <span className="radar-tooltip__date">{formatDate(d.date)}</span>
+          <a
+            className="radar-tooltip__link"
+            href={d.ticketUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={e => e.stopPropagation()}
+          >
+            [ TICKETS ]
+          </a>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function RadarMap({ locations, highlightedCityKey, setHighlightedCityKey, loading }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -275,31 +343,21 @@ export default function RadarMap({ locations, highlightedCityKey, setHighlighted
           >
             <div className="radar-dot__ring" />
             <div className="radar-dot__ring radar-dot__ring--second" />
-
-            {isHighlighted && (
-              <div
-                className="radar-tooltip"
-                onMouseEnter={handleTooltipEnter}
-                onMouseLeave={handleTooltipLeave}
-              >
-                <div className="radar-tooltip__city">{dot.city}</div>
-                {dot.dates.map((d, i) => (
-                  <div key={i} className="radar-tooltip__date-row">
-                    <span className="radar-tooltip__date">{formatDate(d.date)}</span>
-                    <a
-                      className="radar-tooltip__link"
-                      href={d.ticketUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                    >
-                      [ TICKETS ]
-                    </a>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
+        );
+      })}
+
+      {!loading && cityDots.map(dot => {
+        if (highlightedCityKey !== dot.cityKey) return null;
+        return (
+          <ClampedTooltip
+            key={`tip-${dot.cityKey}`}
+            dot={dot}
+            containerRef={containerRef}
+            onMouseEnter={handleTooltipEnter}
+            onMouseLeave={handleTooltipLeave}
+            isMobile={isMobile}
+          />
         );
       })}
     </div>
