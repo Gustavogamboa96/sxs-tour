@@ -6,7 +6,7 @@ body {
   width: 100%;
   letter-spacing: 3px;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 /* Background video styles */

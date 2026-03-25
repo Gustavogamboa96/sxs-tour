@@ -10,13 +10,14 @@ import Presave from './Presave'
 import BentoWidget from './BentoWidget'
 import TerminalPlayer from './TerminalPlayer'
 import ChatBot from './ChatBot'
+import TourSection from './TourSection'
 
 
 
 export default function LandingPage() {
     // Configuration flags - set these to true/false to enable/disable specific modals
     const ENABLE_PRESAVE = false;     // Set to false to skip the Presave modal
-    const ENABLE_UPCOMING = true;    // Set to false to skip the UpcomingDate modal
+    const ENABLE_UPCOMING = false;    // Set to false to skip the UpcomingDate modal
     const ENABLE_SIGNUP = true;      // Set to false to skip the Signup modal
     const ENABLE_TERMINAL = false;   // Set to false to skip the Terminal (already false)
     const ENABLE_CHATBOT = true;     // Set to true to enable the ChatBot after signup
@@ -167,7 +168,7 @@ export default function LandingPage() {
                                             setOpenTerminal(true);
                                         } : link.isUpcoming ? (e) => {
                                             e.preventDefault();
-                                            setOpenUpcomingDate(true);
+                                            document.getElementById('tour-section')?.scrollIntoView({ behavior: 'smooth' });
                                         } : undefined
                                     } className="footer-link">
                                         {link.text}
@@ -220,6 +221,10 @@ export default function LandingPage() {
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
+            <TourSection
+                tourApiUrl={import.meta.env.VITE_TOUR_API_URL}
+                geocodingApiKey={import.meta.env.VITE_OPENCAGE_KEY}
+            />
             <BentoWidget />
             
             {/* TERMINAL PLAYER - Control with ENABLE_TERMINAL flag at top of component */}

@@ -1,0 +1,329 @@
+/* ===== TourSection ===== */
+.tour-section {
+  --accent-red: #B71C1C;
+  --accent-red-bright: #cc2200;
+  --bg-dark: #0d0d0d;
+
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background video behind everything */
+.tour-section__bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Frosted glass overlay on the sides (shows through behind the gutters) */
+.tour-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 1;
+}
+
+.tour-section__inner {
+  width: 100%;
+  max-width: 960px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+/* Desktop: 100vh total, map centered, dates below */
+@media (min-width: 769px) {
+  .tour-section {
+    height: 100vh;
+  }
+  .tour-section__inner {
+    height: 100%;
+    justify-content: center;
+  }
+  .tour-section__map-wrap {
+    height: 65%;
+    min-height: 0;
+  }
+  .tour-section__dates-wrap {
+    min-height: 0;
+    padding: 20px 10px;
+  }
+}
+
+/* Mobile: auto height */
+@media (max-width: 768px) {
+  .tour-section {
+    height: auto;
+  }
+  .tour-section__map-wrap {
+    min-height: 65vw;
+  }
+  .tour-section__dates-wrap {
+    padding: 15px 10px;
+  }
+}
+
+/* ===== RadarMap ===== */
+.radar-map {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.radar-map__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Loading overlay */
+.radar-map__loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: loadingBlink 1.2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes loadingBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+/* Location dot */
+.radar-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.85);
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  cursor: pointer;
+}
+
+/* Invisible larger hit area for easier clicking */
+.radar-dot::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .radar-dot {
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 12px 5px rgba(255, 255, 255, 0.9);
+  }
+  .radar-dot::after {
+    inset: -4px;
+  }
+}
+
+.radar-dot--highlighted {
+  background: var(--accent-red-bright, #cc2200);
+  box-shadow: 0 0 16px 6px rgba(204, 34, 0, 0.7);
+}
+
+/* Ping rings */
+.radar-dot__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  transform: translate(-50%, -50%);
+  animation: radarPing 2s ease-out infinite;
+  pointer-events: none;
+}
+
+.radar-dot__ring--second {
+  animation-delay: 1s;
+}
+
+.radar-dot--highlighted .radar-dot__ring {
+  border-color: var(--accent-red-bright, #cc2200);
+}
+
+@keyframes radarPing {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+  }
+  100% {
+    width: 32px;
+    height: 32px;
+    opacity: 0;
+  }
+}
+
+/* Tooltip */
+.radar-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 8px 12px;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.7rem;
+  color: #fff;
+  white-space: nowrap;
+  z-index: 20;
+  pointer-events: auto;
+  letter-spacing: 1px;
+}
+
+.radar-tooltip__city {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.radar-tooltip__date-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
+}
+
+.radar-tooltip__date {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.65rem;
+}
+
+.radar-tooltip__link {
+  color: var(--accent-red-bright, #cc2200);
+  text-decoration: none;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.radar-tooltip__link:hover {
+  text-decoration: underline;
+  color: #ff4422;
+}
+
+/* ===== TourDatesList ===== */
+.tour-dates-list {
+  padding: 0;
+  background: transparent;
+}
+
+/* Desktop: horizontal scroll, centered */
+@media (min-width: 769px) {
+  .tour-dates-list__scroll {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+}
+
+/* Mobile: 2-column grid */
+@media (max-width: 768px) {
+  .tour-dates-list__scroll {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+}
+
+/* Date button — matches hero footer link style */
+.tour-date-btn {
+  flex-shrink: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(183, 28, 28, 0.5);
+  border-radius: 4px;
+  color: #B71C1C;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 12px 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.tour-date-btn:hover,
+.tour-date-btn--highlighted {
+  background-color: rgba(183, 28, 28, 0.85);
+  color: #ffffff;
+  border-color: #B71C1C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(183, 28, 28, 0.4);
+}
+
+.tour-date-btn__city {
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.tour-date-btn__country {
+  font-size: 0.6rem;
+  color: rgba(183, 28, 28, 0.6);
+  font-weight: 400;
+}
+
+.tour-date-btn--highlighted .tour-date-btn__country,
+.tour-date-btn:hover .tour-date-btn__country {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tour-date-btn__date {
+  font-size: 0.65rem;
+  color: rgba(183, 28, 28, 0.5);
+  margin-top: 4px;
+}
+
+.tour-date-btn--highlighted .tour-date-btn__date,
+.tour-date-btn:hover .tour-date-btn__date {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tour-date-btn__tickets {
+  font-size: 0.55rem;
+  letter-spacing: 2.5px;
+  margin-top: 4px;
+  color: rgba(183, 28, 28, 0.4);
+}
+
+.tour-date-btn--highlighted .tour-date-btn__tickets,
+.tour-date-btn:hover .tour-date-btn__tickets {
+  color: rgba(255, 255, 255, 0.9);
+}
