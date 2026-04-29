@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import * as topojson from 'topojson-client';
+import './TourSection.css';
 
 const WORLD_TOPO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 
@@ -79,6 +80,13 @@ function projectBounded(lon, lat, width, height, bounds) {
   return [x, y];
 }
 
+function screenToGeo(x, y, width, height, bounds) {
+  const { scale, offsetX, offsetY } = getProjection(width, height, bounds);
+  const lon = (x - offsetX) / scale + bounds.lonMin;
+  const lat = bounds.latMax - (y - offsetY) / scale;
+  return { lon, lat };
+}
+
 function isInView(lon, lat, bounds) {
   return lon >= bounds.lonMin && lon <= bounds.lonMax && lat >= bounds.latMin && lat <= bounds.latMax;
 }
@@ -151,12 +159,15 @@ function ClampedTooltip({ dot, containerRef, onMouseEnter, onMouseLeave, isMobil
   );
 }
 
-export default function RadarMap({ locations, highlightedCityKey, setHighlightedCityKey, loading }) {
+export default function RadarMap({ locations, highlightedCityKey, setHighlightedCityKey, loading, showAllDates, onDismissAll }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const [polygons, setPolygons] = useState(null);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [viewBounds, setViewBounds] = useState(null);
+  const boundsRef = useRef(null);
+  const touchStateRef = useRef(null);
 
   // Fetch and parse world topology once
   useEffect(() => {
@@ -210,16 +221,97 @@ export default function RadarMap({ locations, highlightedCityKey, setHighlighted
   }, []);
 
   // On mobile, zoom to fit the actual tour locations
-  const bounds = useMemo(() => {
+  const baseBounds = useMemo(() => {
     if (isMobile && locations.length > 0) {
       return computeMobileBounds(locations);
     }
     return DESKTOP_BOUNDS;
   }, [isMobile, locations]);
 
+  // Reset view when baseBounds changes (new locations or device type)
+  useEffect(() => {
+    setViewBounds(null);
+  }, [baseBounds]);
+
+  // Apply user pan/zoom on top of baseBounds
+  const bounds = useMemo(() => viewBounds ?? baseBounds, [viewBounds, baseBounds]);
+
+  // Mobile touch: 1-finger pan + 2-finger pinch-zoom
+  useEffect(() => {
+    if (!isMobile) return;
+    const container = containerRef.current;
+    if (!container) return;
+
+    const getDist = (t) => Math.hypot(t[1].clientX - t[0].clientX, t[1].clientY - t[0].clientY);
+
+    const onTouchStart = (e) => {
+      const rect = container.getBoundingClientRect();
+      const { width, height } = canvasSize;
+      if (e.touches.length === 1) {
+        touchStateRef.current = { type: 'pan', x: e.touches[0].clientX, y: e.touches[0].clientY };
+      } else if (e.touches.length >= 2) {
+        const dist = getDist(e.touches);
+        const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+        const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+        const geo = screenToGeo(midX, midY, width, height, boundsRef.current);
+        touchStateRef.current = { type: 'pinch', startDist: dist, startBounds: { ...boundsRef.current }, midGeo: geo };
+      }
+    };
+
+    const onTouchMove = (e) => {
+      if (!touchStateRef.current) return;
+      e.preventDefault();
+      const { width, height } = canvasSize;
+      if (width === 0 || height === 0) return;
+
+      if (e.touches.length >= 2 && touchStateRef.current.type === 'pinch') {
+        const { startDist, startBounds, midGeo } = touchStateRef.current;
+        const newDist = getDist(e.touches);
+        const scaleFactor = Math.max(0.5, Math.min(10, newDist / startDist));
+        const oldLonSpan = startBounds.lonMax - startBounds.lonMin;
+        const oldLatSpan = startBounds.latMax - startBounds.latMin;
+        const newLonSpan = Math.max(5, oldLonSpan / scaleFactor);
+        const newLatSpan = Math.max(3, oldLatSpan / scaleFactor);
+        const lonFrac = (midGeo.lon - startBounds.lonMin) / oldLonSpan;
+        const latFrac = (startBounds.latMax - midGeo.lat) / oldLatSpan;
+        setViewBounds({
+          lonMin: Math.max(-180, midGeo.lon - lonFrac * newLonSpan),
+          lonMax: Math.min(180, midGeo.lon + (1 - lonFrac) * newLonSpan),
+          latMin: Math.max(-90, midGeo.lat - (1 - latFrac) * newLatSpan),
+          latMax: Math.min(90, midGeo.lat + latFrac * newLatSpan),
+        });
+      } else if (e.touches.length === 1 && touchStateRef.current.type === 'pan') {
+        const dx = e.touches[0].clientX - touchStateRef.current.x;
+        const dy = e.touches[0].clientY - touchStateRef.current.y;
+        touchStateRef.current.x = e.touches[0].clientX;
+        touchStateRef.current.y = e.touches[0].clientY;
+        const cb = boundsRef.current;
+        const lonSpan = cb.lonMax - cb.lonMin;
+        const latSpan = cb.latMax - cb.latMin;
+        const dLon = -(dx / width) * lonSpan;
+        const dLat = (dy / height) * latSpan;
+        const newLonMin = Math.max(-180, Math.min(180 - lonSpan, cb.lonMin + dLon));
+        const newLatMin = Math.max(-90, Math.min(90 - latSpan, cb.latMin + dLat));
+        setViewBounds({ lonMin: newLonMin, lonMax: newLonMin + lonSpan, latMin: newLatMin, latMax: newLatMin + latSpan });
+      }
+    };
+
+    const onTouchEnd = () => { touchStateRef.current = null; };
+
+    container.addEventListener('touchstart', onTouchStart, { passive: true });
+    container.addEventListener('touchmove', onTouchMove, { passive: false });
+    container.addEventListener('touchend', onTouchEnd, { passive: true });
+
+    return () => {
+      container.removeEventListener('touchstart', onTouchStart);
+      container.removeEventListener('touchmove', onTouchMove);
+      container.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [isMobile, canvasSize]);
+
   const drawMap = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas || !polygons) return;
+    if (!canvas) return;
     const { width, height } = canvasSize;
     if (width === 0 || height === 0) return;
 
@@ -228,10 +320,9 @@ export default function RadarMap({ locations, highlightedCityKey, setHighlighted
     canvas.height = height * dpr;
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
-
-    // Background
     ctx.fillStyle = '#0d0d0d';
     ctx.fillRect(0, 0, width, height);
+    if (!polygons) return;
 
     // Draw country outlines as smooth stroked paths
     ctx.strokeStyle = 'rgba(180, 180, 180, 0.35)';
@@ -311,8 +402,17 @@ export default function RadarMap({ locations, highlightedCityKey, setHighlighted
     }
   };
   const handleDotTap = (cityKey) => {
-    if (isMobile) {
+    if (showAllDates) {
+      onDismissAll?.();
+      setHighlightedCityKey(cityKey);
+    } else if (isMobile) {
       setHighlightedCityKey(prev => prev === cityKey ? null : cityKey);
+    }
+  };
+  const handleContainerClick = (e) => {
+    if (e.target === canvasRef.current) {
+      setHighlightedCityKey(null);
+      onDismissAll?.();
     }
   };
   const handleTooltipEnter = () => {
@@ -324,14 +424,16 @@ export default function RadarMap({ locations, highlightedCityKey, setHighlighted
     }
   };
 
+  boundsRef.current = bounds;
+
   return (
-    <div className="radar-map" ref={containerRef}>
+    <div className="radar-map" ref={containerRef} onClick={handleContainerClick}>
       <canvas ref={canvasRef} className="radar-map__canvas" />
 
       {loading && <div className="radar-map__loading">LOADING TOUR DATA...</div>}
 
       {!loading && cityDots.map(dot => {
-        const isHighlighted = highlightedCityKey === dot.cityKey;
+        const isHighlighted = showAllDates || highlightedCityKey === dot.cityKey;
         return (
           <div
             key={dot.cityKey}
@@ -339,7 +441,7 @@ export default function RadarMap({ locations, highlightedCityKey, setHighlighted
             style={{ left: dot.x, top: dot.y }}
             onMouseEnter={() => handleDotEnter(dot.cityKey)}
             onMouseLeave={handleDotLeave}
-            onClick={() => handleDotTap(dot.cityKey)}
+            onClick={(e) => { e.stopPropagation(); handleDotTap(dot.cityKey); }}
           >
             <div className="radar-dot__ring" />
             <div className="radar-dot__ring radar-dot__ring--second" />
@@ -348,7 +450,8 @@ export default function RadarMap({ locations, highlightedCityKey, setHighlighted
       })}
 
       {!loading && cityDots.map(dot => {
-        if (highlightedCityKey !== dot.cityKey) return null;
+        const isHighlighted = showAllDates || highlightedCityKey === dot.cityKey;
+        if (!isHighlighted) return null;
         return (
           <ClampedTooltip
             key={`tip-${dot.cityKey}`}

@@ -1,291 +1,137 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap');
 
 html,
 body {
   height: 100%;
   width: 100%;
-  letter-spacing: 3px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
 }
 
-/* Background video styles */
-.background-video {
-  position: absolute;
+/* ── Root: lock to viewport ── */
+.landing-root {
+  position: fixed;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
+  overflow: hidden;
+  background: #000;
+  touch-action: none;
 }
 
-/* @media (max-width: 668px) {
-    .music-player-margin-bottom{
-    margin-bottom: 45vh !important;
-  }
-} */
-
-@media  (max-width: 768px) {
-  .background-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .music-player-margin-bottom{
-    margin-bottom: 51vh !important;
-  }
-}
-
-  .music-player-margin-bottom {
-    margin-bottom: 55vh;
-  }
-.bg-container {
-  background-color: #000000;
-  flex-direction: column;
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.dates-div a {
-  font-weight: 700;
-  font-style: bold;
-  color: #B71C1C !important;
-  text-decoration: none;
-  line-height: 2.5vh;
-}
-
-.dates-div a:hover {
-  cursor: unset;
-  text-decoration: underline;
-}
-
-.footer {
-  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  font-weight: 700;
-  font-style: bold;
+/* ── Map fills 100% of the viewport ── */
+.landing-map {
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
+  background: #0d0d0d;
+}
+
+/* ── Compact music player – top-left overlay ── */
+.landing-player-overlay {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 20;
+  pointer-events: all;
+}
+
+/* Strip the outer padding Box MusicPlayer adds when compact */
+.landing-player-overlay > div {
+  padding: 0 !important;
+  width: auto !important;
+  background: transparent !important;
+}
+
+/* ── Footer links – bottom overlay ── */
+.landing-footer-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
   display: flex;
   justify-content: center;
-  flex-direction: row;
-  gap: 10px;
-  margin-top: auto;
-  padding: 20px 10px;
+  padding: 14px 10px 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+  pointer-events: all;
 }
 
-.footer ul {
-  gap: 8px;
-}
-
-.footer li {
+.landing-footer-links {
+  list-style: none;
+  margin: 0;
   padding: 0;
-  margin: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
 }
 
-.footer a,
+.landing-footer-links li {
+  margin: 0;
+}
+
+/* ── Shared footer-link style (used by both layouts) ── */
 .footer-link {
   color: #B71C1C;
   text-decoration: none;
-  font-size: 0.85em;
-  padding: 12px 16px;
-  display: inline-block;
-  background-color: rgba(0, 0, 0, 0.3);
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 8px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.55);
   border: 1px solid rgba(183, 28, 28, 0.5);
   border-radius: 4px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  min-width: 120px;
+  transition: all 0.25s ease;
+  min-width: 100px;
   text-align: center;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  white-space: nowrap;
 }
 
-.footer a:hover,
 .footer-link:hover {
   background-color: rgba(183, 28, 28, 0.85);
   color: #ffffff;
-  text-decoration: none;
-  cursor: pointer;
   border-color: #B71C1C;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(183, 28, 28, 0.4);
+  cursor: pointer;
 }
 
-.list-unstyled {
-  /* ... other styles ... */
-  flex-wrap: wrap;
-}
-
+/* ── Mobile ── */
 @media (max-width: 768px) {
-
-  html,
-  body {
-    overflow-y: scroll;
+  .landing-player-overlay {
+    top: 10px;
+    left: 10px;
   }
 
-
-  .col.d-flex.align-items-center.justify-content-start {
-    max-width: 100%;
+  .landing-footer-overlay {
+    padding: 10px 8px 12px;
   }
 
-  .dates-div {
-    max-width: 100%;
-    padding-top: 20px;
-    padding-left: 10px;
-    font-size: 0.6em;
-    line-height: 160%;
-    white-space: nowrap;
-    letter-spacing: 1.8px;
-  }
-
-  .dates-div a {
-    line-height: 150%;
-    width: 100%;
-    max-width: none;
-  }
-
-  .footer {
-    padding: 15px 5px;
+  .landing-footer-links {
     gap: 5px;
   }
 
-  .footer ul {
-    gap: 6px;
-  }
-
-  .footer a,
   .footer-link {
-    font-size: 0.75em;
-    padding: 14px 12px;
-    min-width: 100px;
+    font-size: 0.68em;
+    padding: 9px 10px;
+    min-width: 80px;
     letter-spacing: 1.5px;
-    min-height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: 44px;
   }
 
-  .footer li {
-    margin: 3px;
-    flex: 0 0 calc(50% - 10px);
-    max-width: calc(50% - 10px);
+  .landing-footer-links li {
+    flex: 0 0 calc(50% - 6px);
+    max-width: calc(50% - 6px);
   }
 }
 
-@media (max-width: 1630px) {
-  /* Media query placeholder for future use */
-}
-
-@media (min-width: 1630px) {
-  .dates-div {
-    padding-bottom: 10vh;
-    /* Adjust the padding as needed */
-  }
-}
-
-
-
-
-/* ----------------------------mouse animation keyframes----------------------- */
-@-webkit-keyframes cursorAnimation {
-  0% {
-    cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto;
-  }
-
-  10% {
-    cursor: url('../../public/images/frame_01_delay-0.1s.gif'), auto;
-  }
-
-  20% {
-    cursor: url('../../public/images/frame_02_delay-0.1s.gif'), auto;
-  }
-
-  30% {
-    cursor: url('../../public/images/frame_03_delay-0.1s.gif'), auto;
-  }
-
-  40% {
-    cursor: url('../../public/images/frame_04_delay-0.1s.gif'), auto;
-  }
-
-  50% {
-    cursor: url('../../public/images/frame_05_delay-0.1s.gif'), auto;
-  }
-
-  60% {
-    cursor: url('../../public/images/frame_06_delay-0.1s.gif'), auto;
-  }
-
-  70% {
-    cursor: url('../../public/images/frame_07_delay-0.1s.gif'), auto;
-  }
-
-  80% {
-    cursor: url('../../public/images/frame_08_delay-0.1s.gif'), auto;
-  }
-
-  90% {
-    cursor: url('../../public/images/frame_09_delay-0.1s.gif'), auto;
-  }
-
-  100% {
-    cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto;
-  }
-}
-
-@keyframes cursorAnimation {
-  0% {
-    cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto;
-  }
-
-  10% {
-    cursor: url('../../public/images/frame_01_delay-0.1s.gif'), auto;
-  }
-
-  20% {
-    cursor: url('../../public/images/frame_02_delay-0.1s.gif'), auto;
-  }
-
-  30% {
-    cursor: url('../../public/images/frame_03_delay-0.1s.gif'), auto;
-  }
-
-  40% {
-    cursor: url('../../public/images/frame_04_delay-0.1s.gif'), auto;
-  }
-
-  50% {
-    cursor: url('../../public/images/frame_05_delay-0.1s.gif'), auto;
-  }
-
-  60% {
-    cursor: url('../../public/images/frame_06_delay-0.1s.gif'), auto;
-  }
-
-  70% {
-    cursor: url('../../public/images/frame_07_delay-0.1s.gif'), auto;
-  }
-
-  80% {
-    cursor: url('../../public/images/frame_08_delay-0.1s.gif'), auto;
-  }
-
-  90% {
-    cursor: url('../../public/images/frame_09_delay-0.1s.gif'), auto;
-  }
-
-  100% {
-    cursor: url('../../public/images/frame_00_delay-0.1s.gif'), auto;
-  }
-}
-
-.animated-cursor {
-  -webkit-animation: cursorAnimation 1s steps(10) infinite;
-  animation: cursorAnimation 1s steps(10) infinite;
-}
-
-/* ----------------------------mouse animation keyframes----------------------- */

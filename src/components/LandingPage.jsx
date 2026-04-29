@@ -1,213 +1,204 @@
-import React, { useState, useEffect } from 'react'
-import { links, events } from '../dates'
+import React, { useState, useEffect, useRef } from 'react'
+import { links } from '../dates'
 import './LandingPage.css'
 import Signup from './Signup'
 import { Snackbar } from '@mui/material'
-import Alert from '@mui/material/Alert';
+import Alert from '@mui/material/Alert'
 import MusicPlayer from './MusicPlayer'
 import UpcomingDate from './UpcomingDate'
 import Presave from './Presave'
-import BentoWidget from './BentoWidget'
-import TerminalPlayer from './TerminalPlayer'
 import ChatBot from './ChatBot'
-import TourSection from './TourSection'
-
-
+import RadarMap from './RadarMap'
 
 export default function LandingPage() {
-    // Configuration flags - set these to true/false to enable/disable specific modals
-    const ENABLE_PRESAVE = false;     // Set to false to skip the Presave modal
-    const ENABLE_UPCOMING = false;    // Set to false to skip the UpcomingDate modal
-    const ENABLE_SIGNUP = true;      // Set to false to skip the Signup modal
-    const ENABLE_TERMINAL = false;   // Set to false to skip the Terminal (already false)
-    const ENABLE_CHATBOT = true;     // Set to true to enable the ChatBot after signup
-    
+    const ENABLE_PRESAVE = false;
+    const ENABLE_UPCOMING = false;
+    const ENABLE_SIGNUP = true;
+    const ENABLE_CHATBOT = true;
+
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const [snackbarMessage, setSnackbarMessage] = useState("")
     const [isSuccess, setIsSuccess] = useState(true)
-    const [openSignup, setOpenSignup] = useState(false);
-    const [openPresave, setOpenPresave] = useState(false);
-    const [openUpcomingDate, setOpenUpcomingDate] = useState(false);
-    const [openTerminal, setOpenTerminal] = useState(false);
-    const [openChatBot, setOpenChatBot] = useState(false);
-    const [isOnboardingSequence, setIsOnboardingSequence] = useState(false);
-
-    const handleOpenPresave = () => setOpenPresave(true);
-    const handleClosePresave = () => {
-        setOpenPresave(false);
-        // Start next modal in sequence based on enabled flags
-        setTimeout(() => {
-            if (ENABLE_UPCOMING) {
-                setOpenUpcomingDate(true);
-            } else if (ENABLE_SIGNUP) {
-                setOpenSignup(true);
-            }
-        }, 300);
+    const [openSignup, setOpenSignup] = useState(false)
+    const [openPresave, setOpenPresave] = useState(false)
+    const [openUpcomingDate, setOpenUpcomingDate] = useState(false)
+    const [openChatBot, setOpenChatBot] = useState(false)
+    const [isOnboardingSequence, setIsOnboardingSequence] = useState(false)
+    const [highlightedCityKey, setHighlightedCityKey] = useState(null)
+    const [showAllDates, setShowAllDates] = useState(false)
+    const handleHighlightCity = (key) => {
+        setHighlightedCityKey(key)
+        if (key !== null) setShowAllDates(false)
+    }
+    const handleDismissAll = () => {
+        setShowAllDates(false)
+        setHighlightedCityKey(null)
     }
 
-    const handleOpenUpcomingDate = () => setOpenUpcomingDate(true);
+    // Tour data (fetched & geocoded here, passed to RadarMap)
+    const [tourDates, setTourDates] = useState([])
+    const [tourLoading, setTourLoading] = useState(true)
+    const geoCache = useRef({})
+
+    useEffect(() => {
+        const tourApiUrl = import.meta.env.VITE_TOUR_API_URL
+        const geocodingApiKey = import.meta.env.VITE_OPENCAGE_KEY
+        if (!tourApiUrl) { setTourLoading(false); return; }
+        let cancelled = false
+
+        async function fetchAndGeocode() {
+            try {
+                const res = await fetch(tourApiUrl)
+                const data = await res.json()
+                const raw = data.tourDates || []
+                const parsed = raw.map((r, i) => {
+                    const parts = r.lugar.split(',').map(s => s.trim())
+                    const city = parts[0] || ''
+                    const country = parts.slice(1).join(', ') || ''
+                    const cityKey = r.lugar.trim()
+                    let isoDate = r.fecha
+                    const dp = r.fecha.split('.')
+                    if (dp.length === 3) isoDate = `${dp[2]}-${dp[1]}-${dp[0]}`
+                    return { id: String(i), city, country, date: isoDate, rawDate: r.fecha, ticketUrl: r.ticketLink, cityKey, lat: null, lng: null }
+                }).filter(r => r.city)
+
+                const uniqueCities = [...new Set(parsed.map(r => r.cityKey))]
+                if (geocodingApiKey) {
+                    await Promise.all(uniqueCities.map(async cityKey => {
+                        if (geoCache.current[cityKey]) return
+                        try {
+                            const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(cityKey)}&key=${encodeURIComponent(geocodingApiKey)}&limit=1`
+                            const geoRes = await fetch(url)
+                            const geoData = await geoRes.json()
+                            if (geoData.results?.length > 0) {
+                                const { lat, lng } = geoData.results[0].geometry
+                                geoCache.current[cityKey] = { lat, lng }
+                            }
+                        } catch { /* skip */ }
+                    }))
+                }
+                if (cancelled) return
+                const final = parsed.map(r => {
+                    const coords = geoCache.current[r.cityKey]
+                    return coords ? { ...r, lat: coords.lat, lng: coords.lng } : r
+                })
+                setTourDates(final)
+            } catch { /* silently fail */ }
+            if (!cancelled) setTourLoading(false)
+        }
+
+        fetchAndGeocode()
+        return () => { cancelled = true }
+    }, [])
+
+    const handleOpenPresave = () => setOpenPresave(true)
+    const handleClosePresave = () => {
+        setOpenPresave(false)
+        setTimeout(() => {
+            if (ENABLE_UPCOMING) setOpenUpcomingDate(true)
+            else if (ENABLE_SIGNUP) setOpenSignup(true)
+        }, 300)
+    }
+
+    const handleOpenUpcomingDate = () => setOpenUpcomingDate(true)
     const handleCloseUpcomingDate = () => {
-        setOpenUpcomingDate(false);
-        // Start next modal in sequence based on enabled flags (only during onboarding)
+        setOpenUpcomingDate(false)
         if (isOnboardingSequence) {
             setTimeout(() => {
-                if (ENABLE_SIGNUP) {
-                    setOpenSignup(true);
-                }
-                setIsOnboardingSequence(false);
-            }, 300);
+                if (ENABLE_SIGNUP) setOpenSignup(true)
+                setIsOnboardingSequence(false)
+            }, 300)
         }
     }
 
-    // Auto-show modal sequence on component mount
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsOnboardingSequence(true);
-            // Determine which modal to show first based on enabled flags
-            if (ENABLE_PRESAVE) {
-                handleOpenPresave();
-            } else if (ENABLE_UPCOMING) {
-                handleOpenUpcomingDate();
-            } else if (ENABLE_SIGNUP) {
-                handleOpenSignup();
-            }
-            // If all are disabled, no modals will show
-        }, 1500);
-        return () => clearTimeout(timer);
-    }, []);
-
-    // Add keyboard shortcut for terminal
-    useEffect(() => {
-        const handleKeyDown = (event) => {
-            // Alt+T keyboard shortcut to open terminal
-            if (event.altKey && event.key === 't') {
-                setOpenTerminal(prev => !prev);
-            }
-            // Escape key to close terminal
-            if (event.key === 'Escape' && openTerminal) {
-                setOpenTerminal(false);
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [openTerminal]);
+    const handleOpenSignup = () => setOpenSignup(true)
+    const handleCloseSignup = () => setOpenSignup(false)
 
     const handleSignupResponse = (message, success) => {
         setSnackbarMessage(message)
         setIsSuccess(success)
         setSnackbarOpen(true)
-        
-        // Modal closing and terminal opening are handled in handleCloseSignup
-        setTimeout(() => {
-            handleCloseSignup();
-        }, 500);
+        setTimeout(() => handleCloseSignup(), 500)
     }
 
-    const handleCloseSignup = () => {
-        setOpenSignup(false);
-        
-        setTimeout(() => {
-            if (ENABLE_TERMINAL) {
-                setOpenTerminal(true);
-            }
-        }, 1000);
-    };
+    const handleCloseChatBot = () => setOpenChatBot(false)
 
-    // Handler for closing the ChatBot
-    const handleCloseChatBot = () => {
-        setOpenChatBot(false);
-    };
-
-    // Secret keyword: typing "chatbot" anywhere on the page opens the ChatBot
     useEffect(() => {
-        if (!ENABLE_CHATBOT) return;
-        const secret = 'chatbot';
-        let buffer = '';
+        const timer = setTimeout(() => {
+            setIsOnboardingSequence(true)
+            if (ENABLE_PRESAVE) handleOpenPresave()
+            else if (ENABLE_UPCOMING) handleOpenUpcomingDate()
+            else if (ENABLE_SIGNUP) handleOpenSignup()
+        }, 1500)
+        return () => clearTimeout(timer)
+    }, [])
+
+    useEffect(() => {
+        if (!ENABLE_CHATBOT) return
+        const secret = 'chatbot'
+        let buffer = ''
         const handleKeyPress = (e) => {
-            const tag = e.target.tagName;
-            if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
-            buffer += e.key.toLowerCase();
-            if (buffer.length > secret.length) {
-                buffer = buffer.slice(-secret.length);
-            }
-            if (buffer === secret) {
-                buffer = '';
-                setOpenChatBot(true);
-            }
-        };
-        window.addEventListener('keypress', handleKeyPress);
-        return () => window.removeEventListener('keypress', handleKeyPress);
-    }, []);
-    
-    const handleOpenSignup = () => setOpenSignup(true);
-
-    const reopenNewsletter = () => {
-        handleOpenSignup();
-    }
-
+            const tag = e.target.tagName
+            if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return
+            buffer += e.key.toLowerCase()
+            if (buffer.length > secret.length) buffer = buffer.slice(-secret.length)
+            if (buffer === secret) { buffer = ''; setOpenChatBot(true) }
+        }
+        window.addEventListener('keypress', handleKeyPress)
+        return () => window.removeEventListener('keypress', handleKeyPress)
+    }, [])
 
     return (
-        <div className='animated-cursor'>
-            <div className="bg-container d-flex align-items-center justify-content-start flex-column min-vh-100" style={{
-                backgroundColor: '#000000',
-                position: 'relative',
-            }}>
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="background-video"
-                >
-                    <source src="/images/TDNBackgroundWeb.webm" type="video/webm" />
-                </video>
-                <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-                    <div className='flex-grow-1 music-player-margin-bottom'>
-                        <MusicPlayer
-                            title={"Pobres Románticos"}
-                            filename={"05.wav"}
-                        />
-                    </div>
-                    <div className='footer d-flex justify-content-center'>
-                        <ul className='list-unstyled d-flex flex-wrap justify-content-center' style={{ maxWidth: '1200px' }}>
-                            {links.map((link, index) => (
-                                <li key={index}
-                                    className="col-12 col-sm-6 col-lg-3 text-center" >
-                                    <a href={link.href} target="_blank" rel="noreferrer" onClick={
-                                        link.onClick ? (e) => {
-                                            e.preventDefault();
-                                            reopenNewsletter();
-                                        } : link.isTerminal ? (e) => {
-                                            e.preventDefault();
-                                            setOpenTerminal(true);
-                                        } : link.isUpcoming ? (e) => {
-                                            e.preventDefault();
-                                            document.getElementById('tour-section')?.scrollIntoView({ behavior: 'smooth' });
-                                        } : undefined
-                                    } className="footer-link">
-                                        {link.text}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+        <div className="landing-root">
+            {/* Full-screen map fills the entire viewport */}
+            <div className="landing-map">
+                <RadarMap
+                    locations={tourDates}
+                    highlightedCityKey={highlightedCityKey}
+                    setHighlightedCityKey={handleHighlightCity}
+                    loading={tourLoading}
+                    showAllDates={showAllDates}
+                    onDismissAll={handleDismissAll}
+                />
             </div>
-            {/* PRESAVE MODAL - Control with ENABLE_PRESAVE flag at top of component */}
+
+            {/* Compact music player — top-left overlay */}
+            <div className="landing-player-overlay">
+                <MusicPlayer
+                    title="Pobres Románticos"
+                    filename="05.wav"
+                    compact
+                />
+            </div>
+
+            {/* Footer links — bottom overlay */}
+            <div className="landing-footer-overlay">
+                <ul className="landing-footer-links">
+                    {links.map((link, index) => (
+                        <li key={index}>
+                            <a
+                                href={link.href}
+                                target={link.href === '#' ? undefined : "_blank"}
+                                rel="noreferrer"
+                                onClick={link.onClick ? (e) => { e.preventDefault(); handleOpenSignup() } :
+                                    link.isUpcoming ? (e) => { e.preventDefault(); setShowAllDates(prev => !prev); setHighlightedCityKey(null); } : undefined}
+                                className="footer-link"
+                            >
+                                {link.text}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
             {ENABLE_PRESAVE && (
-                <Presave 
+                <Presave
                     openPresave={openPresave}
                     handleOpenPresave={handleOpenPresave}
                     handleClosePresave={handleClosePresave}
                     openSignup={openSignup}
                 />
             )}
-            {/* END PRESAVE MODAL */}
-            {/* UPCOMING DATE MODAL - Control with ENABLE_UPCOMING flag at top of component */}
             {ENABLE_UPCOMING && (
                 <UpcomingDate
                     openUpcomingDate={openUpcomingDate}
@@ -216,8 +207,6 @@ export default function LandingPage() {
                     openSignup={openSignup}
                 />
             )}
-            {/* END UPCOMING DATE MODAL */}
-            {/* SIGNUP MODAL - Control with ENABLE_SIGNUP flag at top of component */}
             {ENABLE_SIGNUP && openSignup && (
                 <Signup
                     openSignup={openSignup}
@@ -227,7 +216,6 @@ export default function LandingPage() {
                     openUpcomingDate={openUpcomingDate}
                 />
             )}
-            {/* END SIGNUP MODAL */}
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={3000}
@@ -239,29 +227,9 @@ export default function LandingPage() {
                     {snackbarMessage}
                 </Alert>
             </Snackbar>
-            <TourSection
-                tourApiUrl={import.meta.env.VITE_TOUR_API_URL}
-                geocodingApiKey={import.meta.env.VITE_OPENCAGE_KEY}
-            />
-            <BentoWidget />
-            
-            {/* TERMINAL PLAYER - Control with ENABLE_TERMINAL flag at top of component */}
-            {ENABLE_TERMINAL && (
-                <TerminalPlayer 
-                    open={openTerminal} 
-                    onClose={() => setOpenTerminal(false)} 
-                />
-            )}
-            {/* END TERMINAL PLAYER */}
-            
-            {/* CHATBOT - Control with ENABLE_CHATBOT flag at top of component */}
             {ENABLE_CHATBOT && (
-                <ChatBot 
-                    open={openChatBot} 
-                    onClose={handleCloseChatBot} 
-                />
+                <ChatBot open={openChatBot} onClose={handleCloseChatBot} />
             )}
-            {/* END CHATBOT */}
         </div>
     )
 }

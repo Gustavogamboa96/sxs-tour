@@ -82,7 +82,7 @@ const TinyText = styled(Typography)({
   letterSpacing: 0.2,
 });
 
-export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = 'Entretenimiento', terminalMode = false, onError = null }) {
+export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = 'Entretenimiento', terminalMode = false, onError = null, compact = false }) {
   const duration = 200; // seconds
   const [position, setPosition] = React.useState(32);
   const [paused, setPaused] = React.useState(true);
@@ -243,6 +243,74 @@ export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = '
       margin: '0 auto',
       textAlign: 'center'
     }}>
+      {compact && (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'rgba(0,0,0,0.65)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: '1px solid rgba(183,28,28,0.45)',
+            borderRadius: '6px',
+            padding: '6px 10px 6px 12px',
+            minWidth: 0,
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 0, flex: 1 }}>
+            <Typography
+              sx={{
+                color: '#B71C1C',
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: '0.6rem',
+                fontWeight: 700,
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                lineHeight: 1.2,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              La Vida Bohème
+            </Typography>
+            <Typography
+              sx={{
+                color: 'rgba(255,255,255,0.85)',
+                fontFamily: "'IBM Plex Mono', monospace",
+                fontSize: '0.65rem',
+                fontWeight: 500,
+                letterSpacing: '1px',
+                lineHeight: 1.3,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
+              {title}
+            </Typography>
+          </Box>
+          <IconButton
+            aria-label={paused ? 'play' : 'pause'}
+            onClick={handlePlayPause}
+            size="small"
+            sx={{
+              color: '#B71C1C',
+              padding: '4px',
+              flexShrink: 0,
+              '&:hover': { color: '#ff3311', background: 'rgba(183,28,28,0.15)' },
+            }}
+          >
+            {paused
+              ? <PlayArrowRounded sx={{ fontSize: '1.5rem' }} />
+              : <PauseRounded sx={{ fontSize: '1.5rem' }} />
+            }
+          </IconButton>
+        </Box>
+      )}
+      {!compact && (
+      <>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
         <Box sx={{ textAlign: 'center' }}>
           <Typography
@@ -336,6 +404,8 @@ export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = '
         alignItems="center"
       >
       </Stack>
+      </>
+      )}
     </Box>
   );
 }
