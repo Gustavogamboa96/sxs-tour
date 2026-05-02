@@ -9,6 +9,7 @@ import UpcomingDate from './UpcomingDate'
 import Presave from './Presave'
 import ChatBot from './ChatBot'
 import RadarMap from './RadarMap'
+import BentoWidget from './BentoWidget'
 
 export default function LandingPage() {
     const ENABLE_PRESAVE = false;
@@ -230,6 +231,7 @@ export default function LandingPage() {
             {ENABLE_CHATBOT && (
                 <ChatBot open={openChatBot} onClose={handleCloseChatBot} />
             )}
+            <BentoWidget />
         </div>
     )
 }
