@@ -79,7 +79,7 @@ export const FALLA_BOCONO_CONFIG = {
       price: 'Desde US$10',
       priceNote: 'Exclusivo en Bandcamp',
       body:
-        'El 5 de noviembre, La Vida Bohème abre la preventa de FALLA/BOCONÓ exclusivamente en Bandcamp. Al comprar, recibirás acceso inmediato a AM/FM, la primera canción disponible, y a la obra completa cuando esté terminada y se alcance la meta de recaudación.',
+        'El 5 de noviembre, La Vida Bohème abre la preventa de FALLA/BOCONÓ exclusivamente en Bandcamp. Al comprar, recibirás acceso inmediato a AM/FM, la primera canción disponible, y a la obra completa cuando esté terminada y se alcance la meta de recaudación. Recuerda que $10 es la donación mínima, pero puedes pagar más si lo deseas.',
       cta: 'Comprar FALLA/BOCONÓ',
       linkKey: 'bandcamp',
       external: true,
