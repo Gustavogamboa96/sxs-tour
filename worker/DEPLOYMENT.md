@@ -17,6 +17,7 @@ This worker fetches tour dates from a Google Sheet, validates the data, caches i
    - **B1:** `Lugar`
    - **C1:** `Link to tickets`
    - **D1:** `Banner`
+   - **E1:** `progreso` *(optional — FALLA/BOCONÓ fundraising goal)*
 
 ### Column Format Requirements
 
@@ -26,6 +27,7 @@ This worker fetches tour dates from a Google Sheet, validates the data, caches i
 | Lugar | Text (city name) | Miami, FL |
 | Link to tickets | Full URL | https://tickets.com/event |
 | Banner | Image URL | https://cdn.example.com/banner.jpg |
+| progreso | Amount raised in USD (number; `5000`, `5.000` or `5,000` all work) | 5000 |
 
 ### Make the Sheet Public
 
@@ -100,7 +102,8 @@ Expected response:
       "lugar": "Miami, FL",
       "ticketLink": "https://tickets.com/event"
     }
-  ]
+  ],
+  "progreso": 5000
 }
 ```
 
@@ -139,6 +142,7 @@ Simply edit the Google Sheet to update tour dates:
 1. **Add a date:** Add a new row with Fecha, Lugar, Link to tickets
 2. **Remove a date:** Delete the row
 3. **Update banner:** Change the Banner URL in any row (first non-empty value is used)
+4. **Update the FALLA/BOCONÓ goal progress:** Put the amount raised (USD) in the `progreso` column of any row (first non-empty value is used). Every progress bar on the site (radar dock, map pointer, campaign page) updates from it. If it's empty, the site falls back to `raisedUSD` in `src/config/fallaBoconoConfig.js`.
 
 Changes will reflect within 10 minutes (cache duration).
 

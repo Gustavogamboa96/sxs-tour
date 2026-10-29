@@ -62,6 +62,44 @@ function getCorsHeaders(origin) {
 }
 
 /**
+ * Parses an amount typed in the sheet: "5000", "5.000", "5,000", "US$ 5.000,50"
+ */
+function parseAmount(value) {
+  if (typeof value === 'number') return Number.isFinite(value) && value >= 0 ? value : null;
+  if (typeof value !== 'string') return null;
+  let s = value.replace(/[^\d.,]/g, '');
+  if (!s) return null;
+  const dot = s.lastIndexOf('.');
+  const comma = s.lastIndexOf(',');
+  if (dot > -1 && comma > -1) {
+    const dec = dot > comma ? '.' : ',';
+    s = s.split(dec === '.' ? ',' : '.').join('').replace(dec, '.');
+  } else if (dot > -1 || comma > -1) {
+    const parts = s.split(dot > -1 ? '.' : ',');
+    const thousands = parts.length > 2 || parts[parts.length - 1].length === 3;
+    s = thousands ? parts.join('') : parts.join('.');
+  }
+  const n = Number(s);
+  return Number.isFinite(n) && n >= 0 ? n : null;
+}
+
+/**
+ * Finds the first numeric value in a column whose header starts with "progreso"
+ * (case/accent-insensitive, e.g. "progreso", "Progreso (USD)")
+ */
+function extractProgreso(rows) {
+  for (const row of rows) {
+    for (const [key, value] of Object.entries(row)) {
+      const k = key.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+      if (!k.startsWith('progreso')) continue;
+      const amount = parseAmount(value);
+      if (amount !== null) return amount;
+    }
+  }
+  return null;
+}
+
+/**
  * Creates JSON response with proper headers
  */
 function jsonResponse(data, status = 200, origin = '*') {
@@ -173,9 +211,13 @@ export default {
         ticketLink,
       }));
 
+      // Fundraising progress for FALLA/BOCONÓ (net USD raised), null when empty
+      const progreso = extractProgreso(rawData);
+
       const responseData = {
         banner,
         tourDates,
+        progreso,
       };
 
       // Create cacheable response

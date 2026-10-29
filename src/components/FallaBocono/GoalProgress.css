@@ -1,0 +1,160 @@
+.goal {
+  --goal-ink: #f4f1ea;
+  --goal-muted: rgba(244, 241, 234, 0.62);
+  --goal-track: rgba(244, 241, 234, 0.18);
+  --goal-fill: #7a2e2e;
+  width: 100%;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  color: var(--goal-ink);
+}
+
+.goal--radar {
+  --goal-ink: #f2f2f2;
+  --goal-muted: rgba(255, 255, 255, 0.5);
+  --goal-track: rgba(255, 255, 255, 0.12);
+  --goal-fill: #ffd60a;
+}
+
+.goal__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.goal__of {
+  color: var(--goal-muted);
+}
+
+.goal__pct {
+  color: var(--goal-fill);
+  font-weight: 700;
+}
+
+.goal--stone .goal__pct {
+  color: var(--goal-ink);
+}
+
+.goal__track {
+  position: relative;
+  height: 4px;
+  background: var(--goal-track);
+  overflow: visible;
+}
+
+.goal--full .goal__track {
+  height: 10px;
+}
+
+.goal__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--goal-fill);
+  transform-origin: left center;
+  transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+}
+
+.goal--radar .goal__fill {
+  box-shadow: 0 0 10px rgba(255, 214, 10, 0.45);
+}
+
+/* Blinking head marks the current position, even at 0% */
+.goal__cursor {
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: 12px;
+  background: var(--goal-fill);
+  transform: translate(-1px, -50%);
+  transition: left 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+  animation: goalBlink 1.1s steps(1, end) infinite;
+}
+
+.goal--full .goal__cursor {
+  height: 22px;
+  width: 3px;
+}
+
+.goal--stone .goal__cursor {
+  background: var(--goal-ink);
+}
+
+.goal__tick {
+  position: absolute;
+  top: 100%;
+  width: 1px;
+  height: 6px;
+  background: var(--goal-muted);
+}
+
+.goal__figures {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.goal__figure {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.goal__figure--right {
+  text-align: right;
+}
+
+.goal__label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--goal-muted);
+}
+
+.goal--full .goal__value {
+  font-size: clamp(18px, 2.4vw, 24px);
+  letter-spacing: 0.02em;
+}
+
+.goal--full .goal__value--big {
+  font-family: 'Bodoni Moda', 'Playfair Display', serif;
+  font-variation-settings: 'opsz' 24;
+  font-weight: 500;
+  font-size: clamp(44px, 8vw, 88px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.goal__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 20px;
+  margin-top: 18px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--goal-muted);
+}
+
+.goal__meta strong {
+  color: var(--goal-ink);
+  font-weight: 600;
+}
+
+@keyframes goalBlink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .goal__fill,
+  .goal__cursor {
+    transition: none;
+    animation: none;
+  }
+}

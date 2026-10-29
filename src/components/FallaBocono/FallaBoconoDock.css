@@ -1,0 +1,263 @@
+.fb-dock,
+.fb-dock-pill {
+  --fb-yellow: #ffd60a;
+  position: absolute;
+  z-index: 25;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  color: #f2f2f2;
+  animation: fbDockIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+}
+
+.fb-dock {
+  top: 16px;
+  right: 16px;
+  width: 300px;
+  background: rgba(8, 8, 8, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.fb-dock::before {
+  /* scanlines, same treatment as the radar canvas */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 4px);
+  pointer-events: none;
+}
+
+.fb-dock__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 6px 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.fb-dock__channel {
+  flex: 1;
+}
+
+.fb-dock__blink {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  background: var(--fb-yellow);
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px rgba(255, 214, 10, 0.8);
+  animation: fbDockBlink 1s steps(1, end) infinite;
+}
+
+.fb-dock__min {
+  width: 28px;
+  height: 22px;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fb-dock__min:hover {
+  color: #fff;
+}
+
+.fb-dock__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 14px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fb-dock__title {
+  font-family: 'Bodoni Moda', 'Playfair Display', serif;
+  font-variation-settings: 'opsz' 24;
+  font-weight: 500;
+  font-size: 23px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: #f4f1ea;
+}
+
+.fb-dock__slash {
+  color: #b23a3a;
+}
+
+.fb-dock__x {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.fb-dock__vas {
+  display: block;
+  margin-top: 3px;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  color: rgba(244, 241, 234, 0.75);
+}
+
+.fb-dock__sub {
+  font-size: 10.5px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.fb-dock__goal {
+  margin-top: 2px;
+}
+
+.fb-dock__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--fb-yellow);
+  color: var(--fb-yellow);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.fb-dock__body:hover .fb-dock__cta,
+.fb-dock__body:focus-visible .fb-dock__cta {
+  background: var(--fb-yellow);
+  color: #0a0a0a;
+}
+
+.fb-dock__body:focus-visible {
+  outline: none;
+}
+
+/* Minimized */
+.fb-dock-pill {
+  top: 16px;
+  right: 16px;
+  display: flex;
+  background: rgba(8, 8, 8, 0.86);
+  border: 1px solid rgba(255, 214, 10, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.fb-dock-pill button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.fb-dock-pill__open {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.fb-dock-pill__pct {
+  color: var(--fb-yellow);
+}
+
+.fb-dock-pill__expand {
+  width: 36px;
+  border-left: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 16px !important;
+}
+
+@keyframes fbDockBlink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0.15; }
+}
+
+@keyframes fbDockIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Mobile: compact strip under the music player */
+@media (max-width: 768px) {
+  .fb-dock {
+    top: 66px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+  }
+
+  .fb-dock__head {
+    padding: 6px 4px 6px 10px;
+  }
+
+  .fb-dock__body {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 8px 12px;
+    padding: 10px 10px 12px;
+  }
+
+  .fb-dock__title {
+    font-size: 19px;
+  }
+
+  .fb-dock__vas {
+    font-size: 10px;
+    letter-spacing: 0.26em;
+  }
+
+  .fb-dock__sub {
+    display: none;
+  }
+
+  .fb-dock__goal {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0;
+  }
+
+  .fb-dock__cta {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    min-height: 40px;
+    gap: 10px;
+    padding: 0 12px;
+  }
+
+  .fb-dock-pill {
+    top: 66px;
+    right: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-dock,
+  .fb-dock-pill,
+  .fb-dock__blink {
+    animation: none;
+  }
+}

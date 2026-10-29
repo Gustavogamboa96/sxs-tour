@@ -1,6 +1,10 @@
 import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import * as topojson from 'topojson-client';
 import './TourSection.css';
+import FallaPointer from './FallaBocono/FallaPointer';
+import { FALLA_BOCONO_CONFIG } from '../config/fallaBoconoConfig';
+
+const FALLA_POINT = FALLA_BOCONO_CONFIG.pointer;
 
 const WORLD_TOPO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 
@@ -18,11 +22,12 @@ const MOBILE_PAD = 15;
 
 function computeMobileBounds(locations) {
   const valid = locations.filter(l => l.lat != null && l.lng != null);
-  if (valid.length === 0) return DESKTOP_BOUNDS;
+  // Keep the FALLA/BOCONÓ pointer framed on mobile
+  const allPoints = [...valid, FALLA_POINT];
 
   let minLon = Infinity, maxLon = -Infinity;
   let minLat = Infinity, maxLat = -Infinity;
-  valid.forEach(l => {
+  allPoints.forEach(l => {
     if (l.lng < minLon) minLon = l.lng;
     if (l.lng > maxLon) maxLon = l.lng;
     if (l.lat < minLat) minLat = l.lat;
@@ -159,7 +164,7 @@ function ClampedTooltip({ dot, containerRef, onMouseEnter, onMouseLeave, isMobil
   );
 }
 
-export default function RadarMap({ locations, highlightedCityKey, setHighlightedCityKey, loading, showAllDates, onDismissAll }) {
+export default function RadarMap({ locations, highlightedCityKey, setHighlightedCityKey, loading, showAllDates, onDismissAll, onOpenFallaBocono }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const [polygons, setPolygons] = useState(null);
@@ -426,11 +431,24 @@ export default function RadarMap({ locations, highlightedCityKey, setHighlighted
 
   boundsRef.current = bounds;
 
+  const fallaPos = (canvasSize.width > 0 && isInView(FALLA_POINT.lng, FALLA_POINT.lat, bounds))
+    ? projectBounded(FALLA_POINT.lng, FALLA_POINT.lat, canvasSize.width, canvasSize.height, bounds)
+    : null;
+
   return (
     <div className="radar-map" ref={containerRef} onClick={handleContainerClick}>
       <canvas ref={canvasRef} className="radar-map__canvas" />
 
       {loading && <div className="radar-map__loading">LOADING TOUR DATA...</div>}
+
+      {fallaPos && (
+        <FallaPointer
+          x={fallaPos[0]}
+          y={fallaPos[1]}
+          containerWidth={canvasSize.width}
+          onOpen={onOpenFallaBocono}
+        />
+      )}
 
       {!loading && cityDots.map(dot => {
         const isHighlighted = showAllDates || highlightedCityKey === dot.cityKey;
