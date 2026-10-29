@@ -124,11 +124,6 @@ export const FALLA_BOCONO_CONFIG = {
     },
   ],
 
-  bandcampFridays: [
-    { date: '06 NOV', title: 'Bandcamp Friday', note: '0% revenue share de Bandcamp' },
-    { date: '04 DIC', title: 'Bandcamp Friday', note: '0% revenue share de Bandcamp' },
-  ],
-
   tracklist: [
     { num: '01', title: 'Cambur Pintón' },
     { num: '02', title: 'El Salvador' },

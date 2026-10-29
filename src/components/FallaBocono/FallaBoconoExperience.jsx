@@ -15,10 +15,6 @@ const SECTIONS = [
   { id: 'fb-sumarte', num: '07', label: 'Contacto' },
 ];
 
-const PAY_MORE_NOTE =
-  'El modelo pay more if you want: Bandcamp afirma que cuando el artista permite pagar más, los fans efectivamente pagan por encima del mínimo el 50% de las veces.';
-const NET_NOTE =
-  'Alrededor del 82% de una compra llega al artista después de considerar su participación y los costos de procesamiento.';
 const RELEASE_NOTE =
   'Los tracks serán liberados a medida que se avance hacia la meta de recaudación, empezando con el lanzamiento de AM/FM para empezar la campaña de donativos.';
 
@@ -98,28 +94,6 @@ function useViewport() {
 
 /* ── Formas de ayudar ───────────────────────────────────────── */
 
-function WayExtras({ way }) {
-  if (way.id !== 'bandcamp') return null;
-  return (
-    <div className="fb-way__extras">
-      <p className="fb-way__extras-lead">
-        <strong>Bandcamp Friday</strong> convierte dos fechas en ventanas de mayor recaudación:
-      </p>
-      <div className="fb-fridays">
-        {CFG.bandcampFridays.map((f) => (
-          <div key={f.date} className="fb-friday">
-            <span className="fb-friday__date">{f.date}</span>
-            <span className="fb-friday__title">{f.title}</span>
-            <span className="fb-friday__note">{f.note}</span>
-          </div>
-        ))}
-      </div>
-      <p className="fb-way__fine">{NET_NOTE}</p>
-      <p className="fb-way__fine fb-way__fine--muted">*{PAY_MORE_NOTE}</p>
-    </div>
-  );
-}
-
 function WayDetail({ way, index }) {
   return (
     <div className="fb-way__detail">
@@ -128,7 +102,6 @@ function WayDetail({ way, index }) {
         <span className="fb-way__price-note">{way.priceNote}</span>
       </div>
       <p className="fb-way__body">{way.body}</p>
-      <WayExtras way={way} />
       {CFG.links[way.linkKey] ? (
         <ExternalLink
           href={CFG.links[way.linkKey]}

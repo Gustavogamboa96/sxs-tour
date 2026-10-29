@@ -1442,53 +1442,6 @@
   line-height: 1.62;
 }
 
-.fb-way__extras {
-  margin-top: 26px;
-}
-
-.fb-way__extras-lead {
-  margin: 0 0 12px;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  line-height: 1.6;
-}
-
-.fb-fridays {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.fb-friday {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-  padding: 14px 16px;
-  background: rgba(43, 42, 40, 0.2);
-  border: 1px solid rgba(244, 241, 234, 0.2);
-  font-family: var(--mono);
-  text-align: right;
-}
-
-.fb-friday__date {
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-}
-
-.fb-friday__title {
-  font-size: 10.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.fb-friday__note {
-  font-size: 9.5px;
-  letter-spacing: 0.04em;
-  opacity: 0.78;
-}
-
 .fb-way__fine {
   margin: 16px 0 0;
   font-family: var(--mono);
@@ -2207,22 +2160,6 @@
 
   .fb-figure dd {
     font-size: 52px;
-  }
-
-  .fb-fridays {
-    grid-template-columns: 1fr;
-  }
-
-  .fb-friday {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    text-align: left;
-  }
-
-  .fb-friday__note {
-    flex-basis: 100%;
   }
 
   .fb-way-tab__price {
