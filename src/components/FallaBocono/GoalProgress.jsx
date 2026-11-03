@@ -28,7 +28,7 @@ export default function GoalProgress({ variant = 'stone', size = 'compact', clas
       {size === 'full' ? (
         <div className="goal__figures">
           <div className="goal__figure">
-            <span className="goal__label">Recaudación neta acumulada</span>
+            <span className="goal__label">Recaudación y apoyo acumulado</span>
             <span className="goal__value goal__value--big">{formatUSD(raisedUSD)}</span>
           </div>
           <div className="goal__figure goal__figure--right">

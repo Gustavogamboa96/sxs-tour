@@ -7,16 +7,17 @@ import './FallaBoconoExperience.css';
 
 const SECTIONS = [
   { id: 'fb-inicio', num: '01', label: 'Inicio' },
-  { id: 'fb-contexto', num: '02', label: 'Contexto' },
-  { id: 'fb-ayudar', num: '03', label: 'Cómo ayudar' },
+  { id: 'fb-contexto', num: '02', label: 'Diagnóstico' },
+  { id: 'fb-ayudar', num: '03', label: 'Cómo aportar' },
   { id: 'fb-meta', num: '04', label: 'La meta' },
-  { id: 'fb-ep', num: '05', label: 'El EP' },
-  { id: 'fb-quienes', num: '06', label: 'Quiénes' },
-  { id: 'fb-sumarte', num: '07', label: 'Contacto' },
+  { id: 'fb-como-vamos', num: '05', label: 'Cómo vamos' },
+  { id: 'fb-ep', num: '06', label: 'El EP' },
+  { id: 'fb-quienes', num: '07', label: 'Quiénes' },
+  { id: 'fb-sumarte', num: '08', label: 'Contacto' },
 ];
 
 const RELEASE_NOTE =
-  'Los tracks serán liberados a medida que se avance hacia la meta de recaudación, empezando con el lanzamiento de AM/FM para empezar la campaña de donativos.';
+  'Cada aporte nos acerca a nueva música. FALLA/BOCONÓ se irá liberando a medida que alcancemos las metas de recaudación de Volver a Sonar. Comenzamos con AM/FM el 5 de noviembre. Tú decides qué tan pronto escuchamos lo que sigue.';
 
 function Slash({ className = '' }) {
   return <span className={`fb-slash ${className}`}>/</span>;
@@ -102,7 +103,20 @@ function WayDetail({ way, index }) {
         <span className="fb-way__price-note">{way.priceNote}</span>
       </div>
       <p className="fb-way__body">{way.body}</p>
-      {CFG.links[way.linkKey] ? (
+      {way.ticketLinks ? (
+        <div className="fb-way__ticket-links">
+          {way.ticketLinks.map((link) => (
+            <ExternalLink
+              key={link.linkKey}
+              href={CFG.links[link.linkKey]}
+              className="fb-btn fb-btn--cream fb-way__cta"
+            >
+              {link.label}
+              <span className="fb-btn__arrow" aria-hidden="true">↗</span>
+            </ExternalLink>
+          ))}
+        </div>
+      ) : CFG.links[way.linkKey] ? (
         <ExternalLink
           href={CFG.links[way.linkKey]}
           external={way.external}
@@ -112,9 +126,7 @@ function WayDetail({ way, index }) {
           {way.cta}
           <span className="fb-btn__arrow" aria-hidden="true">{way.external ? '↗' : '→'}</span>
         </ExternalLink>
-      ) : (
-        <span className="fb-way__soon">Canal de contacto disponible muy pronto</span>
-      )}
+      ) : null}
       <span className="fb-way__count" aria-hidden="true">
         {String(index + 1).padStart(2, '0')} / {String(CFG.ways.length).padStart(2, '0')}
       </span>
@@ -250,6 +262,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState(SECTIONS[0].id);
   const [indexOpen, setIndexOpen] = useState(false);
+  const [openContributorSections, setOpenContributorSections] = useState([]);
   const vp = useViewport();
   const progress = useFundraisingProgress();
   const wideWays = useMedia('(min-width: 900px)');
@@ -351,6 +364,32 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
 
   const totalBreakdown = CFG.breakdown.reduce((a, b) => a + b.amountUSD, 0);
   const ctx = CFG.context;
+  const amfmTrack = CFG.tracklist.find((track) => track.title === 'AM/FM');
+  const launchReached = !amfmTrack?.releaseAt || Date.now() >= amfmTrack.releaseAt.getTime();
+  const nextMilestone = CFG.releaseMilestones.find((milestone) => progress.raisedUSD < milestone.amountUSD);
+  const releaseTracks = CFG.tracklist.map((track) => ({
+    ...track,
+    unlocked: progress.raisedUSD >= track.unlockUSD
+      && (!track.releaseAt || Date.now() >= track.releaseAt.getTime()),
+  }));
+  const unlockedTrackCount = releaseTracks.filter((track) => track.unlocked).length;
+  const storyItems = CFG.focusStories
+    .filter((story) => story.unlockUSD <= progress.raisedUSD || story.id === 'amfm')
+    .map((story) => ({ ...story, track: releaseTracks.find((track) => track.title === story.title) }));
+  releaseTracks
+    .filter((track) => track.unlocked)
+    .forEach((track) => {
+      if (!storyItems.some((story) => story.title === track.title)) {
+        storyItems.push({
+          id: `track-${track.num}`,
+          title: track.title,
+          meta: [],
+          body: 'La historia y los materiales de esta canción se publicarán cuando estén disponibles.',
+          image: '',
+          track,
+        });
+      }
+    });
 
   return (
     <article
@@ -450,7 +489,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
       </div>
 
       {/* ── Portada (idéntica a la hoja que se desarruga) ── */}
-      <section className={`fb-cover ${coverTall ? 'fb-cover--tall' : ''}`} style={coverVars} aria-label="Portada">
+      <section id="fb-inicio" className={`fb-cover ${coverTall ? 'fb-cover--tall' : ''}`} style={coverVars} aria-label="Portada">
         <div className="fb-cover__eyebrow">
           <span className="fb-cover__eyebrow-text">VOLVER A SONAR</span>
           <span className="fb-cover__x" aria-hidden="true">×</span>
@@ -460,6 +499,13 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
         </h1>
         <span className="fb-cover__lvb">LA VIDA BOHÈME</span>
         <div className="fb-cover__cta">
+          <div className="fb-cover__intro">
+            <h2>La música también necesita reconstruirse.</h2>
+            <p>
+              La Vida Bohème se suma a Volver a Sonar para apoyar a la Orquesta Sinfónica Gran Mariscal de Ayacucho a
+              recuperar herramientas esenciales para continuar su trabajo.
+            </p>
+          </div>
           <button type="button" className="fb-cover__goal" onClick={() => scrollToId('fb-meta')}>
             <span className="fb-cover__goal-row">
               <span>
@@ -473,7 +519,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
           </button>
           <div className="fb-cover__btns">
             <button type="button" className="fb-btn fb-btn--cream" onClick={() => scrollToId('fb-ayudar')}>
-              Cómo apoyar <span className="fb-btn__arrow fb-btn__arrow--down" aria-hidden="true">↓</span>
+              Elige cómo aportar <span className="fb-btn__arrow fb-btn__arrow--down" aria-hidden="true">↓</span>
             </button>
             <ExternalLink href={CFG.links.bandcamp} className="fb-btn fb-btn--line fb-btn--glass">
               Bandcamp <span className="fb-btn__arrow" aria-hidden="true">↗</span>
@@ -482,58 +528,8 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
         </div>
       </section>
 
-      {/* ── 01 · Inicio ── */}
-      <section id="fb-inicio" className="fb-sec fb-sec--wall fb-intro">
-        <div className="fb-intro__grid">
-          <div className="fb-intro__main">
-            <p className="fb-pretitle fb-reveal">
-              VOLVER A SONAR <span className="fb-rust">×</span> FALLA<span className="fb-rust">/</span>BOCONÓ — LA VIDA BOHÈME
-            </p>
-            <div className="fb-head fb-head--cream fb-reveal">
-              <span className="fb-head__num">01</span>
-              <h2 className="fb-head__title fb-head__title--xl">La música también necesita reconstruirse.</h2>
-            </div>
-            <div className="fb-khaki fb-reveal">
-              <p>
-                La Vida Bohème se suma a <em>Volver a Sonar</em>, una iniciativa de Nexos para apoyar a los músicos de la
-                Orquesta Sinfónica Gran Mariscal de Ayacucho afectados por los terremotos de junio de 2026 en Venezuela.
-              </p>
-              <p>
-                A través de la música y distintas formas de colaboración, queremos recaudar <strong>US$25.000</strong> para
-                que sus músicos puedan recuperar herramientas esenciales para continuar con su trabajo.
-              </p>
-            </div>
-            <nav className="fb-quick fb-reveal" aria-label="Formas de aportar">
-              <span className="fb-label fb-quick__label">Elige cómo aportar</span>
-              <ul className="fb-quick__grid">
-                {CFG.ways.map((w, i) => (
-                  <li key={w.id}>
-                    <button
-                      type="button"
-                      className={`fb-quick__item ${w.featured ? 'is-featured' : ''}`}
-                      onClick={() => goToWay(w.id)}
-                    >
-                      <span className="fb-quick__num">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="fb-quick__title">{w.short || w.title}</span>
-                      <span className="fb-quick__price">{w.price}</span>
-                      <span className="fb-quick__arrow" aria-hidden="true">→</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <div className="fb-intro__goal fb-reveal">
-              <GoalProgress variant="stone" size="compact" />
-              <button type="button" className="fb-btn fb-btn--ghost" onClick={() => scrollToId('fb-contexto')}>
-                Conoce el proyecto <span className="fb-btn__arrow fb-btn__arrow--down" aria-hidden="true">↓</span>
-              </button>
-            </div>
-          </div>
-          <figure className="fb-intro__art fb-reveal" aria-hidden="true">
-            <img src="/images/falla-bocono/woodcut-panel.jpg" alt="" loading="lazy" />
-          </figure>
-        </div>
-
+      {/* ── Resumen del diagnóstico ── */}
+      <section className="fb-sec fb-sec--wall fb-intro" aria-label="Resumen del diagnóstico">
         <dl className="fb-stats fb-reveal">
           {CFG.heroStats.map((s, i) => (
             <div key={`${s.value}-${i}`} className="fb-stat">
@@ -544,7 +540,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
         </dl>
       </section>
 
-      {/* ── 02 · Contexto ── */}
+      {/* ── 02 · Diagnóstico ── */}
       <section id="fb-contexto" className="fb-sec fb-sec--light fb-context">
         <SectionHead num="02" kicker="El punto de partida" title="Una orquesta que necesita seguir sonando" tone="ink" />
         <div className="fb-context__grid">
@@ -609,29 +605,17 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
               </li>
             ))}
           </ul>
+          <p className="fb-breakdown__note">
+            La meta de US$25.000 contempla las necesidades prioritarias identificadas para la orquesta y una asignación
+            parcial de US$453 para gastos de coordinación y gestión de la iniciativa de recaudación.
+          </p>
         </div>
-
-        <ul className="fb-plates fb-reveal" aria-label="Instrumentos afectados">
-          {CFG.instrumentPhotos.map((p, i) => (
-            <li key={p.id} className={`fb-plate ${p.image ? 'has-image' : ''}`}>
-              {p.image ? (
-                <img src={p.image} alt={p.label} loading="lazy" />
-              ) : (
-                <span className="fb-plate__ph" aria-hidden="true">Fotografía pendiente</span>
-              )}
-              <span className="fb-plate__cap">
-                <span className="fb-plate__num">{String(i + 1).padStart(2, '0')}</span>
-                {p.label}
-              </span>
-            </li>
-          ))}
-        </ul>
       </section>
 
-      {/* ── 03 · Cómo ayudar ── */}
+      {/* ── 03 · Cómo aportar ── */}
       <section id="fb-ayudar" className="fb-sec fb-sec--mid fb-help">
         <div className="fb-help__inner">
-          <SectionHead num="03" kicker="Elige cómo sumarte" title="Hay muchas formas de ayudar" />
+          <SectionHead num="03" kicker="Elige cómo sumarte" title="Hay muchas formas de aportar" />
           <div className="fb-reveal">
             <WaysChooser active={way} onSelect={setWay} wide={wideWays} />
           </div>
@@ -643,15 +627,21 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
       <section id="fb-meta" className="fb-sec fb-sec--concrete fb-goal">
         <div className="fb-goal__inner">
           <SectionHead num="04" title={<>Nuestra meta: US$25.000</>} />
-          <p className="fb-goal__sub fb-reveal">Cada aporte nos acerca a la primera etapa de Volver a Sonar.</p>
+          <p className="fb-goal__sub fb-reveal">
+            Recaudación y apoyo acumulado: {formatUSD(progress.raisedUSD)} · {progress.percent}% de la meta alcanzada.
+          </p>
           <div className="fb-goal__card fb-reveal">
             <GoalProgress variant="stone" size="full" />
           </div>
           <p className="fb-goal__note fb-reveal">
-            El progreso se actualiza periódicamente a partir de los ingresos recibidos y conciliados por los distintos canales
-            de recaudación. La meta se considera alcanzada cuando los recursos netos destinados a la causa sumen US$25.000.
-            Los gastos de promoción y comunicación del proyecto se gestionan por separado y no se descuentan de la meta
-            destinada a Volver a Sonar.
+            El avance incluye US$2.779 en apoyo previamente ejecutado mediante otras fuentes de colaboración y nuevas
+            aportaciones netas, una vez descontadas las comisiones de plataformas, procesamiento y transferencias. El
+            progreso se actualiza periódicamente después de conciliar los montos recibidos.
+          </p>
+          <p className="fb-goal__next fb-reveal">
+            {nextMilestone
+              ? <>Próximo desbloqueo: {nextMilestone.tracks.join(', ')} al alcanzar {formatUSD(nextMilestone.amountUSD)}. Faltan {formatUSD(Math.max(0, nextMilestone.amountUSD - progress.raisedUSD))} para liberarlo.</>
+              : <>¡EP completo desbloqueado! · 11 canciones</>}
           </p>
           <button type="button" className="fb-btn fb-btn--cream fb-reveal" onClick={() => scrollToId('fb-ayudar')}>
             Quiero aportar <span className="fb-btn__arrow" aria-hidden="true">↑</span>
@@ -659,10 +649,47 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
         </div>
       </section>
 
-      {/* ── 05 · El EP ── */}
+      {/* ── 05 · Cómo vamos ── */}
+      <section id="fb-como-vamos" className="fb-sec fb-sec--wall fb-progress-log">
+        <SectionHead num="05" title="Cómo vamos" />
+        <div className="fb-progress-log__inner fb-reveal">
+          <p className="fb-progress-log__intro">{CFG.howWeAreDoing.intro}</p>
+          <p className="fb-progress-log__baseline">{CFG.howWeAreDoing.baselineNote}</p>
+          {CFG.howWeAreDoing.entries.length > 0 ? (
+            <ol className="fb-progress-log__entries">
+              {CFG.howWeAreDoing.entries.map((entry) => (
+                <li key={`${entry.date}-${entry.title}`} className="fb-progress-log__entry">
+                  <time dateTime={entry.date}>{entry.dateLabel || entry.date}</time>
+                  <h3>{entry.title}</h3>
+                  <p>{entry.description}</p>
+                  {entry.amountUSD != null && <span className="fb-label">Aplicado: {formatUSD(entry.amountUSD)}</span>}
+                  {entry.media?.map((media) => (
+                    <figure key={media.src}>
+                      {media.type === 'video' ? (
+                        <video src={media.src} controls preload="metadata" />
+                      ) : (
+                        <img src={media.src} alt={media.alt || ''} loading="lazy" />
+                      )}
+                      {media.caption && <figcaption>{media.caption}</figcaption>}
+                    </figure>
+                  ))}
+                  {entry.result && <p className="fb-progress-log__result">{entry.result}</p>}
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p className="fb-progress-log__pending">
+              Las acciones, fechas y resultados verificables de la primera actualización se incorporarán cuando el equipo
+              comparta los materiales correspondientes.
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* ── 06 · El EP ── */}
       <section id="fb-ep" className="fb-sec fb-sec--light fb-ep">
         <SectionHead
-          num="05"
+          num="06"
           kicker="El EP y sus historias"
           title={<>FALLA<Slash />BOCONÓ: música en medio de la transformación</>}
           tone="ink"
@@ -675,40 +702,55 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
               manera de acompañar a otros músicos en un momento difícil.
             </p>
             <p>
-              El proyecto continúa en desarrollo. Su primera canción disponible es AM/FM, y quienes participen en la
-              preventa recibirán la versión completa de la obra al momento de su liberación, una vez finalizada y
-              alcanzada la meta de recaudación.
+              El EP reúne 11 canciones y se irá liberando en Bandcamp conforme Volver a Sonar alcance cada hito. AM/FM
+              inaugura el recorrido el 5 de noviembre; el EP completo estará disponible al llegar a US$25.000.
             </p>
           </div>
           <div className="fb-tracks fb-reveal">
-            <span className="fb-label">La obra comienza con cinco canciones confirmadas</span>
+            <span className="fb-label">{unlockedTrackCount}/11 canciones desbloqueadas · orden artístico del EP</span>
             <ol>
-              {CFG.tracklist.map((t) => (
-                <li key={t.num} className={t.available ? 'is-available' : ''}>
+              {releaseTracks.map((t) => (
+                <li key={t.num} className={t.unlocked ? 'is-available' : ''}>
                   <span className="fb-tracks__num">{t.num}</span>
                   <span className="fb-tracks__title">
                     {t.title}
                     {t.feat && <em> feat. {t.feat}</em>}
                   </span>
-                  {t.available ? (
-                    <span className="fb-tracks__tag">Disponible · 05 NOV</span>
-                  ) : (
-                    <span className="fb-tracks__lock" aria-label="Por liberar">— —</span>
-                  )}
+                  <span className={`fb-tracks__status ${t.unlocked ? 'is-unlocked' : ''}`}>
+                    {t.unlocked ? 'Desbloqueado · Disponible en Bandcamp' : 'Bloqueado'}
+                  </span>
                 </li>
               ))}
             </ol>
+            <div className="fb-milestones" aria-label="Hitos de desbloqueo">
+              <span className="fb-label">Hitos de desbloqueo</span>
+              <ol>
+                {CFG.releaseMilestones.map((milestone) => (
+                  <li
+                    key={milestone.amountUSD}
+                    className={progress.raisedUSD >= milestone.amountUSD
+                      && (milestone.amountUSD > 0 || launchReached) ? 'is-reached' : ''}
+                  >
+                    <strong>{formatUSD(milestone.amountUSD)}</strong>
+                    <span>{milestone.tracks.join(', ')}</span>
+                    <span>{milestone.count}/11</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
         </div>
 
         <div className="fb-focus">
-          <h3 className="fb-focus__title fb-reveal">Tres focos, tres historias</h3>
+          <h3 className="fb-focus__title fb-reveal">Cada aporte nos acerca a nueva música.</h3>
           <div className="fb-focus__track" role="list">
-            {CFG.focusStories.map((f) => (
+            {storyItems.map((f) => (
               <article key={f.id} className="fb-story fb-reveal" role="listitem">
-                <div className="fb-story__img">
-                  <img src={f.image} alt="" loading="lazy" />
-                </div>
+                {f.image && (
+                  <div className="fb-story__img">
+                    <img src={f.image} alt="" loading="lazy" />
+                  </div>
+                )}
                 <h4 className="fb-story__name">{f.title}</h4>
                 {f.meta.length > 0 && (
                   <p className="fb-story__meta">
@@ -721,85 +763,109 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
                   </p>
                 )}
                 <p className="fb-story__body">{f.body}</p>
+                {f.visualizerUrl && (
+                  <div className="fb-story__media">
+                    <iframe
+                      src={f.visualizerUrl}
+                      title={`Visualizador de ${f.title}`}
+                      loading="lazy"
+                      allow="autoplay; encrypted-media; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                )}
+                {f.audioUrl && <audio className="fb-story__audio" src={f.audioUrl} controls preload="none" />}
+                <ExternalLink href={CFG.links.bandcamp} className="fb-btn fb-btn--ink fb-story__cta">
+                  {f.title === 'AM/FM' && !f.track?.unlocked ? 'Disponible en Bandcamp desde el 5 de noviembre' : 'Escuchar en Bandcamp'}
+                  <span className="fb-btn__arrow" aria-hidden="true">↗</span>
+                </ExternalLink>
               </article>
             ))}
           </div>
           <p className="fb-focus__note fb-reveal">{RELEASE_NOTE}</p>
-          <ExternalLink href={CFG.links.bandcamp} className="fb-btn fb-btn--ink fb-reveal">
-            Escucha FALLA/BOCONÓ <span className="fb-btn__arrow" aria-hidden="true">↗</span>
-          </ExternalLink>
+          {nextMilestone ? (
+            <p className="fb-focus__next fb-reveal">
+              PRÓXIMO DESBLOQUEO<br />
+              Faltan {formatUSD(Math.max(0, nextMilestone.amountUSD - progress.raisedUSD))} para liberar {nextMilestone.tracks.join(', ')}.
+            </p>
+          ) : (
+            <p className="fb-focus__next fb-reveal">¡EP completo desbloqueado! · 11 canciones</p>
+          )}
         </div>
       </section>
 
-      {/* ── 06 · Quiénes ── */}
+      {/* ── 07 · Quiénes ── */}
       <section id="fb-quienes" className="fb-sec fb-sec--wall fb-who">
-        <SectionHead num="06" title="Quiénes hacen posible esta iniciativa" />
-        <ul className="fb-partners">
-          {CFG.partners.map((p) => (
-            <li key={p.id} className="fb-partner fb-reveal">
-              <h3 className="fb-partner__name">{p.name}</h3>
-              <p className="fb-partner__role">{p.role}</p>
-              {p.contact && (
-                <p className="fb-partner__contact">
-                  {p.contact.name}
-                  {p.contact.email && (
-                    <>
-                      {' · '}
-                      <a href={`mailto:${p.contact.email}`}>{p.contact.email}</a>
-                    </>
+        <SectionHead num="07" title="Quiénes hacen posible esta iniciativa" />
+        <p className="fb-who__intro fb-reveal">
+          Volver a Sonar reúne a músicos, profesionales, organizaciones y aliados que suman conocimientos, recursos y
+          esfuerzos para que la música pueda seguir sonando.
+        </p>
+        <div className="fb-contributors fb-reveal">
+          {CFG.contributors.map((group) => {
+            const open = openContributorSections.includes(group.id);
+            return (
+              <section key={group.id} className={`fb-contributor ${open ? 'is-open' : ''}`}>
+                <h3>
+                  <button
+                    type="button"
+                    aria-expanded={open}
+                    aria-controls={`fb-contributor-${group.id}`}
+                    onClick={() => setOpenContributorSections((current) => (
+                      open ? current.filter((id) => id !== group.id) : [...current, group.id]
+                    ))}
+                  >
+                    <span>{group.title}</span>
+                    <span className="fb-contributor__icon" aria-hidden="true">{open ? '−' : '+'}</span>
+                  </button>
+                </h3>
+                <div id={`fb-contributor-${group.id}`} className="fb-contributor__panel" hidden={!open}>
+                  {group.people?.map((person) => (
+                    <article key={person.name} className="fb-contributor__person">
+                      <h4>
+                        {person.link ? (
+                          <ExternalLink href={person.link}>{person.name}</ExternalLink>
+                        ) : person.name}
+                      </h4>
+                      <p>{person.role}</p>
+                      {person.contact && <p className="fb-contributor__contact">{person.contact}</p>}
+                    </article>
+                  ))}
+                  {group.lists?.map((list) => (
+                    <div key={list.title} className="fb-contributor__list">
+                      <h4>{list.title}</h4>
+                      <p>{list.description}</p>
+                      <p className="fb-thanks__names">{list.names.join(' / ')}</p>
+                    </div>
+                  ))}
+                  {group.cta && (
+                    <a href={CFG.links.contact} className="fb-btn fb-btn--cream fb-contributor__cta">
+                      {group.cta}<span className="fb-btn__arrow" aria-hidden="true">→</span>
+                    </a>
                   )}
-                </p>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        <div className="fb-thanks fb-reveal">
-          <h3 className="fb-thanks__title">Agradecimientos</h3>
-          {CFG.acknowledgements.map((group) => (
-            <div key={group.category} className="fb-thanks__group">
-              <span className="fb-label">{group.category}</span>
-              <p className="fb-thanks__names">
-                {group.names.map((n, i) => (
-                  <React.Fragment key={n}>
-                    {i > 0 && (
-                      <>
-                        <Slash className="fb-thanks__sep" />
-                        <wbr />
-                      </>
-                    )}
-                    <span>{n}</span>
-                  </React.Fragment>
-                ))}
-              </p>
-            </div>
-          ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
       </section>
 
-      {/* ── 07 · Contacto ── */}
+      {/* ── 08 · Contacto ── */}
       <section id="fb-sumarte" className="fb-sec fb-sec--concrete fb-join">
         <div className="fb-join__inner">
-          <SectionHead num="07" title="¿Quieres sumarte?" />
+          <SectionHead num="08" title="¿Quieres sumarte?" />
           <p className="fb-join__text fb-reveal">
             Si quieres proponer una colaboración, ofrecer apoyo en especie, contribuir desde una empresa o conocer más
             sobre la iniciativa, escríbenos.
           </p>
           <div className="fb-actions fb-reveal">
-            {CFG.links.contact ? (
-              <a href={CFG.links.contact} className="fb-btn fb-btn--cream">
-                Contactar equipo de FALLA/BOCONÓ <span className="fb-btn__arrow" aria-hidden="true">→</span>
-              </a>
-            ) : (
-              <button type="button" className="fb-btn fb-btn--cream" onClick={() => goToWay('collaborate')}>
-                Ver cómo colaborar <span className="fb-btn__arrow" aria-hidden="true">↑</span>
-              </button>
-            )}
+            <a href={CFG.links.contact} className="fb-btn fb-btn--cream">
+              Proponer una colaboración <span className="fb-btn__arrow" aria-hidden="true">→</span>
+            </a>
             <ExternalLink href={CFG.links.bandcamp} className="fb-btn fb-btn--line">
               Escucha FALLA/BOCONÓ <span className="fb-btn__arrow" aria-hidden="true">↗</span>
             </ExternalLink>
           </div>
-          {!CFG.links.contact && <p className="fb-join__soon fb-reveal">Canal de contacto directo · muy pronto</p>}
           <p className="fb-join__credit fb-reveal">
             Contacto del proyecto: {CFG.links.projectManager} · Project Manager
           </p>
