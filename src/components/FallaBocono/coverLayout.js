@@ -5,14 +5,14 @@
  */
 export const COVER_IMAGES = {
   background: '/images/falla-bocono/hero-grey.png',
-  logo: '/images/falla-bocono/hero-logo-black.png',
+  logo: '/images/falla-bocono/hero-logo-updated.png',
 };
 
 export const COVER_COLORS = {
   base: '#AAAAAA',
 };
 
-const LOGO_ASPECT = 2604 / 705;
+const LOGO_ASPECT = 2094 / 768;
 
 export function coverMetrics(w, h) {
   const left = w * 0.065;

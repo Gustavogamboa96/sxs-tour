@@ -490,8 +490,8 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
           <img
             src={COVER_IMAGES.logo}
             alt="Volver a Sonar · FALLA/BOCONÓ · La Vida Bohème"
-            width="2604"
-            height="705"
+            width="2094"
+            height="768"
             fetchpriority="high"
           />
         </h1>
@@ -605,7 +605,6 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
             <WaysChooser active={way} onSelect={setWay} wide={wideWays} />
           </div>
         </div>
-        <div className="fb-help__relief" aria-hidden="true" />
       </section>
 
       {/* ── 04 · Meta ── */}

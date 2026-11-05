@@ -68,7 +68,7 @@
   display: flex;
   align-items: center;
   transform: translateY(-50%);
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .fb-pointer__leader {

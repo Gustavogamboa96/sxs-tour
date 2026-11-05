@@ -1267,10 +1267,6 @@
   z-index: 1;
 }
 
-.fb-help__relief {
-  display: none;
-}
-
 .fb-ways--wide {
   display: grid;
   grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
@@ -2019,29 +2015,6 @@
 
   .fb-nav__menu {
     display: inline-flex;
-  }
-}
-
-@media (min-width: 1240px) {
-  .fb-help__inner {
-    padding-right: calc(21vw + 24px);
-  }
-
-  .fb-help__relief {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 21vw;
-    background: url('/images/falla-bocono/woodcut-relief.jpg') center / cover no-repeat;
-    filter: contrast(1.04);
-  }
-}
-
-@media (max-width: 1099px) and (min-width: 900px) {
-  .fb-help__inner {
-    padding-right: 0;
   }
 }
 
