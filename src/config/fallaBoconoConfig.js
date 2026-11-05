@@ -53,13 +53,13 @@ export const FALLA_BOCONO_CONFIG = {
     {
       id: 'bandcamp',
       title: 'FALLA/BOCONÓ en Bandcamp',
-      short: 'Compra el EP en Bandcamp',
+      short: 'Compra el álbum en Bandcamp',
       audience: 'Para quien quiere la música',
       price: 'Desde US$14',
       priceNote: 'Exclusivo en Bandcamp',
       body: campaignLaunched
-        ? 'Desde el estreno del 5 de noviembre, puedes apoyar Volver a Sonar adquiriendo FALLA/BOCONÓ en Bandcamp. Al comprar, recibes acceso de inmediato a AM / FM y a las siguientes canciones conforme se alcancen los hitos de recaudación. El EP completo queda liberado al alcanzar US$25.000. US$14 es el aporte mínimo, pero puedes contribuir con una cantidad mayor si lo deseas.'
-        : 'A partir del 5 de noviembre, podrás apoyar Volver a Sonar adquiriendo FALLA/BOCONÓ en preventa. Al comprar, recibirás acceso a AM / FM, el primer tema disponible, a partir de su lanzamiento, y a las siguientes canciones conforme se alcancen los hitos de recaudación. El EP completo quedará liberado al alcanzar US$25.000. US$14 es el aporte mínimo, pero puedes contribuir con una cantidad mayor si lo deseas.',
+        ? 'Desde el estreno del 5 de noviembre, puedes apoyar Volver a Sonar adquiriendo FALLA/BOCONÓ en Bandcamp. Al comprar, recibes acceso de inmediato a AM / FM y a las siguientes canciones conforme se alcancen los hitos de recaudación. El álbum completo queda liberado al alcanzar US$25.000. US$14 es el aporte mínimo, pero puedes contribuir con una cantidad mayor si lo deseas.'
+        : 'A partir del 5 de noviembre, podrás apoyar Volver a Sonar adquiriendo FALLA/BOCONÓ en preventa. Al comprar, recibirás acceso a AM / FM, el primer tema disponible, a partir de su lanzamiento, y a las siguientes canciones conforme se alcancen los hitos de recaudación. El álbum completo quedará liberado al alcanzar US$25.000. US$14 es el aporte mínimo, pero puedes contribuir con una cantidad mayor si lo deseas.',
       cta: 'Comprar en Bandcamp',
       linkKey: 'bandcamp',
       external: true,
@@ -134,7 +134,7 @@ export const FALLA_BOCONO_CONFIG = {
       title: 'AM / FM',
       meta: ['Primer tema disponible · 5 de noviembre'],
       body:
-        'Nació de años de viaje, vivió en una laptop hasta este verano y se terminó en el estudio de la banda en Ciudad de México. Es la resolución más apacible del EP para atraer escuchas.',
+        'Nació de años de viaje, vivió en una laptop hasta este verano y se terminó en el estudio de la banda en Ciudad de México. Es la resolución más apacible del álbum para atraer escuchas.',
       image: '/images/falla-bocono/amfm-cover.png',
       imageAlt: 'Portada de FALLA/BOCONÓ · La Vida Bohème',
       squareImage: true,

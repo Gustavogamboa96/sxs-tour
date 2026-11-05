@@ -11,7 +11,7 @@ const SECTIONS = [
   { id: 'fb-ayudar', num: '03', label: 'Cómo aportar' },
   { id: 'fb-meta', num: '04', label: 'La meta' },
   { id: 'fb-como-vamos', num: '05', label: 'Cómo vamos' },
-  { id: 'fb-ep', num: '06', label: 'El EP' },
+  { id: 'fb-ep', num: '06', label: 'El álbum' },
   { id: 'fb-quienes', num: '07', label: 'Quiénes' },
   { id: 'fb-sumarte', num: '08', label: 'Contacto' },
 ];
@@ -625,7 +625,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
           <p className="fb-goal__next fb-reveal">
             {nextMilestone
               ? <>Próximo desbloqueo: {nextMilestone.tracks.join(', ')} al alcanzar {formatUSD(nextMilestone.amountUSD)}. Faltan {formatUSD(Math.max(0, nextMilestone.amountUSD - progress.raisedUSD))} para liberarlo.</>
-              : <>¡EP completo desbloqueado! · {totalTrackCount} canciones</>}
+              : <>¡Álbum completo desbloqueado! · {totalTrackCount} canciones</>}
           </p>
           <button type="button" className="fb-btn fb-btn--cream fb-reveal" onClick={() => scrollToId('fb-ayudar')}>
             Quiero aportar <span className="fb-btn__arrow" aria-hidden="true">↑</span>
@@ -670,11 +670,11 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
         </div>
       </section>
 
-      {/* ── 06 · El EP ── */}
+      {/* ── 06 · El álbum ── */}
       <section id="fb-ep" className="fb-sec fb-sec--light fb-ep">
         <SectionHead
           num="06"
-          kicker="El EP y sus historias"
+          kicker="El álbum y sus historias"
           title={<>FALLA<Slash />BOCONÓ: música en medio de la transformación</>}
           tone="ink"
         />
@@ -686,12 +686,12 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
               manera de acompañar a otros músicos en un momento difícil.
             </p>
             <p>
-              El EP reúne {totalTrackCount} canciones y se irá liberando en Bandcamp conforme Volver a Sonar alcance cada hito. AM / FM
-              inaugura el recorrido el 5 de noviembre; el EP completo estará disponible al llegar a US$25.000.
+              El álbum reúne {totalTrackCount} canciones y se irá liberando en Bandcamp conforme Volver a Sonar alcance cada hito. AM / FM
+              inaugura el recorrido el 5 de noviembre; el álbum completo estará disponible al llegar a US$25.000.
             </p>
           </div>
           <div className="fb-tracks fb-reveal">
-            <span className="fb-label">{unlockedTrackCount}/{totalTrackCount} canciones desbloqueadas · orden artístico del EP</span>
+            <span className="fb-label">{unlockedTrackCount}/{totalTrackCount} canciones desbloqueadas · orden artístico del álbum</span>
             <ol>
               {releaseTracks.map((t) => (
                 <li key={t.num} className={t.unlocked ? 'is-available' : ''}>
@@ -773,7 +773,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
               Faltan {formatUSD(Math.max(0, nextMilestone.amountUSD - progress.raisedUSD))} para liberar {nextMilestone.tracks.join(', ')}.
             </p>
           ) : (
-            <p className="fb-focus__next fb-reveal">¡EP completo desbloqueado! · {totalTrackCount} canciones</p>
+            <p className="fb-focus__next fb-reveal">¡Álbum completo desbloqueado! · {totalTrackCount} canciones</p>
           )}
         </div>
       </section>
