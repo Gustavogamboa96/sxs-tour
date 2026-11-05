@@ -1965,6 +1965,10 @@
 }
 
 @media (max-width: 899px) {
+  .fb {
+    --display-opsz: 'opsz' 6;
+  }
+
   .fb-nav__kbd {
     display: none;
   }
@@ -2590,5 +2594,33 @@
 
   .fb-story__cta {
     width: 100%;
+  }
+}
+
+@media (max-width: 899px) {
+  .fb-head__title,
+  .fb-index li button,
+  .fb-figure dd,
+  .fb-ways__panel-title,
+  .fb-way__price,
+  .fb-tracks__title,
+  .fb-focus__title,
+  .fb-partner__name,
+  .fb-thanks__title,
+  .fb-join__closing,
+  .fb-contributor h3 button,
+  .fb-contributor__person h4,
+  .fb-contributor__list h4 {
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .fb-head__title {
+    overflow-wrap: anywhere;
+  }
+
+  .fb-goal__sub {
+    font-weight: 700;
+    line-height: 1.5;
   }
 }
