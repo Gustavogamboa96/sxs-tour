@@ -19,6 +19,20 @@ const MIN_LON_SPAN = 40;
 const MIN_LAT_SPAN = 28;
 // Padding around location cluster (degrees)
 const MOBILE_PAD = 10;
+const INITIAL_ZOOM = 1.15;
+
+function zoomInitialBounds(bounds) {
+  const lonCenter = (bounds.lonMin + bounds.lonMax) / 2;
+  const latCenter = (bounds.latMin + bounds.latMax) / 2;
+  const lonHalfSpan = (bounds.lonMax - bounds.lonMin) / (2 * INITIAL_ZOOM);
+  const latHalfSpan = (bounds.latMax - bounds.latMin) / (2 * INITIAL_ZOOM);
+  return {
+    lonMin: lonCenter - lonHalfSpan,
+    lonMax: lonCenter + lonHalfSpan,
+    latMin: latCenter - latHalfSpan,
+    latMax: latCenter + latHalfSpan,
+  };
+}
 
 function computeMobileBounds(locations) {
   const valid = locations.filter(l => l.lat != null && l.lng != null);
@@ -228,9 +242,9 @@ export default function RadarMap({ locations, highlightedCityKey, setHighlighted
   // On mobile, zoom to fit the actual tour locations
   const baseBounds = useMemo(() => {
     if (isMobile && locations.length > 0) {
-      return computeMobileBounds(locations);
+      return zoomInitialBounds(computeMobileBounds(locations));
     }
-    return DESKTOP_BOUNDS;
+    return zoomInitialBounds(DESKTOP_BOUNDS);
   }, [isMobile, locations]);
 
   // Reset view when baseBounds changes (new locations or device type)
