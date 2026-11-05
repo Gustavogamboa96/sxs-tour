@@ -1,8 +1,8 @@
 /**
  * FALLA/BOCONÓ x VOLVER A SONAR — configuración central de la campaña.
  *
- * La columna `progreso` del Google Sheet representa nuevos ingresos netos conciliados;
- * el apoyo previamente ejecutado se suma por separado desde `fundraising.baselineUSD`.
+ * La columna `progreso` del Google Sheet representa el total recaudado;
+ * no se suma ningún monto adicional desde la configuración.
  */
 
 const LAUNCH_AT = new Date('2026-11-05T00:00:00-04:00');
@@ -12,8 +12,6 @@ const CONTACT_EMAIL = 'tofukarr@gmail.com';
 export const FALLA_BOCONO_CONFIG = {
   fundraising: {
     goalUSD: 25000,
-    baselineUSD: 2779,
-    newNetRaisedUSD: 0,
     lastUpdated: '05 NOV 2026',
   },
 
@@ -166,7 +164,6 @@ export const FALLA_BOCONO_CONFIG = {
 
   howWeAreDoing: {
     intro: 'Cada aporte se convierte en acciones concretas para que la música pueda seguir sonando.',
-    baselineNote: 'Ya comenzamos: US$2.779 en apoyo previamente ejecutado mediante otras fuentes de colaboración.',
     entries: [],
   },
 
@@ -294,7 +291,7 @@ export function parseAmount(value) {
   return Number.isFinite(n) && n >= 0 ? n : null;
 }
 
-// Monto en vivo (Google Sheet). null = usar el respaldo de arriba.
+// Monto en vivo (Google Sheet). null = todavía no hay un total disponible.
 let liveRaisedUSD = null;
 let progressVersion = 0;
 const progressListeners = new Set();
@@ -317,10 +314,8 @@ export function getFundraisingVersion() {
 }
 
 export function getFundraisingProgress() {
-  const { goalUSD, baselineUSD, newNetRaisedUSD, lastUpdated } = FALLA_BOCONO_CONFIG.fundraising;
-  const live = liveRaisedUSD !== null;
-  const newNetRaised = live ? liveRaisedUSD : newNetRaisedUSD;
-  const raisedUSD = baselineUSD + newNetRaised;
+  const { goalUSD, lastUpdated } = FALLA_BOCONO_CONFIG.fundraising;
+  const raisedUSD = liveRaisedUSD ?? 0;
   const ratio = goalUSD > 0 ? Math.min(1, Math.max(0, raisedUSD / goalUSD)) : 0;
   return {
     goalUSD,
@@ -329,7 +324,6 @@ export function getFundraisingProgress() {
     ratio,
     percent: Math.floor(ratio * 1000) / 10,
     remainingUSD: Math.max(0, goalUSD - raisedUSD),
-    newNetRaisedUSD: newNetRaised,
   };
 }
 

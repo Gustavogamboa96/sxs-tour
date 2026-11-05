@@ -6,4 +6,4 @@ Campaign contact buttons open the visitor's email application using a `mailto:` 
 
 ## Fundraising progress
 
-The Google Sheet column whose header starts with `progreso` must contain only new net contributions received and reconciled, excluding the US$2,779 baseline already executed through other sources. The website adds that baseline to the live amount so it is counted once.
+The Google Sheet column whose header starts with `progreso` contains the total amount raised in USD. The website uses this value directly, without adding a baseline or a configured contribution amount. Until a valid total is available, progress displays zero.

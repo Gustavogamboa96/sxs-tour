@@ -142,7 +142,7 @@ Simply edit the Google Sheet to update tour dates:
 1. **Add a date:** Add a new row with Fecha, Lugar, Link to tickets
 2. **Remove a date:** Delete the row
 3. **Update banner:** Change the Banner URL in any row (first non-empty value is used)
-4. **Update the FALLA/BOCONÓ goal progress:** Put the amount raised (USD) in the `progreso` column of any row (first non-empty value is used). Every progress bar on the site (radar dock, map pointer, campaign page) updates from it. If it's empty, the site falls back to `raisedUSD` in `src/config/fallaBoconoConfig.js`.
+4. **Update the FALLA/BOCONÓ goal progress:** Put the total amount raised (USD) in the `progreso` column of any row (first numeric value is used). Every progress bar on the site (radar dock, map pointer, campaign page) uses this total directly, without adding a baseline. Until a valid total is available, progress displays zero.
 
 Changes will reflect within 10 minutes (cache duration).
 

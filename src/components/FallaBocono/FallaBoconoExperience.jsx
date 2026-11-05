@@ -782,7 +782,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
       <section id="fb-quienes" className="fb-sec fb-sec--wall fb-who">
         <SectionHead num="07" title="Quiénes hacen posible esta iniciativa" />
         <p className="fb-who__intro fb-reveal">
-          Volver a Sonar reúne a músicos, profesionales, organizaciones y aliados que suman conocimientos, recursos y
+          <ExternalLink href={CFG.links.volverASonar} className="fb-inline-link">Volver a Sonar</ExternalLink> reúne a músicos, profesionales, organizaciones y aliados que suman conocimientos, recursos y
           esfuerzos para que la música pueda seguir sonando.
         </p>
         <div className="fb-contributors fb-reveal">
