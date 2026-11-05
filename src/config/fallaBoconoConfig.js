@@ -19,6 +19,7 @@ export const FALLA_BOCONO_CONFIG = {
 
   links: {
     bandcamp: 'https://lavidaboheme.bandcamp.com',
+    paypal: 'https://paypal.me/yosoylavidaboheme?locale.x=en_US&country.x=US',
     contact: `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Colaboración — Volver a Sonar x FALLA/BOCONÓ')}`,
     festivalTickets: 'https://ticketing.cusica.com/events/125-cusica-festival-nuevas-bandas?_gl=1*6w328*_gcl_au*NTEwMTE3ODQ0LjE3OTM2NDgzOTAuMTM2NDIzNjM2MC4xNzkzNjQ4MzkwLjE3OTM2NDgzODkuMTU1NzI2MDU4NC4xNzkzNjQ4MzkwLjE3OTM2NDgzODk',
     valenciaTickets: 'https://room.b9ticketing.com/boletos/aforo/6ac6a3bb53bd3f999585d78f?fbclid=PAVERFWAVVyFlleHRuA2FlbQIxMQBwZG9mAmZkaWQWURfrfH56oc5DfEXiE8RZ-B3fLqMz-nNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp5uPiCYLRocTOlebAI8fCvSvEC-zoTf-_5R0n4C-cTCobYIu6t8kslLiqTcc_aem_WofJmrmcWCBAlllTXeKw4A',
@@ -75,7 +76,8 @@ export const FALLA_BOCONO_CONFIG = {
       body:
         'Este monto representa una aproximación del costo promedio de atender las necesidades diagnosticadas por músico, considerando instrumentos, reparaciones, kits de continuidad y apoyo operativo. Tu aportación se integra al fondo común para cubrir las necesidades prioritarias de la orquesta; los recursos no se reparten necesariamente por igual.',
       cta: 'Proponer un aporte',
-      linkKey: 'contact',
+      linkKey: 'paypal',
+      external: true,
     },
     {
       id: 'merch',
@@ -134,7 +136,9 @@ export const FALLA_BOCONO_CONFIG = {
       meta: ['Primer tema disponible · 5 de noviembre'],
       body:
         'Nació de años de viaje, vivió en una laptop hasta este verano y se terminó en el estudio de la banda en Ciudad de México. Es la resolución más apacible del EP para atraer escuchas.',
-      image: '/images/falla-bocono/focus-amfm.jpg',
+      image: '/images/falla-bocono/amfm-cover.png',
+      imageAlt: 'Portada de FALLA/BOCONÓ · La Vida Bohème',
+      squareImage: true,
       unlockUSD: 0,
       audioUrl: '',
       visualizerUrl: '',

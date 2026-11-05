@@ -266,7 +266,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
   const vp = useViewport();
   const progress = useFundraisingProgress();
   const wideWays = useMedia('(min-width: 900px)');
-  const [way, setWay] = useState(CFG.ways[0].id);
+  const [way, setWay] = useState('bandcamp');
   const coverVars = useMemo(() => ({ ...coverStyleVars(vp.w, vp.h), '--cv-h': `${vp.h}px` }), [vp]);
 
   const scrollToEl = useCallback((el, gap = 0) => {
@@ -732,8 +732,8 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
             {storyItems.map((f) => (
               <article key={f.id} className="fb-story fb-reveal" role="listitem">
                 {f.image && (
-                  <div className="fb-story__img">
-                    <img src={f.image} alt="" loading="lazy" />
+                  <div className={`fb-story__img${f.squareImage ? ' fb-story__img--square' : ''}`}>
+                    <img src={f.image} alt={f.imageAlt || ''} loading="lazy" />
                   </div>
                 )}
                 <h4 className="fb-story__name">{f.title}</h4>
