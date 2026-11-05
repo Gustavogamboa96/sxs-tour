@@ -609,7 +609,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
       </section>
 
       {/* ── 04 · Meta ── */}
-      <section id="fb-meta" className="fb-sec fb-sec--concrete fb-goal">
+      <section id="fb-meta" className="fb-sec fb-sec--dark fb-goal">
         <div className="fb-goal__inner">
           <SectionHead num="04" title={<>Nuestra meta: US$25.000</>} />
           <p className="fb-goal__sub fb-reveal">
@@ -836,7 +836,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
       </section>
 
       {/* ── 08 · Contacto ── */}
-      <section id="fb-sumarte" className="fb-sec fb-sec--concrete fb-join">
+      <section id="fb-sumarte" className="fb-sec fb-sec--dark fb-join">
         <div className="fb-join__inner">
           <SectionHead num="08" title="¿Quieres sumarte?" />
           <p className="fb-join__text fb-reveal">
