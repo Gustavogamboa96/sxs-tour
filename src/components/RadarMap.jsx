@@ -10,15 +10,15 @@ const WORLD_TOPO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110
 
 // Desktop viewport bounds: Americas + Europe
 const DESKTOP_BOUNDS = {
-  lonMin: -120, lonMax: 40,
-  latMin: -56,  latMax: 62,
+  lonMin: -104, lonMax: 24,
+  latMin: -40.4, latMax: 54,
 };
 
 // Minimum span so the map doesn't zoom absurdly close for 1-2 nearby cities
-const MIN_LON_SPAN = 50;
-const MIN_LAT_SPAN = 35;
+const MIN_LON_SPAN = 40;
+const MIN_LAT_SPAN = 28;
 // Padding around location cluster (degrees)
-const MOBILE_PAD = 15;
+const MOBILE_PAD = 10;
 
 function computeMobileBounds(locations) {
   const valid = locations.filter(l => l.lat != null && l.lng != null);
