@@ -499,7 +499,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
           <div className="fb-cover__intro">
             <h2>La música también necesita reconstruirse.</h2>
             <p>
-              La Vida Bohème se suma a Volver a Sonar para apoyar a la Orquesta Sinfónica Gran Mariscal de Ayacucho a
+              La Vida Bohème se suma a <ExternalLink href={CFG.links.volverASonar} className="fb-inline-link">Volver a Sonar</ExternalLink> para apoyar a la Orquesta Sinfónica Gran Mariscal de Ayacucho a
               recuperar herramientas esenciales para continuar su trabajo.
             </p>
           </div>
@@ -540,7 +540,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false, coverRe
               herramientas de trabajo en la orquesta. Los daños suman un valor económico de $24.547,00 USD.
             </p>
             <p>
-              La primera etapa de Volver a Sonar contempla la reparación de instrumentos (4 contrabajos, 1 arpa clásica,
+              La primera etapa de <ExternalLink href={CFG.links.volverASonar} className="fb-inline-link">Volver a Sonar</ExternalLink> contempla la reparación de instrumentos (4 contrabajos, 1 arpa clásica,
               cuerdas, cañas, arcos, puentes y trabajos de luthería), la reposición de materiales indispensables para la
               interpretación musical y kits de continuidad para 51 músicos, además de necesidades operativas esenciales del staff.
             </p>

@@ -18,6 +18,7 @@ export const FALLA_BOCONO_CONFIG = {
   },
 
   links: {
+    volverASonar: 'https://somosnexos.org/#p-volver-a-sonar',
     bandcamp: 'https://lavidaboheme.bandcamp.com',
     paypal: 'https://paypal.me/yosoylavidaboheme?locale.x=en_US&country.x=US',
     contact: `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Colaboración — Volver a Sonar x FALLA/BOCONÓ')}`,
