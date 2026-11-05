@@ -86,7 +86,6 @@ export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = '
   const duration = 200; // seconds
   const [position, setPosition] = React.useState(32);
   const [paused, setPaused] = React.useState(true);
-  const [autoplaySuccess, setAutoplaySuccess] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const audioRef = React.useRef(null);
   function formatDuration(value) {
@@ -143,29 +142,15 @@ export default function MusicPlayer({ filename = 'alcoropromowav.wav', title = '
       });
       
       newAudio.addEventListener('playing', () => {
-        setAutoplaySuccess(true);
         setPaused(false);
         // Make sure loading is set to false when playing starts
         setLoading(false);
       });
       
-      // Set audio autoplay to true
-      newAudio.autoplay = true;
-      
+      newAudio.autoplay = false;
+      setPaused(true);
       setAudio(newAudio);
       audioRef.current = newAudio;
-      
-      // Attempt to play the audio
-      const playPromise = newAudio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.error('Error auto-playing audio:', error);
-          // Don't call onError to prevent error messages in the UI
-          // if (onError) {
-          //   onError(`Error playing audio: ${error.message}`);
-          // }
-        });
-      }
     } catch (error) {
       console.error('Error creating audio element:', error);
       setAudioError(true);

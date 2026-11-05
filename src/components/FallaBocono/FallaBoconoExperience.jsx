@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { FALLA_BOCONO_CONFIG as CFG, formatUSD, formatUSDShort } from '../../config/fallaBoconoConfig';
 import useFundraisingProgress from './useFundraisingProgress';
-import { coverStyleVars, ensureCoverFont } from './coverLayout';
+import { COVER_IMAGES, coverStyleVars } from './coverLayout';
 import GoalProgress from './GoalProgress';
 import './FallaBoconoExperience.css';
 
@@ -17,7 +17,7 @@ const SECTIONS = [
 ];
 
 const RELEASE_NOTE =
-  'Cada aporte nos acerca a nueva música. FALLA/BOCONÓ se irá liberando a medida que alcancemos las metas de recaudación de Volver a Sonar. Comenzamos con AM/FM el 5 de noviembre. Tú decides qué tan pronto escuchamos lo que sigue.';
+  'Cada aporte nos acerca a nueva música. FALLA/BOCONÓ se irá liberando a medida que alcancemos las metas de recaudación de Volver a Sonar. Comenzamos con AM / FM el 5 de noviembre. Tú decides qué tan pronto escuchamos lo que sigue.';
 
 function Slash({ className = '' }) {
   return <span className={`fb-slash ${className}`}>/</span>;
@@ -257,7 +257,7 @@ function WaysChooser({ active, onSelect, wide }) {
 
 /* ── Página ─────────────────────────────────────────────────── */
 
-export default function FallaBoconoExperience({ onClose, hidden = false }) {
+export default function FallaBoconoExperience({ onClose, hidden = false, coverRef }) {
   const rootRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState(SECTIONS[0].id);
@@ -268,11 +268,6 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
   const wideWays = useMedia('(min-width: 900px)');
   const [way, setWay] = useState(CFG.ways[0].id);
   const coverVars = useMemo(() => ({ ...coverStyleVars(vp.w, vp.h), '--cv-h': `${vp.h}px` }), [vp]);
-  const coverTall = vp.w / vp.h < 1;
-
-  useEffect(() => {
-    ensureCoverFont();
-  }, []);
 
   const scrollToEl = useCallback((el, gap = 0) => {
     const root = rootRef.current;
@@ -364,7 +359,8 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
 
   const totalBreakdown = CFG.breakdown.reduce((a, b) => a + b.amountUSD, 0);
   const ctx = CFG.context;
-  const amfmTrack = CFG.tracklist.find((track) => track.title === 'AM/FM');
+  const totalTrackCount = CFG.tracklist.length;
+  const amfmTrack = CFG.tracklist.find((track) => track.title === 'AM / FM');
   const launchReached = !amfmTrack?.releaseAt || Date.now() >= amfmTrack.releaseAt.getTime();
   const nextMilestone = CFG.releaseMilestones.find((milestone) => progress.raisedUSD < milestone.amountUSD);
   const releaseTracks = CFG.tracklist.map((track) => ({
@@ -489,15 +485,16 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
       </div>
 
       {/* ── Portada (idéntica a la hoja que se desarruga) ── */}
-      <section id="fb-inicio" className={`fb-cover ${coverTall ? 'fb-cover--tall' : ''}`} style={coverVars} aria-label="Portada">
-        <div className="fb-cover__eyebrow">
-          <span className="fb-cover__eyebrow-text">VOLVER A SONAR</span>
-          <span className="fb-cover__x" aria-hidden="true">×</span>
-        </div>
+      <section id="fb-inicio" className="fb-cover" style={coverVars} aria-label="Portada" ref={coverRef}>
         <h1 className="fb-cover__title">
-          FALLA<Slash />BOCONÓ
+          <img
+            src={COVER_IMAGES.logo}
+            alt="Volver a Sonar · FALLA/BOCONÓ · La Vida Bohème"
+            width="2604"
+            height="705"
+            fetchpriority="high"
+          />
         </h1>
-        <span className="fb-cover__lvb">LA VIDA BOHÈME</span>
         <div className="fb-cover__cta">
           <div className="fb-cover__intro">
             <h2>La música también necesita reconstruirse.</h2>
@@ -518,26 +515,14 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
             </span>
           </button>
           <div className="fb-cover__btns">
-            <button type="button" className="fb-btn fb-btn--cream" onClick={() => scrollToId('fb-ayudar')}>
+            <button type="button" className="fb-btn fb-btn--ink" onClick={() => scrollToId('fb-ayudar')}>
               Elige cómo aportar <span className="fb-btn__arrow fb-btn__arrow--down" aria-hidden="true">↓</span>
             </button>
-            <ExternalLink href={CFG.links.bandcamp} className="fb-btn fb-btn--line fb-btn--glass">
+            <ExternalLink href={CFG.links.bandcamp} className="fb-btn fb-btn--line">
               Bandcamp <span className="fb-btn__arrow" aria-hidden="true">↗</span>
             </ExternalLink>
           </div>
         </div>
-      </section>
-
-      {/* ── Resumen del diagnóstico ── */}
-      <section className="fb-sec fb-sec--wall fb-intro" aria-label="Resumen del diagnóstico">
-        <dl className="fb-stats fb-reveal">
-          {CFG.heroStats.map((s, i) => (
-            <div key={`${s.value}-${i}`} className="fb-stat">
-              <dt className="fb-stat__label">{s.label}</dt>
-              <dd className="fb-stat__value">{s.value}</dd>
-            </div>
-          ))}
-        </dl>
       </section>
 
       {/* ── 02 · Diagnóstico ── */}
@@ -641,7 +626,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
           <p className="fb-goal__next fb-reveal">
             {nextMilestone
               ? <>Próximo desbloqueo: {nextMilestone.tracks.join(', ')} al alcanzar {formatUSD(nextMilestone.amountUSD)}. Faltan {formatUSD(Math.max(0, nextMilestone.amountUSD - progress.raisedUSD))} para liberarlo.</>
-              : <>¡EP completo desbloqueado! · 11 canciones</>}
+              : <>¡EP completo desbloqueado! · {totalTrackCount} canciones</>}
           </p>
           <button type="button" className="fb-btn fb-btn--cream fb-reveal" onClick={() => scrollToId('fb-ayudar')}>
             Quiero aportar <span className="fb-btn__arrow" aria-hidden="true">↑</span>
@@ -702,19 +687,19 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
               manera de acompañar a otros músicos en un momento difícil.
             </p>
             <p>
-              El EP reúne 11 canciones y se irá liberando en Bandcamp conforme Volver a Sonar alcance cada hito. AM/FM
+              El EP reúne {totalTrackCount} canciones y se irá liberando en Bandcamp conforme Volver a Sonar alcance cada hito. AM / FM
               inaugura el recorrido el 5 de noviembre; el EP completo estará disponible al llegar a US$25.000.
             </p>
           </div>
           <div className="fb-tracks fb-reveal">
-            <span className="fb-label">{unlockedTrackCount}/11 canciones desbloqueadas · orden artístico del EP</span>
+            <span className="fb-label">{unlockedTrackCount}/{totalTrackCount} canciones desbloqueadas · orden artístico del EP</span>
             <ol>
               {releaseTracks.map((t) => (
                 <li key={t.num} className={t.unlocked ? 'is-available' : ''}>
                   <span className="fb-tracks__num">{t.num}</span>
                   <span className="fb-tracks__title">
                     {t.title}
-                    {t.feat && <em> feat. {t.feat}</em>}
+                    {t.feat && <em> (feat. {t.feat})</em>}
                   </span>
                   <span className={`fb-tracks__status ${t.unlocked ? 'is-unlocked' : ''}`}>
                     {t.unlocked ? 'Desbloqueado · Disponible en Bandcamp' : 'Bloqueado'}
@@ -733,7 +718,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
                   >
                     <strong>{formatUSD(milestone.amountUSD)}</strong>
                     <span>{milestone.tracks.join(', ')}</span>
-                    <span>{milestone.count}/11</span>
+                    <span>{milestone.count}/{totalTrackCount}</span>
                   </li>
                 ))}
               </ol>
@@ -776,7 +761,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
                 )}
                 {f.audioUrl && <audio className="fb-story__audio" src={f.audioUrl} controls preload="none" />}
                 <ExternalLink href={CFG.links.bandcamp} className="fb-btn fb-btn--ink fb-story__cta">
-                  {f.title === 'AM/FM' && !f.track?.unlocked ? 'Disponible en Bandcamp desde el 5 de noviembre' : 'Escuchar en Bandcamp'}
+                  {f.id === 'amfm' && !f.track?.unlocked ? 'Disponible en Bandcamp desde el 5 de noviembre' : 'Escuchar en Bandcamp'}
                   <span className="fb-btn__arrow" aria-hidden="true">↗</span>
                 </ExternalLink>
               </article>
@@ -789,7 +774,7 @@ export default function FallaBoconoExperience({ onClose, hidden = false }) {
               Faltan {formatUSD(Math.max(0, nextMilestone.amountUSD - progress.raisedUSD))} para liberar {nextMilestone.tracks.join(', ')}.
             </p>
           ) : (
-            <p className="fb-focus__next fb-reveal">¡EP completo desbloqueado! · 11 canciones</p>
+            <p className="fb-focus__next fb-reveal">¡EP completo desbloqueado! · {totalTrackCount} canciones</p>
           )}
         </div>
       </section>

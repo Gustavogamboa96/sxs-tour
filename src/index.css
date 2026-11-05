@@ -13,6 +13,11 @@ code {
 } */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 
+:root {
+  --campaign-accent: #787B54;
+  --campaign-accent-rgb: 120, 123, 84;
+}
+
 html, body {
     font-family: 'IBM Plex Sans', sans-serif, -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }

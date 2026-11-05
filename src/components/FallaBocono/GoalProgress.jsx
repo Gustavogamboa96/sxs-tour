@@ -5,7 +5,7 @@ import './GoalProgress.css';
 
 /**
  * Barra de meta compartida.
- * variant: 'radar' (home, mono + amarillo) | 'stone' (página editorial)
+ * variant: 'radar' (home, mono + verde) | 'stone' (página editorial)
  * size: 'compact' | 'full'
  */
 export default function GoalProgress({ variant = 'stone', size = 'compact', className = '' }) {

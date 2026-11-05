@@ -1,7 +1,7 @@
 .goal {
-  --goal-ink: #f4f1ea;
-  --goal-muted: rgba(244, 241, 234, 0.62);
-  --goal-track: rgba(244, 241, 234, 0.18);
+  --goal-ink: var(--ink, #2A2A2A);
+  --goal-muted: var(--ink, #2A2A2A);
+  --goal-track: rgba(42, 42, 42, 0.18);
   --goal-fill: #7a2e2e;
   width: 100%;
   font-family: 'IBM Plex Mono', ui-monospace, monospace;
@@ -12,7 +12,7 @@
   --goal-ink: #f2f2f2;
   --goal-muted: rgba(255, 255, 255, 0.5);
   --goal-track: rgba(255, 255, 255, 0.12);
-  --goal-fill: #ffd60a;
+  --goal-fill: var(--campaign-accent);
 }
 
 .goal__row {
@@ -58,7 +58,7 @@
 }
 
 .goal--radar .goal__fill {
-  box-shadow: 0 0 10px rgba(255, 214, 10, 0.45);
+  box-shadow: 0 0 10px rgba(var(--campaign-accent-rgb), 0.45);
 }
 
 /* Blinking head marks the current position, even at 0% */

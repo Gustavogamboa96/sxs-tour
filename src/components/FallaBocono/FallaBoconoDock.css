@@ -1,6 +1,6 @@
 .fb-dock,
 .fb-dock-pill {
-  --fb-yellow: #ffd60a;
+  --fb-accent: var(--campaign-accent);
   position: absolute;
   z-index: 25;
   font-family: 'IBM Plex Mono', ui-monospace, monospace;
@@ -46,9 +46,9 @@
   width: 7px;
   height: 7px;
   flex: none;
-  background: var(--fb-yellow);
+  background: var(--fb-accent);
   transform: rotate(45deg);
-  box-shadow: 0 0 8px rgba(255, 214, 10, 0.8);
+  box-shadow: 0 0 8px rgba(var(--campaign-accent-rgb), 0.8);
   animation: fbDockBlink 1s steps(1, end) infinite;
 }
 
@@ -130,8 +130,8 @@
   justify-content: space-between;
   margin-top: 4px;
   padding: 10px 12px;
-  border: 1px solid var(--fb-yellow);
-  color: var(--fb-yellow);
+  border: 1px solid var(--fb-accent);
+  color: var(--fb-accent);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.24em;
@@ -140,7 +140,7 @@
 
 .fb-dock__body:hover .fb-dock__cta,
 .fb-dock__body:focus-visible .fb-dock__cta {
-  background: var(--fb-yellow);
+  background: var(--fb-accent);
   color: #0a0a0a;
 }
 
@@ -154,7 +154,7 @@
   right: 16px;
   display: flex;
   background: rgba(8, 8, 8, 0.86);
-  border: 1px solid rgba(255, 214, 10, 0.55);
+  border: 1px solid rgba(var(--campaign-accent-rgb), 0.55);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
@@ -179,7 +179,7 @@
 }
 
 .fb-dock-pill__pct {
-  color: var(--fb-yellow);
+  color: var(--fb-accent);
 }
 
 .fb-dock-pill__expand {

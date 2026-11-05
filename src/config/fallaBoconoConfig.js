@@ -25,19 +25,11 @@ export const FALLA_BOCONO_CONFIG = {
     projectManager: 'Stephanie Carreira',
   },
 
-  // Ubicación del puntero amarillo en el radar (La Guaira / Caracas)
+  // Ubicación del puntero de la campaña en el radar (La Guaira / Caracas)
   pointer: {
     lat: 10.6018,
     lng: -66.9322,
   },
-
-  heroStats: [
-    { value: '05 NOV', label: 'Lanzamiento' },
-    { value: '1 EP', label: 'FALLA/BOCONÓ' },
-    { value: 'US$25K', label: 'Meta neta' },
-    { value: '51', label: 'Kits de continuidad' },
-    { value: '51', label: 'Músicos de la orquesta' },
-  ],
 
   context: {
     members: 68,
@@ -66,8 +58,8 @@ export const FALLA_BOCONO_CONFIG = {
       price: 'Desde US$14',
       priceNote: 'Exclusivo en Bandcamp',
       body: campaignLaunched
-        ? 'Desde el estreno del 5 de noviembre, puedes apoyar Volver a Sonar adquiriendo FALLA/BOCONÓ en Bandcamp. Al comprar, recibes acceso de inmediato a AM/FM y a las siguientes canciones conforme se alcancen los hitos de recaudación. El EP completo queda liberado al alcanzar US$25.000. US$14 es el aporte mínimo, pero puedes contribuir con una cantidad mayor si lo deseas.'
-        : 'A partir del 5 de noviembre, podrás apoyar Volver a Sonar adquiriendo FALLA/BOCONÓ en preventa. Al comprar, recibirás acceso a AM/FM, el primer tema disponible, a partir de su lanzamiento, y a las siguientes canciones conforme se alcancen los hitos de recaudación. El EP completo quedará liberado al alcanzar US$25.000. US$14 es el aporte mínimo, pero puedes contribuir con una cantidad mayor si lo deseas.',
+        ? 'Desde el estreno del 5 de noviembre, puedes apoyar Volver a Sonar adquiriendo FALLA/BOCONÓ en Bandcamp. Al comprar, recibes acceso de inmediato a AM / FM y a las siguientes canciones conforme se alcancen los hitos de recaudación. El EP completo queda liberado al alcanzar US$25.000. US$14 es el aporte mínimo, pero puedes contribuir con una cantidad mayor si lo deseas.'
+        : 'A partir del 5 de noviembre, podrás apoyar Volver a Sonar adquiriendo FALLA/BOCONÓ en preventa. Al comprar, recibirás acceso a AM / FM, el primer tema disponible, a partir de su lanzamiento, y a las siguientes canciones conforme se alcancen los hitos de recaudación. El EP completo quedará liberado al alcanzar US$25.000. US$14 es el aporte mínimo, pero puedes contribuir con una cantidad mayor si lo deseas.',
       cta: 'Comprar en Bandcamp',
       linkKey: 'bandcamp',
       external: true,
@@ -115,32 +107,30 @@ export const FALLA_BOCONO_CONFIG = {
   ],
 
   tracklist: [
-    { num: '01', title: 'Cambur Pintón', unlockUSD: 10000 },
-    { num: '02', title: 'El Salvador', unlockUSD: 10000 },
-    { num: '03', title: 'Golpe de Estado', unlockUSD: 10000 },
-    { num: '04', title: 'Péscalo', feat: 'Orestes Gómez', unlockUSD: 5000 },
-    { num: '05', title: 'AM/FM', unlockUSD: 0, releaseAt: LAUNCH_AT },
+    { num: '01', title: 'Golpe de Estado', unlockUSD: 10000 },
+    { num: '02', title: 'Péscalo', feat: 'Orestes Gómez', unlockUSD: 5000 },
+    { num: '03', title: 'AM / FM', unlockUSD: 0, releaseAt: LAUNCH_AT },
+    { num: '04', title: 'Track 4', unlockUSD: 10000 },
+    { num: '05', title: 'Track 5', unlockUSD: 10000 },
     { num: '06', title: 'Track 6', unlockUSD: 15000 },
     { num: '07', title: 'Track 7', unlockUSD: 15000 },
     { num: '08', title: 'Track 8', unlockUSD: 20000 },
-    { num: '09', title: 'Track 9', unlockUSD: 20000 },
-    { num: '10', title: 'Track 10', unlockUSD: 25000 },
-    { num: '11', title: 'Track 11', unlockUSD: 25000 },
+    { num: '09', title: 'Track 9', unlockUSD: 25000 },
   ],
 
   releaseMilestones: [
-    { amountUSD: 0, count: 1, tracks: ['AM/FM'] },
+    { amountUSD: 0, count: 1, tracks: ['AM / FM'] },
     { amountUSD: 5000, count: 2, tracks: ['Péscalo'] },
-    { amountUSD: 10000, count: 5, tracks: ['Cambur Pintón', 'El Salvador', 'Golpe de Estado'] },
+    { amountUSD: 10000, count: 5, tracks: ['Golpe de Estado', 'Track 4', 'Track 5'] },
     { amountUSD: 15000, count: 7, tracks: ['Track 6', 'Track 7'] },
-    { amountUSD: 20000, count: 9, tracks: ['Track 8', 'Track 9'] },
-    { amountUSD: 25000, count: 11, tracks: ['Track 10', 'Track 11'] },
+    { amountUSD: 20000, count: 8, tracks: ['Track 8'] },
+    { amountUSD: 25000, count: 9, tracks: ['Track 9'] },
   ],
 
   focusStories: [
     {
       id: 'amfm',
-      title: 'AM/FM',
+      title: 'AM / FM',
       meta: ['Primer tema disponible · 5 de noviembre'],
       body:
         'Nació de años de viaje, vivió en una laptop hasta este verano y se terminó en el estudio de la banda en Ciudad de México. Es la resolución más apacible del EP para atraer escuchas.',

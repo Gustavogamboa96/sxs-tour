@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { COVER_IMAGES, COVER_COLORS, COVER_FONT, COVER_WEIGHT, coverMetrics, ensureCoverFont } from './coverLayout';
+import { COVER_IMAGES, COVER_COLORS, coverMetrics } from './coverLayout';
 import './CrumpleTransition.css';
 
 /**
@@ -206,63 +206,33 @@ function initGL(canvas) {
   };
 }
 
-function drawSpaced(ctx, text, x, y, tracking) {
-  let cx = x;
-  for (const ch of text) {
-    ctx.fillText(ch, cx, y);
-    cx += ctx.measureText(ch).width + tracking;
-  }
-  return cx;
-}
-
-function paintCover(canvas, w, h, images) {
+function paintCover(canvas, w, h, images, cover) {
   const ctx = canvas.getContext('2d');
   const scale = canvas.width / w;
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
   ctx.fillStyle = COVER_COLORS.base;
   ctx.fillRect(0, 0, w, h);
 
-  const img = w / h < 1 ? images.tall : images.wide;
+  const coverBounds = cover?.getBoundingClientRect();
+  const coverHeight = coverBounds?.height || h;
+  const img = images.background;
   if (img && img.complete && img.naturalWidth) {
-    const r = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+    const r = Math.max(w / img.naturalWidth, coverHeight / img.naturalHeight);
     const iw = img.naturalWidth * r;
     const ih = img.naturalHeight * r;
-    ctx.drawImage(img, (w - iw) / 2, (h - ih) / 2, iw, ih);
+    ctx.drawImage(img, (w - iw) / 2, (coverHeight - ih) / 2, iw, ih);
   }
-  const g = ctx.createLinearGradient(0, 0, 0, h);
-  g.addColorStop(0, 'rgba(24,22,20,0.28)');
-  g.addColorStop(0.45, 'rgba(24,22,20,0.06)');
-  g.addColorStop(1, 'rgba(24,22,20,0.4)');
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, w, h);
-
   const m = coverMetrics(w, h);
-  ctx.textBaseline = 'top';
-  ctx.shadowColor = 'rgba(0,0,0,0.18)';
-  ctx.shadowBlur = 24;
-
-  ctx.font = `italic ${COVER_WEIGHT} ${m.eyebrowSize}px ${COVER_FONT}`;
-  ctx.fillStyle = COVER_COLORS.cream;
-  const end = drawSpaced(ctx, 'VOLVER A SONAR', m.left, m.top, m.eyebrowSize * 0.42);
-  ctx.fillStyle = COVER_COLORS.rust;
-  ctx.fillText('×', end + m.eyebrowSize * 0.2, m.top);
-
-  const ty = m.top + m.eyebrowSize + m.titleGap;
-  ctx.font = `${COVER_WEIGHT} ${m.titleSize}px ${COVER_FONT}`;
-  let x = m.left + m.indent;
-  ctx.fillStyle = COVER_COLORS.cream;
-  ctx.fillText('FALLA', x, ty);
-  x += ctx.measureText('FALLA').width;
-  ctx.fillStyle = COVER_COLORS.rust;
-  ctx.fillText('/', x, ty);
-  x += ctx.measureText('/').width;
-  ctx.fillStyle = COVER_COLORS.cream;
-  ctx.fillText('BOCONÓ', x, ty);
-
-  ctx.font = `${COVER_WEIGHT} ${m.lvbSize}px ${COVER_FONT}`;
-  ctx.textAlign = 'right';
-  ctx.fillText('LA VIDA BOHÈME', w - m.lvbRight, h - m.lvbBottom - m.lvbSize);
-  ctx.textAlign = 'left';
+  const logoBounds = cover?.querySelector('.fb-cover__title img')?.getBoundingClientRect();
+  if (coverBounds && logoBounds?.width && logoBounds.height) {
+    m.logoLeft = logoBounds.left - coverBounds.left;
+    m.logoTop = logoBounds.top - coverBounds.top;
+    m.logoWidth = logoBounds.width;
+    m.logoHeight = logoBounds.height;
+  }
+  if (images.logo?.complete && images.logo.naturalWidth) {
+    ctx.drawImage(images.logo, m.logoLeft, m.logoTop, m.logoWidth, m.logoHeight);
+  }
 }
 
 let assetsPromise = null;
@@ -271,12 +241,14 @@ function loadAssets() {
   const load = (src) => new Promise((resolve) => {
     const img = new Image();
     img.onload = () => resolve(img);
-    img.onerror = () => resolve(null);
+    img.onerror = () => {
+      console.error('Failed to load campaign cover image:', src);
+      resolve(null);
+    };
     img.src = src;
   });
-  const fonts = ensureCoverFont();
-  assetsPromise = Promise.all([load(COVER_IMAGES.wide), load(COVER_IMAGES.tall), fonts])
-    .then(([wide, tall]) => ({ wide, tall }));
+  assetsPromise = Promise.all([load(COVER_IMAGES.background), load(COVER_IMAGES.logo)])
+    .then(([background, logo]) => ({ background, logo }));
   return assetsPromise;
 }
 
@@ -287,7 +259,7 @@ export function preloadCrumpleAssets() {
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-export default function CrumpleTransition({ run, onCovered, onDone }) {
+export default function CrumpleTransition({ run, onCovered, onDone, coverRef }) {
   const rootRef = useRef(null);
   const canvasRef = useRef(null);
   const backdropRef = useRef(null);
@@ -321,7 +293,7 @@ export default function CrumpleTransition({ run, onCovered, onDone }) {
     const fallback = () => {
       // Simple dissolve when WebGL or motion is unavailable
       backdrop.style.transition = 'opacity 260ms ease';
-      backdrop.style.background = '#8c8984';
+      backdrop.style.background = COVER_COLORS.base;
       requestAnimationFrame(() => { backdrop.style.opacity = '1'; });
       timers.push(setTimeout(() => {
         covered();
@@ -350,6 +322,7 @@ export default function CrumpleTransition({ run, onCovered, onDone }) {
 
       const images = await Promise.race([loadAssets(), new Promise((r) => setTimeout(() => r({}), 600))]);
       if (cancelled) return;
+      if (!images.background || !images.logo) { fallback(); return; }
 
       const W = window.innerWidth;
       const H = window.innerHeight;
@@ -361,7 +334,7 @@ export default function CrumpleTransition({ run, onCovered, onDone }) {
       const paper = document.createElement('canvas');
       paper.width = Math.round(W * texScale);
       paper.height = Math.round(H * texScale);
-      paintCover(paper, W, H, images || {});
+      paintCover(paper, W, H, images || {}, coverRef?.current);
 
       const { gl, tex, uni, count } = ctx;
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -473,7 +446,7 @@ export default function CrumpleTransition({ run, onCovered, onDone }) {
       timers.forEach(clearTimeout);
       root.classList.remove('is-active');
     };
-  }, [run]);
+  }, [run, coverRef]);
 
   return (
     <div ref={rootRef} className="fb-crumple" aria-hidden="true">

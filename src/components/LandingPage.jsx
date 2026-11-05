@@ -38,6 +38,7 @@ export default function LandingPage() {
     const fallaRef = useRef(falla)
     const runRef = useRef(null)
     const fallaSeenRef = useRef(falla !== 'closed')
+    const fallaCoverRef = useRef(null)
     const setFalla = (v) => { fallaRef.current = v; setFallaState(v) }
     const setFallaRun = (v) => { runRef.current = v; setFallaRunState(v) }
 
@@ -376,11 +377,13 @@ export default function LandingPage() {
                 <FallaBoconoExperience
                     onClose={handleCloseFallaBocono}
                     hidden={falla === 'opening'}
+                    coverRef={fallaCoverRef}
                 />
             )}
 
             <CrumpleTransition
                 run={fallaRun}
+                coverRef={fallaCoverRef}
                 onCovered={handleCrumpleCovered}
                 onDone={handleCrumpleDone}
             />
